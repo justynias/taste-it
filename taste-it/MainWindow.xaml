@@ -10,12 +10,18 @@
         xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
         xmlns:views="clr-namespace:taste_it.Views" 
         xmlns:models="clr-namespace:taste_it.Models"
-        
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         mc:Ignorable="d"
         Style="{StaticResource CustomWindowStyle}" x:Name="TasteItWindow"
         Title="taste it"
         Height="1024" Width="640">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Button Width="100" Height="50" Command="{Binding LoadCommand}" Content="CLick"/>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding UserCollection}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="name" Binding="{Binding Path=name}"></DataGridTextColumn>
+            </DataGrid.Columns>
+         
+        </DataGrid>
+    </StackPanel>
 </Window>

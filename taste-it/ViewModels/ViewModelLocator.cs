@@ -15,6 +15,7 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using taste_it.DataService;
 
 namespace taste_it.ViewModels
 {
@@ -41,7 +42,7 @@ namespace taste_it.ViewModels
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
-
+            SimpleIoc.Default.Register<IUserDataService, UserDataService>();
             SimpleIoc.Default.Register<MainWindowViewModel>();
         }
 

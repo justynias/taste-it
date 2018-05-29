@@ -14,6 +14,21 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -86,51 +101,44 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Categories.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    <Compile Include="CustomCommands\RelayCommandAsync.cs" />
+    <Compile Include="DataService\IUserDataService.cs" />
+    <Compile Include="DataService\UserDataService.cs" />
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Have_category.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    <Compile Include="Models\Have_category.cs">
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Have_favourites.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    <Compile Include="Models\Have_favourites.cs">
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Have_tags.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    <Compile Include="Models\Have_tags.cs">
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserModel.cs" />
-    <Compile Include="Recipes.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    <Compile Include="Models\Recipe.cs">
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Tags.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TasteITDataBaseModel.Context.cs">
+    <Compile Include="Models\TasteITDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TasteITDataBaseModel.Context.tt</DependentUpon>
+      <DependentUpon>TasteITDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="TasteITDataBaseModel.cs">
+    <Compile Include="Models\TasteITDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TasteITDataBaseModel.Designer.cs">
+    <Compile Include="Models\TasteITDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
+      <DependentUpon>TasteITDataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Users.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -180,19 +188,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Models\TasteITDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TasteITDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\TasteITDataModel.edmx.diagram">
+      <DependentUpon>TasteITDataModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EntityDeploy Include="TasteITDataBaseModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TasteITDataBaseModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="TasteITDataBaseModel.edmx.diagram">
-      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -200,19 +208,31 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TasteITDataBaseModel.Context.tt">
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\TasteITDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
-      <LastGenOutput>TasteITDataBaseModel.Context.cs</LastGenOutput>
+      <DependentUpon>TasteITDataModel.edmx</DependentUpon>
+      <LastGenOutput>TasteITDataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="TasteITDataBaseModel.tt">
+    <Content Include="Models\TasteITDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
-      <LastGenOutput>TasteITDataBaseModel.cs</LastGenOutput>
+      <DependentUpon>TasteITDataModel.edmx</DependentUpon>
+      <LastGenOutput>TasteITDataModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 i x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
