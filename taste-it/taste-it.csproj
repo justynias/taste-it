@@ -62,6 +62,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -84,7 +86,52 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Categories.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Have_category.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Have_favourites.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Have_tags.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Recipes.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tags.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TasteITDataBaseModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TasteITDataBaseModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TasteITDataBaseModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TasteITDataBaseModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Users.cs">
+      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\SignInView.xaml.cs">
@@ -139,13 +186,34 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EntityDeploy Include="TasteITDataBaseModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TasteITDataBaseModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TasteITDataBaseModel.edmx.diagram">
+      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="TasteITDataBaseModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
+      <LastGenOutput>TasteITDataBaseModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="TasteITDataBaseModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TasteITDataBaseModel.edmx</DependentUpon>
+      <LastGenOutput>TasteITDataBaseModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
