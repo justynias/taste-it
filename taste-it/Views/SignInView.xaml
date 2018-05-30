@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewmodel="clr-namespace:taste_it.ViewModels"
              xmlns:local="clr-namespace:taste_it.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -10,7 +11,7 @@
     <UserControl.Resources>
         <SolidColorBrush x:Key="MainTextColor" Color="#FF61C67C" />
         <SolidColorBrush x:Key="BackgroundColor" Color="#FFFFFFFF" />
-        <Style TargetType="{x:Type TextBox}">
+        <Style x:Key="LineTextbox" TargetType="{x:Type TextBox}">
             <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}" />
             <Setter Property="BorderThickness" Value="0 0 0 2" />
             <Setter Property="FontSize" Value="18px" />
@@ -19,7 +20,7 @@
             <Setter Property="Padding" Value="0 0 0 8"/>
             <Setter Property="Margin" Value="0 40 0 0"/>
         </Style>
-        <Style x:Key="RoundCornerMain" TargetType="{x:Type Button}">
+        <Style x:Key="RoundCornerPrimaryBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="1"/>
@@ -45,7 +46,7 @@
                                 <Setter Property="Foreground" Value="{StaticResource MainTextColor}"/>
                                 <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource MainTextColor}"/>
                                 <Setter Property="BorderThickness" TargetName="border" Value="2"/>
-                                
+
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}"/>
@@ -53,13 +54,12 @@
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="RoundCornerAlternative" TargetType="{x:Type Button}">
+        <Style x:Key="RoundCornerAlternativeBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="1"/>
@@ -77,17 +77,12 @@
                                                   >
                                 </ContentPresenter>
                             </Border>
-
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsPressed" Value="True">
-                                
                                 <Setter Property="Background" TargetName="border" Value="{StaticResource MainTextColor}"/>
-                                
                                 <Setter Property="Foreground" Value="{StaticResource BackgroundColor}"/>
-                               
                                 <Setter Property="BorderThickness" TargetName="border" Value="0"/>
-
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}"/>
@@ -101,8 +96,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
     </UserControl.Resources>
     
     <Grid Background="{StaticResource BackgroundColor}">
@@ -116,15 +109,15 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
             <TextBlock Text="T A S T E . I T" Foreground="{StaticResource MainTextColor}" FontSize="56px" TextAlignment="Center" Margin="0, 50, 0, 0" FontStretch="UltraExpanded" FontWeight="Bold" />
-            <TextBlock Text="Find your dishes, enjoy your dishes." Foreground="{StaticResource MainTextColor}" FontSize="18px" TextAlignment="Center"  FontStretch="UltraExpanded" FontWeight="Light" />
+            <TextBlock Text="Find your dishes, enjoy your dishes." Foreground="{StaticResource MainTextColor}" FontSize= "18px" TextAlignment="Center"  Margin="0, 20, 0, 0"  FontStretch="UltraExpanded" FontWeight="Light" />
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
-            <TextBox>Username</TextBox>
-            <TextBox>Password</TextBox>
+            <TextBox  Style="{StaticResource LineTextbox}"></TextBox>
+            <TextBox  Style="{StaticResource LineTextbox}"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
-            <Button Style="{StaticResource RoundCornerMain}">Sign In</Button>
-            <Button Style="{StaticResource RoundCornerAlternative}">Sign Up</Button>
+            <Button Style="{StaticResource RoundCornerPrimaryBtn}">Sign In</Button>
+            <Button Style="{StaticResource RoundCornerAlternativeBtn}">Sign Up</Button>
         </StackPanel>
         
     </Grid>
