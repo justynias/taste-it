@@ -44,6 +44,8 @@ namespace taste_it.ViewModels
             ////}
             SimpleIoc.Default.Register<IUserDataService, UserDataService>();
             SimpleIoc.Default.Register<MainWindowViewModel>();
+            SimpleIoc.Default.Register<SignInViewModel>();
+
         }
 
         public MainWindowViewModel Main
@@ -53,7 +55,14 @@ namespace taste_it.ViewModels
                 return ServiceLocator.Current.GetInstance<MainWindowViewModel>();
             }
         }
-        
+        public SignInViewModel SignIn
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SignInViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

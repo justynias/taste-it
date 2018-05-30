@@ -3,17 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        
         xmlns:local="clr-namespace:taste_it"
         xmlns:my="clr-namespace:taste_it.Additionals"
         xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow" 
         xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
         xmlns:views="clr-namespace:taste_it.Views" 
         xmlns:models="clr-namespace:taste_it.Models"
-        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        DataContext="{Binding Source={StaticResource Locator}, Path=SignIn}"
         mc:Ignorable="d"
         Style="{StaticResource CustomWindowStyle}" x:Name="TasteItWindow"
         Title="taste it"
         Height="1024" Width="640">
+    <StackPanel>
+        
+        <TextBox>
+            <TextBox.Text>
+                <Binding Path="UserName" Mode="TwoWay" ValidatesOnDataErrors="True"/>
+            </TextBox.Text>
+
+        </TextBox>
+        <TextBox Text="{Binding UserPassword, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+        <Button Width="100" Height="50" Command="{Binding SignInCommand}" Content="CLick"/>
+    </StackPanel>
  
 </Window>
