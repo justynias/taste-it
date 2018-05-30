@@ -23,6 +23,9 @@ namespace taste_it
         public MainWindow()
         {
             InitializeComponent();
+			//kupa
         }
+
+       
     }
 }

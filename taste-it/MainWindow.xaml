@@ -10,10 +10,11 @@
         xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
         xmlns:views="clr-namespace:taste_it.Views" 
         xmlns:models="clr-namespace:taste_it.Models"
-        
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         mc:Ignorable="d"
         Style="{StaticResource CustomWindowStyle}" x:Name="TasteItWindow"
         Title="taste it"
+<<<<<<< HEAD
         Height="800" Width="640">
 
     <Window.Resources>
@@ -38,4 +39,8 @@
                     Height="{Binding ActualHeight, 
                     RelativeSource ={RelativeSource AncestorType = {x:Type Window}}}"/>
     </Grid>
+=======
+        Height="1024" Width="640">
+ 
+>>>>>>> 5b406274a662fdfab9280aef7b49b48863226e46
 </Window>

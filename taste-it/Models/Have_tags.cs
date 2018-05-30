@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace taste_it
+namespace taste_it.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace taste_it
         public int id_t { get; set; }
         public int id_r { get; set; }
     
-        public virtual Recipes Recipes { get; set; }
-        public virtual Tags Tags { get; set; }
+        public virtual Recipe Recipe { get; set; }
+        public virtual Tag Tag { get; set; }
     }
 }

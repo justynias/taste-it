@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace taste_it
+namespace taste_it.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Have_category
+    public partial class Have_favourites
     {
         public int id { get; set; }
-        public int id_c { get; set; }
+        public int id_u { get; set; }
         public int id_r { get; set; }
     
-        public virtual Categories Categories { get; set; }
-        public virtual Recipes Recipes { get; set; }
+        public virtual Recipe Recipe { get; set; }
+        public virtual User User { get; set; }
     }
 }

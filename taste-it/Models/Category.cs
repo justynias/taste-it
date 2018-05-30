@@ -7,24 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace taste_it
+namespace taste_it.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public Category()
         {
-            this.Have_favourites = new HashSet<Have_favourites>();
+            this.Have_category = new HashSet<Have_category>();
         }
     
-        public int id_u { get; set; }
+        public int id_c { get; set; }
         public string name { get; set; }
-        public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Have_favourites> Have_favourites { get; set; }
+        public virtual ICollection<Have_category> Have_category { get; set; }
     }
 }
