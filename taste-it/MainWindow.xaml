@@ -13,44 +13,7 @@
         mc:Ignorable="d"
         Style="{StaticResource CustomWindowStyle}" x:Name="TasteItWindow"
         Title="taste it"
-        Height="1024" Width="640">
-    <Window.Resources>
-        <Style x:Key="TextErrorStyle" TargetType="{x:Type TextBox}">
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate x:Name="TextErrorTemplate">
-                        <DockPanel LastChildFill="True">
-                            <AdornedElementPlaceholder>
-                                <Border BorderBrush="Red" 
-                                BorderThickness="2"/>
-                            </AdornedElementPlaceholder>
-                            <TextBlock FontSize="20"
-                            Foreground="Red">*?*</TextBlock>
-                        </DockPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" 
+        Height="800" Width="640">
 
-                Value="True">
-                    <Setter Property="ToolTip" 
-
-                    Value="{Binding RelativeSource=
-            {x:Static RelativeSource.Self},
-            Path=(Validation.Errors)[0].ErrorContent}"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-        
-        <StackPanel>
-
-        <TextBox FontSize="20" Text="{Binding UserName, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                 Style="{StaticResource TextErrorStyle}" />
-        <TextBox FontSize="20" Text="{Binding UserPassword, Mode=TwoWay, ValidatesOnDataErrors=True}"
-                 Style="{StaticResource TextErrorStyle}" />
-        <Button Width="100" Height="50" Command="{Binding SignInCommand}" Content="CLick"/>
-    </StackPanel>
- 
+   
 </Window>
