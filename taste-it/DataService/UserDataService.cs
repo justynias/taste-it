@@ -25,5 +25,7 @@ namespace taste_it.DataService
             dbContext.Users.Add(user);
             await dbContext.SaveChangesAsync();
         }
+
+        
     }
 }

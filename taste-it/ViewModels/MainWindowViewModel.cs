@@ -15,29 +15,18 @@ namespace taste_it.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         
-        public ObservableCollection<User> UserCollection { get; set; }
-        private readonly IUserDataService _userDataService;
-        public ICommand LoadCommand { get; private set; }
+        
 
-        public MainWindowViewModel(IUserDataService userData)
+        
+
+        public MainWindowViewModel()
         {
-            _userDataService = userData;
-            UserCollection = new ObservableCollection<User>();
+           
             
-            LoadCommand = new RelayCommand(LoadUsers);
+            
         }
 
-        public async void LoadUsers()
-        {
-            var users  = await _userDataService.GetUsersAsync();
-            UserCollection.Clear();
-            foreach (var item in users)
-            {
-                UserCollection.Add(item);
-            }
-            RaisePropertyChanged(() => UserCollection);
-        }
-
+     
 
 
     }

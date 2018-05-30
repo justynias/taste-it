@@ -15,13 +15,5 @@
         Style="{StaticResource CustomWindowStyle}" x:Name="TasteItWindow"
         Title="taste it"
         Height="1024" Width="640">
-    <StackPanel>
-        <Button Width="100" Height="50" Command="{Binding LoadCommand}" Content="CLick"/>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding UserCollection}" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="name" Binding="{Binding Path=name}"></DataGridTextColumn>
-            </DataGrid.Columns>
-         
-        </DataGrid>
-    </StackPanel>
+ 
 </Window>

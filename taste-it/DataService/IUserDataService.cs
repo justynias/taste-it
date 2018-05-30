@@ -10,7 +10,8 @@ namespace taste_it.DataService
     public interface IUserDataService
     {
         Task<IEnumerable<User>> GetUsersAsync();
-        
-        
+        Task AddUserAsync(User user);
+
+
     }
 }
