@@ -86,6 +86,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Additionals\Navigation\FrameNavigationService.cs" />
+    <Compile Include="Additionals\Navigation\IFrameNavigationService.cs" />
     <Compile Include="Categories.cs">
       <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
     </Compile>

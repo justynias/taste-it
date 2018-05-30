@@ -6,7 +6,128 @@
              xmlns:local="clr-namespace:taste_it.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="MainTextColor" Color="#FF61C67C" />
+        <SolidColorBrush x:Key="BackgroundColor" Color="#FFFFFFFF" />
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}" />
+            <Setter Property="BorderThickness" Value="0 0 0 2" />
+            <Setter Property="FontSize" Value="18px" />
+            <Setter Property="Foreground" Value="{StaticResource MainTextColor}" />
+            <Setter Property="Width" Value="400"/>
+            <Setter Property="Padding" Value="0 0 0 8"/>
+            <Setter Property="Margin" Value="0 40 0 0"/>
+        </Style>
+        <Style x:Key="RoundCornerMain" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="{StaticResource BackgroundColor}"/>
+            <Setter Property="Width" Value="400"/>
+            <Setter Property="Margin" Value="0 30 0 0"/>
+            <Setter Property="FontSize" Value="14px"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border Padding="20 20 20 20" x:Name="border" CornerRadius="5" BorderThickness="2" Background="{StaticResource MainTextColor}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  >
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFFFFF"/>
+                                <Setter Property="Foreground" Value="{StaticResource MainTextColor}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource MainTextColor}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+                                
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RoundCornerAlternative" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="{StaticResource MainTextColor}"/>
+            <Setter Property="Width" Value="400"/>
+            <Setter Property="Margin" Value="0 30 0 0"/>
+            <Setter Property="FontSize" Value="14px"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border Padding="20 20 20 20" x:Name="border" CornerRadius="5" BorderThickness="2" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource MainTextColor}" >
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  >
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource MainTextColor}"/>
+                                
+                                <Setter Property="Foreground" Value="{StaticResource BackgroundColor}"/>
+                               
+                                <Setter Property="BorderThickness" TargetName="border" Value="0"/>
+
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+    </UserControl.Resources>
+    
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
+            <TextBlock Text="T A S T E . I T" Foreground="{StaticResource MainTextColor}" FontSize="56px" TextAlignment="Center" Margin="0, 50, 0, 0" FontStretch="UltraExpanded" FontWeight="Bold" />
+            <TextBlock Text="Find your dishes, enjoy your dishes." Foreground="{StaticResource MainTextColor}" FontSize="18px" TextAlignment="Center"  FontStretch="UltraExpanded" FontWeight="Light" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
+            <TextBox>Username</TextBox>
+            <TextBox>Password</TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
+            <Button Style="{StaticResource RoundCornerMain}">Sign In</Button>
+            <Button Style="{StaticResource RoundCornerAlternative}">Sign Up</Button>
+        </StackPanel>
+        
     </Grid>
+
+
 </UserControl>
