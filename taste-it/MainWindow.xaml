@@ -3,17 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:taste_it"
-        xmlns:my="clr-namespace:taste_it.Additionals"
-        xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow" 
+        
+        xmlns:local="clr-namespace:taste_it" 
+        xmlns:my="clr-namespace:taste_it.Additionals" 
+        xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow"
+        xmlns:ws="clr-namespace:taste_it.Additionals.WatermarkService"
         xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
         xmlns:views="clr-namespace:taste_it.Views" 
-        xmlns:models="clr-namespace:taste_it.Models"
-        DataContext="{Binding Source={StaticResource Locator}, Path=SignIn}"
+        xmlns:models="clr-namespace:taste_it.Models" 
+        
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         mc:Ignorable="d"
         Style="{StaticResource CustomWindowStyle}" x:Name="TasteItWindow"
         Title="taste it"
-        Height="800" Width="640">
+        Height="780" Width="640">
 
-   
+    <Window.Resources>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="Roboto" />
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Frame  Source="./Views/SignInView.xaml" x:Name="MainFrame" 
+                    NavigationUIVisibility="Hidden"
+                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="1"
+                    Width="{Binding ActualWidth, 
+                    RelativeSource = {RelativeSource AncestorType = {x:Type Window}}}" 
+                    Height="{Binding ActualHeight, 
+                    RelativeSource ={RelativeSource AncestorType = {x:Type Window}}}"/>
+    </Grid>
+
 </Window>

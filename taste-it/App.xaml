@@ -4,7 +4,8 @@
              
              xmlns:local="clr-namespace:taste_it" 
              xmlns:my="clr-namespace:taste_it.Additionals" 
-             xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow" 
+             xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow"
+             xmlns:ws="clr-namespace:taste_it.Additionals.WatermarkService"
              xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
              xmlns:views="clr-namespace:taste_it.Views" 
              xmlns:models="clr-namespace:taste_it.Models" 
@@ -61,29 +62,35 @@
         </Setter.Value>
       </Setter>
     </Style>
-    <Style TargetType="{x:Type TextBox}">
-      <Style.Triggers>
-        <Trigger Property="Validation.HasError" Value="true">
-          <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
-        </Trigger>
-      </Style.Triggers>
-      <Setter Property="Validation.ErrorTemplate">
-        <Setter.Value>
-          <ControlTemplate>
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90*" />
-                <ColumnDefinition Width="20" />
-              </Grid.ColumnDefinitions>
-              <Border BorderBrush="#FFB42D00" BorderThickness="1.25" CornerRadius="2.75" Grid.Column="0">
-                <AdornedElementPlaceholder Grid.Column="0" />
-              </Border>
-            </Grid>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-    <Style TargetType="{x:Type Image}" x:Key="WindowIcon">
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError"
+                    Value="true">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                                    BorderThickness="0 0 3 0"
+                                    Grid.Column="0">
+                                <AdornedElementPlaceholder Grid.Column="0" />
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+       
+        <Style TargetType="{x:Type Image}" x:Key="WindowIcon">
       <Setter Property="Height" Value="25" />
       <Setter Property="Width" Value="25" />
     </Style>

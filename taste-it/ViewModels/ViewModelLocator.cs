@@ -15,6 +15,8 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using System;
+using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 
 namespace taste_it.ViewModels
@@ -42,9 +44,16 @@ namespace taste_it.ViewModels
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
-            SimpleIoc.Default.Register<IUserDataService, UserDataService>();
-            SimpleIoc.Default.Register<MainWindowViewModel>();
-            SimpleIoc.Default.Register<SignInViewModel>();
+            var navigationService = new FrameNavigationService();
+
+            navigationService.Configure("Main", new Uri("../MainWindowView.xaml", UriKind.Relative));
+            navigationService.Configure("SignIn", new Uri("../Views/SignIn.xaml", UriKind.Relative));
+
+            SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
+       
+            SimpleIoc.Default.Register<IUserDataService, UserDataService>(true);
+            SimpleIoc.Default.Register<MainWindowViewModel>(true);
+            SimpleIoc.Default.Register<SignInViewModel>(true);
 
         }
 

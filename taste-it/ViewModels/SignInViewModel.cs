@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 using taste_it.Models;
 
@@ -22,6 +23,7 @@ namespace taste_it.ViewModels
         private string userName;
         private string userPassword;
         private readonly IUserDataService _userDataService;
+        private IFrameNavigationService _navigationService;
 
         #endregion
 
@@ -60,8 +62,9 @@ namespace taste_it.ViewModels
 
         
         
-        public SignInViewModel(IUserDataService userData)
+        public SignInViewModel(IUserDataService userData, IFrameNavigationService navigationService)
         {
+            _navigationService = navigationService;
             _userDataService = userData;
             UserCollection = new ObservableCollection<User>();
             LoadUsers();
