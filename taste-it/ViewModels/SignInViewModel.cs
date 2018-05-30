@@ -124,7 +124,7 @@ namespace taste_it.ViewModels
         {
             if (string.IsNullOrEmpty(propertyName) || (!HasErrors))
                 return null;
-            return new List<string>() { "Invalid credentials." };
+            return new List<string>() { "Invalid credentials" };
         }
         public bool HasErrors { get; set; } = false;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
