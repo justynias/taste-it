@@ -101,17 +101,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-<<<<<<< HEAD
-    <Compile Include="Additionals\Navigation\FrameNavigationService.cs" />
-    <Compile Include="Additionals\Navigation\IFrameNavigationService.cs" />
-    <Compile Include="Categories.cs">
-      <DependentUpon>TasteITDataBaseModel.tt</DependentUpon>
-=======
+    <Compile Include="Additionals\NavigationService\FrameNavigationService.cs" />
+    <Compile Include="Additionals\NavigationService\IFrameNavigationService.cs" />
     <Compile Include="DataService\IUserDataService.cs" />
     <Compile Include="DataService\UserDataService.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>TasteITDataModel.tt</DependentUpon>
->>>>>>> 5b406274a662fdfab9280aef7b49b48863226e46
     </Compile>
     <Compile Include="Models\Have_category.cs">
       <DependentUpon>TasteITDataModel.tt</DependentUpon>
