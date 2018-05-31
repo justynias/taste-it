@@ -103,6 +103,7 @@
     </ApplicationDefinition>
     <Compile Include="Additionals\NavigationService\FrameNavigationService.cs" />
     <Compile Include="Additionals\NavigationService\IFrameNavigationService.cs" />
+    <Compile Include="Additionals\PasswordService\PasswordBoxAssistant.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkAdorner.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkService.cs" />
     <Compile Include="DataService\IUserDataService.cs" />
