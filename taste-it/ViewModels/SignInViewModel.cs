@@ -74,7 +74,7 @@ namespace taste_it.ViewModels
 
 
         #region methods
-        public async void LoadUsers()
+        private async void LoadUsers()
         {
             var users = await _userDataService.GetUsersAsync();
             UserCollection.Clear();
@@ -91,7 +91,7 @@ namespace taste_it.ViewModels
             CheckCredentials();
             //if(ChechCreditionals -> NavigateToNextView  // after logged in display another view
         }
-        public bool CheckCredentials()
+        private bool CheckCredentials()
         {
             HasErrors = !Verification();
             if (HasErrors)

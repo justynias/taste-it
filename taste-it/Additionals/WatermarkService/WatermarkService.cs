@@ -63,11 +63,17 @@ namespace taste_it.Additionals.WatermarkService
                 control.GotKeyboardFocus += Control_GotKeyboardFocus;
                 control.LostKeyboardFocus += Control_Loaded;
             }
-            else if (d is TextBox)
+            else if (d is TextBox )
             {
                 control.GotKeyboardFocus += Control_GotKeyboardFocus;
                 control.LostKeyboardFocus += Control_Loaded;
                 ((TextBox)control).TextChanged += Control_GotKeyboardFocus;
+            }
+            else if (d is PasswordBox)
+            {
+                control.GotKeyboardFocus += Control_GotKeyboardFocus;
+                control.LostKeyboardFocus += Control_Loaded;
+                ((PasswordBox)control).PasswordChanged += Control_GotKeyboardFocus;
             }
 
             if (d is ItemsControl && !(d is ComboBox))
@@ -225,6 +231,10 @@ namespace taste_it.Additionals.WatermarkService
             else if (c is TextBoxBase)
             {
                 return (c as TextBox).Text == string.Empty;
+            }
+            else if (c is PasswordBox)
+            {
+                return (c as PasswordBox).Password == string.Empty;
             }
             else if (c is ItemsControl)
             {
