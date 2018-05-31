@@ -89,7 +89,7 @@ namespace taste_it.ViewModels
         {
 
             CheckCredentials();
-            //if(ChechCreditionals -> NavigateToNextView  // after logged in display another view
+            //if(ChechCreditionals -> NavigateToNextView  // after logged in display anot her view
         }
         private bool CheckCredentials()
         {
@@ -111,14 +111,13 @@ namespace taste_it.ViewModels
             foreach (var u in UserCollection)
             {
                 if (UserName == u.name && UserPassword == u.password)
-                {
-                    CurrentUser = u;
+                { 
                     Console.WriteLine("logged in");
                     return true;
                 }
             }
-            UserName = null;
-            UserPassword = null;
+            UserName = String.Empty;
+            UserPassword = String.Empty;
             return false;
         }
 
@@ -127,14 +126,13 @@ namespace taste_it.ViewModels
         //Implementation of INotifyDataErrorInfo, to verify data after button is clicked
         public IEnumerable GetErrors(string propertyName)
         {
-            if (string.IsNullOrEmpty(propertyName) || (!HasErrors))
+            if (string.IsNullOrEmpty(propertyName) || string.IsNullOrWhiteSpace(propertyName) || (!HasErrors))
                 return null;
             return new List<string>() { "Invalid credentials" };
         }
         public bool HasErrors { get; set; } = false;
-
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        
+
 
     }
 }
