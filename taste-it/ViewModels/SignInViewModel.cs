@@ -132,7 +132,9 @@ namespace taste_it.ViewModels
             return new List<string>() { "Invalid credentials" };
         }
         public bool HasErrors { get; set; } = false;
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        
 
     }
 }
