@@ -117,6 +117,8 @@ namespace taste_it.ViewModels
                     return true;
                 }
             }
+            UserName = null;
+            UserPassword = null;
             return false;
         }
 
@@ -131,7 +133,6 @@ namespace taste_it.ViewModels
         }
         public bool HasErrors { get; set; } = false;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
 
     }
 }
