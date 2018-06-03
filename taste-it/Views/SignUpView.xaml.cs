@@ -18,9 +18,9 @@ namespace taste_it.Views
     /// <summary>
     /// Interaction logic for TestView.xaml
     /// </summary>
-    public partial class TestView : UserControl
+    public partial class SignUpView : UserControl
     {
-        public TestView()
+        public SignUpView()
         {
             InitializeComponent();
         }

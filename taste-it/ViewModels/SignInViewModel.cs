@@ -31,6 +31,8 @@ namespace taste_it.ViewModels
         public User CurrentUser {get;set;}
         public ObservableCollection<User> UserCollection { get; set; }
         public ICommand SignInCommand { get; private set; }
+        public ICommand SignUpCommand { get; private set; }
+
         public string UserName
         {
             get
@@ -70,6 +72,8 @@ namespace taste_it.ViewModels
             LoadUsers();
 
             SignInCommand = new RelayCommand(SignIn);
+            SignUpCommand = new RelayCommand(SignUp);
+
         }
 
 
@@ -90,6 +94,17 @@ namespace taste_it.ViewModels
 
             CheckCredentials();
             //if(ChechCreditionals -> NavigateToNextView  // after logged in display anot her view
+        }
+
+        public void SignUp()
+        {
+            //Messenger.Default.Send<CurrentQuizMessage>(new CurrentQuizMessage
+            //{
+            //    Quiz = CurrentQuiz
+
+            //});
+            
+            _navigationService.NavigateTo("SignUp"); 
         }
         private bool CheckCredentials()
         {

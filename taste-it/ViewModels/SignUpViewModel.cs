@@ -29,6 +29,8 @@ namespace taste_it.ViewModels
         public User NewUser { get; set; }
         public ObservableCollection<User> UserCollection { get; set; }
         public ICommand SignUpCommand { get; private set; }
+        public ICommand SignInCommand { get; private set; }
+
 
         // naviate to sign in (button return or sign up (sign up with command)
         // message with navigation -> usercollection
@@ -72,6 +74,8 @@ namespace taste_it.ViewModels
             UserCollection = new ObservableCollection<User>();
            // LoadUsers();
             SignUpCommand = new RelayCommand(AddUser);
+            SignInCommand = new RelayCommand(SignIn);
+
         }
 
         private async void LoadUsers()
@@ -89,7 +93,18 @@ namespace taste_it.ViewModels
             NewUser = new User();
             NewUser.name = UserName;
             NewUser.password = UserPassword;
+            //Guid or autoincrement id?
             await _userDataService.AddUserAsync(NewUser);
+        }
+        public void SignIn()
+        {
+            //Messenger.Default.Send<CurrentQuizMessage>(new CurrentQuizMessage
+            //{
+            //    Quiz = CurrentQuiz
+
+            //});
+
+            _navigationService.NavigateTo("SignIn");
         }
 
     }
