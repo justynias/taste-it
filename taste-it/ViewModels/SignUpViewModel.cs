@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -47,6 +48,7 @@ namespace taste_it.ViewModels
             {
 
                 Set(ref userName, value);
+                
             }
         }
         public string UserPassword
@@ -60,7 +62,9 @@ namespace taste_it.ViewModels
             {
 
                 Set(ref userPassword, value);
+               
             }
+
         }
 
         #endregion
@@ -78,6 +82,18 @@ namespace taste_it.ViewModels
 
         }
 
+        private string HashPassword(string password)
+        {
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            return Convert.ToBase64String(hashBytes);
+        }
         private async void LoadUsers()
         {
             var users = await _userDataService.GetUsersAsync();
@@ -92,7 +108,7 @@ namespace taste_it.ViewModels
         {
             NewUser = new User();
             NewUser.name = UserName;
-            NewUser.password = UserPassword;
+            NewUser.password = HashPassword(UserPassword);
             //Guid or autoincrement id?
             await _userDataService.AddUserAsync(NewUser);
         }

@@ -238,7 +238,7 @@
           </Key>
           <Property Name="id_u" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="65" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Have_favourites" Relationship="Self.FK_Have_favourites_Users" FromRole="Users" ToRole="Have_favourites" />
         </EntityType>
         <Association Name="FK_Have_category_Categories">
