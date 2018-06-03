@@ -15,7 +15,7 @@ using taste_it.Models;
 
 namespace taste_it.ViewModels
 {
-    class SignUpViewModel: ViewModelBase
+    public class SignUpViewModel: ViewModelBase
     {
         #region fields
         private string userName;
@@ -26,6 +26,7 @@ namespace taste_it.ViewModels
         #endregion
 
         #region properties
+        public User NewUser { get; set; }
         public ObservableCollection<User> UserCollection { get; set; }
         public ICommand SignUpCommand { get; private set; }
 
@@ -66,10 +67,30 @@ namespace taste_it.ViewModels
         {
             _navigationService = navigationService;
             _userDataService = userData;
-           
-           // SignUpCommand = new RelayCommand(SignIn);
+
+            //
+            UserCollection = new ObservableCollection<User>();
+           // LoadUsers();
+            SignUpCommand = new RelayCommand(AddUser);
         }
 
+        private async void LoadUsers()
+        {
+            var users = await _userDataService.GetUsersAsync();
+            UserCollection.Clear();
+            foreach (var item in users)
+            {
+                UserCollection.Add(item);
+            }
+            RaisePropertyChanged(() => UserCollection);
+        }
+        private async void AddUser()
+        {
+            NewUser = new User();
+            NewUser.name = UserName;
+            NewUser.password = UserPassword;
+            await _userDataService.AddUserAsync(NewUser);
+        }
 
     }
 }
