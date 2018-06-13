@@ -47,13 +47,17 @@ namespace taste_it.ViewModels
             var navigationService = new FrameNavigationService();
 
             navigationService.Configure("Main", new Uri("../MainWindowView.xaml", UriKind.Relative));
-            navigationService.Configure("SignIn", new Uri("../Views/SignIn.xaml", UriKind.Relative));
+            navigationService.Configure("SignIn", new Uri("../Views/SignInView.xaml", UriKind.Relative));
+            navigationService.Configure("SignUp", new Uri("../Views/SignUpView.xaml", UriKind.Relative));
+
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
        
             SimpleIoc.Default.Register<IUserDataService, UserDataService>(true);
             SimpleIoc.Default.Register<MainWindowViewModel>(true);
             SimpleIoc.Default.Register<SignInViewModel>(true);
+            SimpleIoc.Default.Register<SignUpViewModel>(true);
+
 
         }
 
@@ -69,6 +73,14 @@ namespace taste_it.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<SignInViewModel>();
+            }
+        }
+
+        public SignUpViewModel SignUp
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SignUpViewModel>();
             }
         }
 
