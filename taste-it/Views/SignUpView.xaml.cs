@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace taste_it.Views
 {
     /// <summary>
-    /// Interaction logic for TestView.xaml
+    /// Interaction logic for SignUpView.xaml
     /// </summary>
     public partial class SignUpView : UserControl
     {
