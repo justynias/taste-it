@@ -16,7 +16,7 @@
         mc:Ignorable="d"
         Style="{StaticResource CustomWindowStyle}" x:Name="TasteItWindow"
         Title="taste it"
-        Height="780" Width="640">
+        Height="800" Width="300">
 
     <Window.Resources>
         <Style TargetType="{x:Type Window}">
