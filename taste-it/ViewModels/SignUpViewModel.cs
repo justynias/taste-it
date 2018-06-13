@@ -122,6 +122,6 @@ namespace taste_it.ViewModels
 
             _navigationService.NavigateTo("SignIn");
         }
-        //initial
+        //naprawa
     }
 }
