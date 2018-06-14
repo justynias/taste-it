@@ -37,8 +37,13 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
             <TextBox  Style="{StaticResource LineTextbox}">
+                
                 <TextBox.Text>
-                    <Binding Mode="TwoWay" Path="UserName" UpdateSourceTrigger="LostFocus" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
+                    <Binding Mode="TwoWay" Path="UserName" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                        </Binding.ValidationRules>
+                    </Binding>
                 </TextBox.Text>
                 <ws:WatermarkService.Watermark>
                     <TextBlock Margin ="0 -40 0 0" FontSize="18px">Username</TextBlock>
@@ -46,18 +51,30 @@
             </TextBox>
             <PasswordBox Style="{StaticResource LinePasswordBox}"
                          ps:PasswordBoxAssistant.BindPassword="True"
-                         ps:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPassword, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                          PasswordChar="*"                       
                          >
+                <ps:PasswordBoxAssistant.BoundPassword>
+                    <Binding Mode="TwoWay" Path="UserPassword" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ps:PasswordBoxAssistant.BoundPassword>
                 <ws:WatermarkService.Watermark>
                     <TextBlock Margin ="0 -40 0 0" FontSize="18px">Password</TextBlock>
                 </ws:WatermarkService.Watermark>
             </PasswordBox>
             <PasswordBox Style="{StaticResource LinePasswordBox}"
                          ps:PasswordBoxAssistant.BindPassword="True"
-                         ps:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPasswordRepeated, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                          PasswordChar="*"                       
                          >
+                <ps:PasswordBoxAssistant.BoundPassword>
+                    <Binding Mode="TwoWay" Path="UserPassword" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ps:PasswordBoxAssistant.BoundPassword>
                 <ws:WatermarkService.Watermark>
                     <TextBlock Margin ="0 -40 0 0" FontSize="18px">Repeat Password</TextBlock>
                 </ws:WatermarkService.Watermark>
