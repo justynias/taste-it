@@ -13,8 +13,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              d1p1:Ignorable="d" 
              xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
-  <Application.Resources>
-     <viewmodels:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:viewmodels="clr-namespace:taste_it.ViewModels" />
+    <Application.Resources>
+        <viewmodels:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:viewmodels="clr-namespace:taste_it.ViewModels" />
      <SolidColorBrush x:Key="WindowColor" Color="#FF21272C" />
     <SolidColorBrush x:Key="WindowBackColor" Color="#FF21272C" />
     <SolidColorBrush x:Key="WindowForeColor" Color="#FFFFFFFF" />
@@ -72,29 +72,35 @@
             <Setter Property="Width" Value="400"/>
             <Setter Property="Padding" Value="0 0 0 8"/>
             <Setter Property="Margin" Value="0 40 0 0"/>
+
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
-                    <ControlTemplate x:Name="TextErrorTemplate">
-                        <DockPanel LastChildFill="True">
-                            <AdornedElementPlaceholder>
-                                <Border BorderBrush="Red" 
-                                BorderThickness="0 0 0 2"/>
-                            </AdornedElementPlaceholder>
-                        </DockPanel>
+                    <ControlTemplate>
+                        <UniformGrid>
+
+                            <!--TextBox Error template-->
+                            <Canvas Panel.ZIndex="1099">
+                                <UniformGrid Rows="1">
+                                    <AdornedElementPlaceholder x:Name="ErrorAdorner" />
+                                </UniformGrid>
+                                <Popup IsOpen="True" AllowsTransparency="True" Placement="Right" PlacementTarget="{Binding ElementName=ErrorAdorner}" StaysOpen="True" VerticalOffset="-40">
+                                    <Border Canvas.Bottom="5"
+                Canvas.Top="{Binding Path=AdornedElement.ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}"
+                Padding="4"
+                CornerRadius="5"
+                Background="Red">
+                                        <TextBlock TextWrapping="Wrap"
+                   Margin="4"
+                   MaxWidth="100"
+                                                   Foreground="White"
+                   Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
+                                    </Border>
+                                </Popup>
+                            </Canvas>
+                        </UniformGrid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" 
-
-                Value="True">
-                    <Setter Property="ToolTip" 
-
-                    Value="{Binding RelativeSource=
-            {x:Static RelativeSource.Self},
-            Path=(Validation.Errors).CurrentItem.ErrorContent}"></Setter>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style x:Key="LinePasswordBox" TargetType="{x:Type PasswordBox}">
             <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}" />
@@ -106,27 +112,32 @@
             <Setter Property="Margin" Value="0 40 0 0"/>
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
-                    <ControlTemplate x:Name="PasswordErrorTemplate">
-                        <DockPanel LastChildFill="True">
-                            <AdornedElementPlaceholder>
-                                <Border BorderBrush="Red" 
-                                BorderThickness="0 0 0 2"/>
-                            </AdornedElementPlaceholder>
-                        </DockPanel>
+                    <ControlTemplate>
+                        <UniformGrid>
+
+                            <!--TextBox Error template-->
+                            <Canvas Panel.ZIndex="1099">
+                                <UniformGrid Rows="1">
+                                    <AdornedElementPlaceholder x:Name="ErrorAdorner" />
+                                </UniformGrid>
+                                <Popup IsOpen="True" AllowsTransparency="True" Placement="Right" PlacementTarget="{Binding ElementName=ErrorAdorner}" StaysOpen="True" VerticalOffset="-40">
+                                    <Border Canvas.Bottom="5"
+                Canvas.Top="{Binding Path=AdornedElement.ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}"
+                Padding="4"
+                CornerRadius="5"
+                Background="Red">
+                                        <TextBlock TextWrapping="Wrap"
+                   Margin="4"
+                   MaxWidth="100"
+                                                   Foreground="White"
+                   Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
+                                    </Border>
+                                </Popup>
+                            </Canvas>
+                        </UniformGrid>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" 
-
-                Value="True">
-                    <Setter Property="ToolTip" 
-
-                    Value="{Binding RelativeSource=
-            {x:Static RelativeSource.Self},
-            Path=(Validation.Errors).CurrentItem.ErrorContent}"></Setter>
-                </Trigger>
-            </Style.Triggers>
+                </Setter>
         </Style>
         <Style x:Key="RoundCornerPrimaryBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -204,34 +215,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="{x:Type TextBox}">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError"
-                    Value="true">
-                    <Setter Property="ToolTip"
-                        Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
-                </Trigger>
-            </Style.Triggers>
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="90*" />
-                                <ColumnDefinition Width="20" />
-                            </Grid.ColumnDefinitions>
-                            <Border
-                                    BorderThickness="0 0 3 0"
-                                    Grid.Column="0">
-                                <AdornedElementPlaceholder Grid.Column="0" />
-                            </Border>
 
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-       
         <Style TargetType="{x:Type Image}" x:Key="WindowIcon">
       <Setter Property="Height" Value="25" />
       <Setter Property="Width" Value="25" />

@@ -24,7 +24,6 @@ namespace taste_it.ViewModels
         private string userName;
         private string userPassword;
         private string userPasswordRepeated;
-        private bool canSave;
         private readonly IUserDataService _userDataService;
         private IFrameNavigationService _navigationService;
 
@@ -37,8 +36,6 @@ namespace taste_it.ViewModels
         public ICommand SignUpCommand { get; private set; }
         public ICommand NavigateToSignInViewCommand { get; private set; }
         public ICommand LoadUsersCommand { get; private set; }
-
-       
 
         public string UserName
         {
@@ -93,7 +90,7 @@ namespace taste_it.ViewModels
             _userDataService = userData;
 
             UserCollection = new ObservableCollection<User>();
-            SignUpCommand = new RelayCommand(SignUp, CanSave); 
+            SignUpCommand = new RelayCommand(SignUp, true); 
             LoadUsersCommand = new RelayCommand(LoadUsers); 
             NavigateToSignInViewCommand = new RelayCommand(NavigateToSignInView);
 
@@ -117,7 +114,8 @@ namespace taste_it.ViewModels
         private bool CanSave()
         {
             string value;
-            return (HasPasswordProperFormat(UserPassword, out value) && HasUserNameProperFormat(UserName, out value) && IsRepeatdPasswordCorrect());
+            bool result = (HasPasswordProperFormat(UserPassword, out value) && HasUserNameProperFormat(UserName, out value) && IsRepeatdPasswordCorrect());
+            return result;
         }
         private async void LoadUsers()
         {
@@ -135,7 +133,14 @@ namespace taste_it.ViewModels
             //NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword)};
             //UserCollection.Add(NewUser);
             //await _userDataService.AddUserAsync(NewUser);
-            Debug.WriteLine("sign up");   //to test only
+            if (CanSave())
+            {
+                Debug.WriteLine("sign up");   //to test only
+            }
+            else
+            {
+                Debug.WriteLine("no sign up");   //to test only
+            }
         }
 
         private void NavigateToSignInView()
@@ -228,17 +233,18 @@ namespace taste_it.ViewModels
                 string result = string.Empty;
                 if (columnName == "UserPassword")
                 {
-                    if (!HasPasswordProperFormat(UserPassword, out result)) return result;
+                    if (!HasPasswordProperFormat(UserPassword, out result)) { return result;  }
                     
                 }
                 else if (columnName == "UserPasswordRepeated")
                 {
-                    if (!IsRepeatdPasswordCorrect()) return "Passwords are not the same";
+                    if (!IsRepeatdPasswordCorrect()) {  return "Passwords are not the same"; }
                    
                 }
                 else if (columnName == "UserName")
                 {
-                    if (!HasUserNameProperFormat(UserName, out result)) return result;
+                    if (!HasUserNameProperFormat(UserName, out result)) { return result; }
+                    return result;
                 }
                 return result;
             }
@@ -248,6 +254,7 @@ namespace taste_it.ViewModels
         {
             get { return null; }
         }
+
 
         #endregion
 
