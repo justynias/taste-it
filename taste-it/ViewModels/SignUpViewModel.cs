@@ -34,16 +34,21 @@ namespace taste_it.ViewModels
         public ObservableCollection<User> UserCollection { get; set; }
         public ICommand SignUpCommand { get; private set; }
         public ICommand NavigateToSignInViewCommand { get; private set; }
+        public ICommand LoadUsersCommand { get; private set; }
 
 
         // naviate to sign in (button return or sign up (sign up with command)
         // message with navigation -> usercollection
         // validation, no empty fields, check if user exist, password 
         // ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$
-        //private bool CanSave
-        //{
-           
-        //}
+        private bool CanSave
+        {
+            get { return canSave; }
+            set
+            {
+                Set(ref canSave, value);
+            }
+        }
         public string UserName
         {
             get
@@ -98,7 +103,9 @@ namespace taste_it.ViewModels
 
             UserCollection = new ObservableCollection<User>();
             SignUpCommand = new RelayCommand(SignUp); //unable button
+            LoadUsersCommand = new RelayCommand(LoadUsers); //unable button
             NavigateToSignInViewCommand = new RelayCommand(NavigateToSignInView);
+
 
         }
 
@@ -139,16 +146,18 @@ namespace taste_it.ViewModels
             _navigationService.NavigateTo("SignIn");
         }
 
-        private bool IsPasswordConfirmed()
+        private bool IsRepeatdPasswordValid()
         {
-            return UserPasswordRepeated == UserPassword;
+            if(UserPassword!=null && UserPasswordRepeated!=null) Console.WriteLine(UserPassword, UserPasswordRepeated);
+            return UserPasswordRepeated != UserPassword;
         }
         private bool UserExists()
         {
             //message with collection
-            // return UserCollection.Any(u => u.name == UserName);
-            return true;
+             return UserCollection.Any(u => u.name == UserName);
+            //return false;
         }
+
         public string this[string columnName]
         {
             get
@@ -158,21 +167,28 @@ namespace taste_it.ViewModels
                 {
                     if (!HasPasswordProperFormat(UserPassword, out result)) return result;
                 }
-                else if(columnName == "UserPasswordRepeated")
+                else if (columnName == "UserPasswordRepeated")
                 {
-                    if (IsPasswordConfirmed()) return "Passwords are not the same";
+                    if (IsRepeatdPasswordValid())
+                    {
+                        CanSave = false;
+                        return "Passwords are not the same";
+
+                    }
                 }
-                else if(columnName =="UserName")
+                else if (columnName == "UserName")
                 {
                     if (UserExists()) return "User name already exists";
                 }
-                //CanSave =result==String.Empty;
+               
                 return result;
             }
         }
+
         public string Error
         {
             get { return null; }
+          // get { return this.canSave ? string.Empty : string.Empty; }
         }
 
 
