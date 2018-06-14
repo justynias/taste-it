@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using taste_it.Additionals.NavigationService;
@@ -16,11 +17,13 @@ using taste_it.Models;
 
 namespace taste_it.ViewModels
 {
-    public class SignUpViewModel: ViewModelBase
+    public class SignUpViewModel: ViewModelBase, IDataErrorInfo
     {
         #region fields
         private string userName;
         private string userPassword;
+        private string userPasswordRepeated;
+        private bool canSave;
         private readonly IUserDataService _userDataService;
         private IFrameNavigationService _navigationService;
 
@@ -30,13 +33,17 @@ namespace taste_it.ViewModels
         public User NewUser { get; set; }
         public ObservableCollection<User> UserCollection { get; set; }
         public ICommand SignUpCommand { get; private set; }
-        public ICommand SignInCommand { get; private set; }
+        public ICommand NavigateToSignInViewCommand { get; private set; }
 
 
         // naviate to sign in (button return or sign up (sign up with command)
         // message with navigation -> usercollection
         // validation, no empty fields, check if user exist, password 
         // ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$
+        //private bool CanSave
+        //{
+           
+        //}
         public string UserName
         {
             get
@@ -66,6 +73,21 @@ namespace taste_it.ViewModels
             }
 
         }
+        public string UserPasswordRepeated
+        {
+            get
+            {
+                return userPasswordRepeated;
+            }
+
+            set
+            {
+
+                Set(ref userPasswordRepeated, value);
+
+            }
+
+        }
 
         #endregion
 
@@ -74,14 +96,13 @@ namespace taste_it.ViewModels
             _navigationService = navigationService;
             _userDataService = userData;
 
-            //
             UserCollection = new ObservableCollection<User>();
-           // LoadUsers();
-            SignUpCommand = new RelayCommand(AddUser);
-            SignInCommand = new RelayCommand(SignIn);
+            SignUpCommand = new RelayCommand(SignUp); //unable button
+            NavigateToSignInViewCommand = new RelayCommand(NavigateToSignInView);
 
         }
 
+       
         private string HashPassword(string password)
         {
             byte[] salt;
@@ -104,24 +125,105 @@ namespace taste_it.ViewModels
             }
             RaisePropertyChanged(() => UserCollection);
         }
-        private async void AddUser()
+        private async void SignUp()
         {
-            NewUser = new User();
-            NewUser.name = UserName;
-            NewUser.password = HashPassword(UserPassword);
-            //Guid or autoincrement id?
+            NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword)};
+            UserCollection.Add(NewUser);
             await _userDataService.AddUserAsync(NewUser);
         }
-        public void SignIn()
-        {
-            //Messenger.Default.Send<CurrentQuizMessage>(new CurrentQuizMessage
-            //{
-            //    Quiz = CurrentQuiz
 
-            //});
+
+        public void NavigateToSignInView()
+        {
 
             _navigationService.NavigateTo("SignIn");
         }
-        //naprawa
+
+        private bool IsPasswordConfirmed()
+        {
+            return UserPasswordRepeated == UserPassword;
+        }
+        private bool UserExists()
+        {
+            //message with collection
+            // return UserCollection.Any(u => u.name == UserName);
+            return true;
+        }
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = string.Empty;
+                if (columnName == "UserPassword")
+                {
+                    if (!HasPasswordProperFormat(UserPassword, out result)) return result;
+                }
+                else if(columnName == "UserPasswordRepeated")
+                {
+                    if (IsPasswordConfirmed()) return "Passwords are not the same";
+                }
+                else if(columnName =="UserName")
+                {
+                    if (UserExists()) return "User name already exists";
+                }
+                //CanSave =result==String.Empty;
+                return result;
+            }
+        }
+        public string Error
+        {
+            get { return null; }
+        }
+
+
+        private bool HasPasswordProperFormat(string password, out string ErrorMessage)
+        {
+            var input = password;
+            ErrorMessage = string.Empty;
+            Console.WriteLine(UserPassword);
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                ErrorMessage = "Password should not be empty";
+                return false;
+            }
+
+            var hasNumber = new Regex(@"[0-9]+");
+            var hasUpperChar = new Regex(@"[A-Z]+");
+            var hasMiniMaxChars = new Regex(@".{8,15}");
+            var hasLowerChar = new Regex(@"[a-z]+");
+            var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
+
+            if (!hasLowerChar.IsMatch(input))
+            {
+                ErrorMessage = "Password should contain At least one lower case letter";
+                return false;
+            }
+            else if (!hasUpperChar.IsMatch(input))
+            {
+                ErrorMessage = "Password should contain At least one upper case letter";
+                return false;
+            }
+            else if (!hasMiniMaxChars.IsMatch(input))
+            {
+                ErrorMessage = "Password should not be less than or greater than 12 characters";
+                return false;
+            }
+            else if (!hasNumber.IsMatch(input))
+            {
+                ErrorMessage = "Password should contain At least one numeric value";
+                return false;
+            }
+
+            else if (!hasSymbols.IsMatch(input))
+            {
+                ErrorMessage = "Password should contain At least one special case characters";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
