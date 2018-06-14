@@ -69,7 +69,7 @@
                          PasswordChar="*"                       
                          >
                 <ps:PasswordBoxAssistant.BoundPassword>
-                    <Binding Mode="TwoWay" Path="UserPassword" UpdateSourceTrigger="LostFocus">
+                    <Binding Mode="TwoWay" Path="UserPasswordRepeated" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
                             <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
                         </Binding.ValidationRules>
