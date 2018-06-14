@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,6 +28,7 @@ namespace taste_it.ViewModels
         private readonly IUserDataService _userDataService;
         private IFrameNavigationService _navigationService;
 
+
         #endregion
 
         #region properties
@@ -41,14 +43,13 @@ namespace taste_it.ViewModels
         // message with navigation -> usercollection
         // validation, no empty fields, check if user exist, password 
         // ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$
-        private bool CanSave
+        private bool CanSave()
         {
-            get { return canSave; }
-            set
-            {
-                Set(ref canSave, value);
-            }
+            //return 
+            string value;
+            return (HasPasswordProperFormat(UserPassword, out value) && HasUserNameProperFormat(UserName, out value) && !IsRepeatdPasswordValid());
         }
+
         public string UserName
         {
             get
@@ -102,7 +103,7 @@ namespace taste_it.ViewModels
             _userDataService = userData;
 
             UserCollection = new ObservableCollection<User>();
-            SignUpCommand = new RelayCommand(SignUp); //unable button
+            SignUpCommand = new RelayCommand(SignUp, CanSave); //unable button
             LoadUsersCommand = new RelayCommand(LoadUsers); //unable button
             NavigateToSignInViewCommand = new RelayCommand(NavigateToSignInView);
 
@@ -124,7 +125,7 @@ namespace taste_it.ViewModels
         }
         private async void LoadUsers()
         {
-            var users = await _userDataService.GetUsersAsync();
+            var users =  await _userDataService.GetUsersAsync();
             UserCollection.Clear();
             foreach (var item in users)
             {
@@ -132,11 +133,13 @@ namespace taste_it.ViewModels
             }
             RaisePropertyChanged(() => UserCollection);
         }
-        private async void SignUp()
+        //private async void SignUp()
+        private void SignUp()
         {
-            NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword)};
-            UserCollection.Add(NewUser);
-            await _userDataService.AddUserAsync(NewUser);
+            //NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword)};
+            //UserCollection.Add(NewUser);
+            //await _userDataService.AddUserAsync(NewUser);
+            Debug.WriteLine("sign up");
         }
 
 
@@ -148,15 +151,15 @@ namespace taste_it.ViewModels
 
         private bool IsRepeatdPasswordValid()
         {
-            if(UserPassword!=null && UserPasswordRepeated!=null) Console.WriteLine(UserPassword, UserPasswordRepeated);
+            //if(UserPassword!=null && UserPasswordRepeated!=null) Console.WriteLine(UserPassword, UserPasswordRepeated);
             return UserPasswordRepeated != UserPassword;
         }
-        private bool UserExists()
-        {
-            //message with collection
-             return UserCollection.Any(u => u.name == UserName);
-            //return false;
-        }
+        //private bool UserExists()
+        //{
+        //    //message with collection
+        //     return UserCollection.Any(u => u.name == UserName);
+        //    //return false;
+        //}
 
         public string this[string columnName]
         {
@@ -166,21 +169,17 @@ namespace taste_it.ViewModels
                 if (columnName == "UserPassword")
                 {
                     if (!HasPasswordProperFormat(UserPassword, out result)) return result;
+                    
                 }
                 else if (columnName == "UserPasswordRepeated")
                 {
-                    if (IsRepeatdPasswordValid())
-                    {
-                        CanSave = false;
-                        return "Passwords are not the same";
-
-                    }
+                    if (IsRepeatdPasswordValid()) return "Passwords are not the same";
+                   
                 }
                 else if (columnName == "UserName")
                 {
-                    if (UserExists()) return "User name already exists";
+                    if (!HasUserNameProperFormat(UserName, out result)) return result;
                 }
-               
                 return result;
             }
         }
@@ -192,6 +191,25 @@ namespace taste_it.ViewModels
         }
 
 
+        private bool HasUserNameProperFormat(string name, out string ErrorMessage)
+        {
+            ErrorMessage = string.Empty;
+            if ((string.IsNullOrWhiteSpace(name) || string.IsNullOrEmpty(name)))
+            {
+                Debug.WriteLine("empty");
+                Debug.WriteLine(name);
+                ErrorMessage = "User name should not be empty";
+                return false;
+
+            }
+            else if(UserCollection.Any(u => u.name == UserName))
+            {
+                ErrorMessage = "User name already exists";
+                return false;
+            }
+            else return true;
+
+        }
         private bool HasPasswordProperFormat(string password, out string ErrorMessage)
         {
             var input = password;
