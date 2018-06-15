@@ -106,7 +106,7 @@ namespace taste_it.ViewModels
         }
         private bool CheckCredentials()
         {
-            HasErrors = !Verification();
+            HasErrors = !IsVerified();
             if (HasErrors)
             {
                 ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("UserName"));
@@ -119,7 +119,7 @@ namespace taste_it.ViewModels
             return false;
         }
 
-        private bool Verification()   
+        private bool IsVerified()   
         {
            CurrentUser = UserCollection.FirstOrDefault(u => u.name == UserName);
             
@@ -132,17 +132,6 @@ namespace taste_it.ViewModels
                 Debug.WriteLine("User does not exist!");
                 return false;
             }
-            //foreach (var u in UserCollection)
-            //{
-            //    if (UserName == u.name && UserPassword == u.password)
-            //    { 
-            //        Console.WriteLine("logged in");
-            //        return true;
-            //    }
-            //}
-            //UserName = String.Empty;
-            //UserPassword = String.Empty;
-            //return false;
         }
 
         private bool CheckPassword(string inputPassword, string savedPasswordHash)
@@ -161,16 +150,15 @@ namespace taste_it.ViewModels
                 if (hashBytes[i + 16] != hash[i])
                 {
                     //throw new UnauthorizedAccessException();
-                    Debug.WriteLine("correct password, logged in");
+                    Debug.WriteLine("wrong password");
                     return false;
                 }
-            Debug.WriteLine("wrong password");
+            Debug.WriteLine("correct password, logged in");
             return true;
 
         }
-        #endregion
+        #endregion INotifyDataErrorInfo Members
 
-        //Implementation of INotifyDataErrorInfo, to verify data after button is clicked
         public IEnumerable GetErrors(string propertyName)
         {
             if (string.IsNullOrEmpty(propertyName) || string.IsNullOrWhiteSpace(propertyName) || (!HasErrors))
