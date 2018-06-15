@@ -135,7 +135,6 @@ namespace taste_it.ViewModels
         private async void SignUp()
         { 
 
-        //user cannot have special chars??
             if (CanSave())
             {
                 NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword) };
@@ -177,6 +176,11 @@ namespace taste_it.ViewModels
                 ErrorMessage = "User name already exists";
                 return false;
             }
+            else if (name.Length>20)
+            {
+                ErrorMessage = "User name should not be greater than 20 characters";
+                return false;
+            }
             else return true;
 
         }
@@ -194,7 +198,6 @@ namespace taste_it.ViewModels
             
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
-            //var hasMiniMaxChars = new Regex(@"^.{8,15}$");
             var hasLowerChar = new Regex(@"[a-z]+");
             var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
 
@@ -213,11 +216,7 @@ namespace taste_it.ViewModels
                 ErrorMessage = "Password should contain At least one upper case letter";
                 return false;
             }
-            //else if (!hasMiniMaxChars.IsMatch(input))
-            //{
-            //    ErrorMessage = "Password should not be less than 8 or greater than 12 characters";
-            //    return false;
-            //}
+
             else if (!hasNumber.IsMatch(input))
             {
                 ErrorMessage = "Password should contain At least one numeric value";
