@@ -98,6 +98,7 @@ namespace taste_it.ViewModels
         }
 
         #region methods
+
         private string HashPassword(string password)
         {
             byte[] salt;
@@ -109,6 +110,8 @@ namespace taste_it.ViewModels
             Array.Copy(hash, 0, hashBytes, 16, 20);
 
             return Convert.ToBase64String(hashBytes);
+
+
         }
 
         private bool CanSave()
@@ -119,6 +122,7 @@ namespace taste_it.ViewModels
         }
         private async void LoadUsers()
         {
+            System.Threading.Thread.Sleep(5000); //sleep for testing 
             var users =  await _userDataService.GetUsersAsync();
             UserCollection.Clear();
             foreach (var item in users)
@@ -128,13 +132,15 @@ namespace taste_it.ViewModels
             RaisePropertyChanged(() => UserCollection);
         }
         //private async void SignUp()
-        private void SignUp()
-        {
-            //NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword)};
-            //UserCollection.Add(NewUser);
-            //await _userDataService.AddUserAsync(NewUser);
+        private async void SignUp()
+        { 
+
+        //user cannot have special chars??
             if (CanSave())
             {
+                NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword) };
+                UserCollection.Add(NewUser);
+                await _userDataService.AddUserAsync(NewUser);
                 Debug.WriteLine("sign up");   //to test only
             }
             else
@@ -185,13 +191,18 @@ namespace taste_it.ViewModels
                 ErrorMessage = "Password should not be empty";
                 return false;
             }
-
+            
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
-            var hasMiniMaxChars = new Regex(@".{8,15}");
+            //var hasMiniMaxChars = new Regex(@"^.{8,15}$");
             var hasLowerChar = new Regex(@"[a-z]+");
             var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
 
+            if(!(password.Length>=8 && password.Length<=12))
+            {
+                ErrorMessage = "Password should not be less than 8 or greater than 12 characters";
+                return false;
+            }
             if (!hasLowerChar.IsMatch(input))
             {
                 ErrorMessage = "Password should contain At least one lower case letter";
@@ -202,11 +213,11 @@ namespace taste_it.ViewModels
                 ErrorMessage = "Password should contain At least one upper case letter";
                 return false;
             }
-            else if (!hasMiniMaxChars.IsMatch(input))
-            {
-                ErrorMessage = "Password should not be less than or greater than 12 characters";
-                return false;
-            }
+            //else if (!hasMiniMaxChars.IsMatch(input))
+            //{
+            //    ErrorMessage = "Password should not be less than 8 or greater than 12 characters";
+            //    return false;
+            //}
             else if (!hasNumber.IsMatch(input))
             {
                 ErrorMessage = "Password should contain At least one numeric value";

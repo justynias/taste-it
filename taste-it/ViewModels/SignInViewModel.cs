@@ -5,7 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -69,7 +71,7 @@ namespace taste_it.ViewModels
             _navigationService = navigationService;
             _userDataService = userData;
             UserCollection = new ObservableCollection<User>();
-            LoadUsers();
+            LoadUsers();  //should load users after every change of view!
 
             SignInCommand = new RelayCommand(SignIn);
             SignUpCommand = new RelayCommand(SignUp);
@@ -98,11 +100,7 @@ namespace taste_it.ViewModels
 
         public void SignUp()
         {
-            //Messenger.Default.Send<CurrentQuizMessage>(new CurrentQuizMessage
-            //{
-            //    Quiz = CurrentQuiz
-
-            //});
+           //Messenger with collection of users?
             
             _navigationService.NavigateTo("SignUp"); 
         }
@@ -122,20 +120,54 @@ namespace taste_it.ViewModels
         }
 
         private bool Verification()   
-        {           
-            foreach (var u in UserCollection)
+        {
+           CurrentUser = UserCollection.FirstOrDefault(u => u.name == UserName);
+            
+            if (CurrentUser != null)
             {
-                if (UserName == u.name && UserPassword == u.password)
-                { 
-                    Console.WriteLine("logged in");
-                    return true;
-                }
+                return CheckPassword(UserPassword, CurrentUser.password);
             }
-            UserName = String.Empty;
-            UserPassword = String.Empty;
-            return false;
+            else
+            {
+                Debug.WriteLine("User does not exist!");
+                return false;
+            }
+            //foreach (var u in UserCollection)
+            //{
+            //    if (UserName == u.name && UserPassword == u.password)
+            //    { 
+            //        Console.WriteLine("logged in");
+            //        return true;
+            //    }
+            //}
+            //UserName = String.Empty;
+            //UserPassword = String.Empty;
+            //return false;
         }
 
+        private bool CheckPassword(string inputPassword, string savedPasswordHash)
+        {
+
+            /* Extract the bytes */
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            /* Get the salt */
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            /* Compute the hash on the password the user entered */
+            var pbkdf2 = new Rfc2898DeriveBytes(inputPassword, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            /* Compare the results */
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i])
+                {
+                    //throw new UnauthorizedAccessException();
+                    Debug.WriteLine("correct password, logged in");
+                    return false;
+                }
+            Debug.WriteLine("wrong password");
+            return true;
+
+        }
         #endregion
 
         //Implementation of INotifyDataErrorInfo, to verify data after button is clicked
