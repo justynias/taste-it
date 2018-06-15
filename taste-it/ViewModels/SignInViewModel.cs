@@ -33,7 +33,7 @@ namespace taste_it.ViewModels
         public User CurrentUser {get;set;}
         public ObservableCollection<User> UserCollection { get; set; }
         public ICommand SignInCommand { get; private set; }
-        public ICommand SignUpCommand { get; private set; }
+        public ICommand NavigateToSignUpCommand { get; private set; }
 
         public string UserName
         {
@@ -74,7 +74,7 @@ namespace taste_it.ViewModels
             LoadUsers();  //should load users after every change of view!
 
             SignInCommand = new RelayCommand(SignIn);
-            SignUpCommand = new RelayCommand(SignUp);
+            NavigateToSignUpCommand = new RelayCommand(NavigateToSignUp);
 
         }
 
@@ -98,7 +98,7 @@ namespace taste_it.ViewModels
             //if(ChechCreditionals -> NavigateToNextView  // after logged in display anot her view
         }
 
-        public void SignUp()
+        public void NavigateToSignUp()
         {
            //Messenger with collection of users?
             
