@@ -75,29 +75,20 @@
 
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
-                    <ControlTemplate>
-                        <UniformGrid>
-
-                            <!--TextBox Error template-->
-                            <Canvas Panel.ZIndex="1099">
-                                <UniformGrid Rows="1">
-                                    <AdornedElementPlaceholder x:Name="ErrorAdorner" />
-                                </UniformGrid>
-                                <Popup IsOpen="True" AllowsTransparency="True" Placement="Right" PlacementTarget="{Binding ElementName=ErrorAdorner}" StaysOpen="True" VerticalOffset="-40">
-                                    <Border Canvas.Bottom="5"
-                Canvas.Top="{Binding Path=AdornedElement.ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}"
+                    <ControlTemplate >
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right"
                 Padding="4"
                 CornerRadius="5"
                 Background="Red">
-                                        <TextBlock TextWrapping="Wrap"
+                                <TextBlock TextWrapping="Wrap"
                    Margin="4"
                    MaxWidth="100"
                                                    Foreground="White"
                    Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
-                                    </Border>
-                                </Popup>
-                            </Canvas>
-                        </UniformGrid>
+                            </Border>
+                            <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                        </DockPanel>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -112,32 +103,23 @@
             <Setter Property="Margin" Value="0 40 0 0"/>
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
-                    <ControlTemplate>
-                        <UniformGrid>
-
-                            <!--TextBox Error template-->
-                            <Canvas Panel.ZIndex="1099">
-                                <UniformGrid Rows="1">
-                                    <AdornedElementPlaceholder x:Name="ErrorAdorner" />
-                                </UniformGrid>
-                                <Popup IsOpen="True" AllowsTransparency="True" Placement="Right" PlacementTarget="{Binding ElementName=ErrorAdorner}" StaysOpen="True" VerticalOffset="-40">
-                                    <Border Canvas.Bottom="5"
-                Canvas.Top="{Binding Path=AdornedElement.ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}"
+                    <ControlTemplate >
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right"
                 Padding="4"
                 CornerRadius="5"
                 Background="Red">
-                                        <TextBlock TextWrapping="Wrap"
+                                <TextBlock TextWrapping="Wrap"
                    Margin="4"
                    MaxWidth="100"
                                                    Foreground="White"
                    Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
-                                    </Border>
-                                </Popup>
-                            </Canvas>
-                        </UniformGrid>
+                            </Border>
+                            <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                        </DockPanel>
                     </ControlTemplate>
                 </Setter.Value>
-                </Setter>
+            </Setter>
         </Style>
         <Style x:Key="RoundCornerPrimaryBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -275,8 +257,8 @@
         <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="AllowsTransparency" Value="True" />
-            <Setter Property="MinWidth" Value="600" />
-            <Setter Property="MinHeight" Value="800" />
+            <Setter Property="MinWidth" Value="700" />
+            <Setter Property="MinHeight" Value="900" />
             <Setter Property="Template" Value="{StaticResource WindowTemplate}" />
         </Style>
 
