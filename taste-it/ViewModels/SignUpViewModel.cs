@@ -122,7 +122,6 @@ namespace taste_it.ViewModels
         }
         private async void LoadUsers()
         {
-           // System.Threading.Thread.Sleep(5000); //sleep for testing 
             var users =  await _userDataService.GetUsersAsync();
             UserCollection.Clear();
             foreach (var item in users)
@@ -131,7 +130,6 @@ namespace taste_it.ViewModels
             }
             RaisePropertyChanged(() => UserCollection);
         }
-        //private async void SignUp()
         private async void SignUp()
         { 
 
@@ -140,12 +138,9 @@ namespace taste_it.ViewModels
                 NewUser = new User() { name = this.UserName, password = this.HashPassword(UserPassword) };
                 UserCollection.Add(NewUser);
                 await _userDataService.AddUserAsync(NewUser);
-                Debug.WriteLine("sign up");   //to test only
+                NavigateToSignInView();
             }
-            else
-            {
-                Debug.WriteLine("no sign up");   //to test only
-            }
+            
         }
 
         private void NavigateToSignInView()

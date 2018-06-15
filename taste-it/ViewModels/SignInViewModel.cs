@@ -34,7 +34,7 @@ namespace taste_it.ViewModels
         public ObservableCollection<User> UserCollection { get; set; }
         public ICommand SignInCommand { get; private set; }
         public ICommand NavigateToSignUpCommand { get; private set; }
-
+        public ICommand LoadUsersCommand { get; private set; }
         public string UserName
         {
             get
@@ -71,10 +71,11 @@ namespace taste_it.ViewModels
             _navigationService = navigationService;
             _userDataService = userData;
             UserCollection = new ObservableCollection<User>();
-            LoadUsers();  //should load users after every change of view!
+           // LoadUsers();  //should load users after every change of view!
 
             SignInCommand = new RelayCommand(SignIn);
             NavigateToSignUpCommand = new RelayCommand(NavigateToSignUp);
+            LoadUsersCommand = new RelayCommand(LoadUsers);
 
         }
 
@@ -94,8 +95,8 @@ namespace taste_it.ViewModels
         public void SignIn()   // Method execute after button clicked
         {
 
-            CheckCredentials();
-            //if(ChechCreditionals -> NavigateToNextView  // after logged in display anot her view
+           CheckCredentials();
+            //if (CheckCredentials()) NavigateTo...(); // after logged in display anot her view
         }
 
         public void NavigateToSignUp()

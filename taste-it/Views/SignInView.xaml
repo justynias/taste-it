@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             
+              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:taste_it" 
              xmlns:my="clr-namespace:taste_it.Additionals" 
              xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow"
@@ -18,6 +18,12 @@
              DataContext="{Binding Source={StaticResource Locator}, Path=SignIn}"
              >
     <Grid Background="{StaticResource BackgroundColor}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadUsersCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
