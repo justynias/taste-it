@@ -150,7 +150,9 @@ namespace taste_it.ViewModels
 
         private void NavigateToSignInView()
         {
-
+            UserName = string.Empty;
+            UserPassword = string.Empty;
+            UserPasswordRepeated = string.Empty;
             _navigationService.NavigateTo("SignIn");
         }
         #endregion

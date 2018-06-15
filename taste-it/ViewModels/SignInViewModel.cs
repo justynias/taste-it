@@ -100,8 +100,10 @@ namespace taste_it.ViewModels
 
         public void NavigateToSignUp()
         {
-           //Messenger with collection of users?
-            
+            //Messenger with collection of users?
+            UserName = string.Empty;
+            UserPassword = string.Empty;
+            HasErrors = false;
             _navigationService.NavigateTo("SignUp"); 
         }
         private bool CheckCredentials()
