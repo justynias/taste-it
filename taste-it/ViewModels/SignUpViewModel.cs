@@ -122,6 +122,7 @@ namespace taste_it.ViewModels
         }
         private async void LoadUsers()
         {
+           // System.Threading.Thread.Sleep(5000); //sleep for testing 
             var users =  await _userDataService.GetUsersAsync();
             UserCollection.Clear();
             foreach (var item in users)
