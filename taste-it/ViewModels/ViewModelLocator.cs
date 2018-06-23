@@ -54,6 +54,7 @@ namespace taste_it.ViewModels
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
        
             SimpleIoc.Default.Register<IUserDataService, UserDataService>(true);
+            SimpleIoc.Default.Register<IRecipeDataService, RecipeDataService>(true);
             SimpleIoc.Default.Register<MainWindowViewModel>(true);
             SimpleIoc.Default.Register<SignInViewModel>(true);
             SimpleIoc.Default.Register<SignUpViewModel>(true);
