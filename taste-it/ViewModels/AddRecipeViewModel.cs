@@ -20,10 +20,15 @@ namespace taste_it.ViewModels
    
     public class AddRecipeViewModel : ViewModelBase
     {
-        private readonly IUserDataService _userDataService;
-        public AddRecipeViewModel()
+
+        private User currentUser; // to merged author with the recipe
+        private IFrameNavigationService _navigationService;
+        private readonly IRecipeDataService _recipeDataService;
+        public AddRecipeViewModel(IRecipeDataService  recipeData, IFrameNavigationService navigationService)
         {
-            
+            _navigationService = navigationService;
+            _recipeDataService = recipeData;
+
         }
     }
 }

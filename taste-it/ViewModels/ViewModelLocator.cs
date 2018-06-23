@@ -49,6 +49,8 @@ namespace taste_it.ViewModels
             navigationService.Configure("Main", new Uri("../MainWindowView.xaml", UriKind.Relative));
             navigationService.Configure("SignIn", new Uri("../Views/SignInView.xaml", UriKind.Relative));
             navigationService.Configure("SignUp", new Uri("../Views/SignUpView.xaml", UriKind.Relative));
+            navigationService.Configure("AddRecipe", new Uri("../Views/AddRecipeView.xaml", UriKind.Relative));
+
 
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
@@ -82,6 +84,14 @@ namespace taste_it.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<SignUpViewModel>();
+            }
+        }
+
+        public AddRecipeViewModel AddRecipe
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddRecipeViewModel>();
             }
         }
 
