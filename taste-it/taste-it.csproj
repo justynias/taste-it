@@ -106,11 +106,13 @@
     <Compile Include="Additionals\PasswordService\PasswordBoxAssistant.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkAdorner.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkService.cs" />
+    <Compile Include="DataService\CategoryDataService.cs" />
     <Compile Include="DataService\ICategoryDataService.cs" />
     <Compile Include="DataService\IRecipeDataService.cs" />
     <Compile Include="DataService\ITagDataService.cs" />
     <Compile Include="DataService\IUserDataService.cs" />
     <Compile Include="DataService\RecipeDataService.cs" />
+    <Compile Include="DataService\TagDataService.cs" />
     <Compile Include="DataService\UserDataService.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>TasteITDataModel.tt</DependentUpon>
