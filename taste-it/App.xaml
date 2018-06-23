@@ -22,6 +22,7 @@
         <SolidColorBrush x:Key="WindowButtonColor" Color="#FF21272C" />
         <SolidColorBrush x:Key="WindowButtonOverColor" Color="#FF2D353A" />
         <SolidColorBrush x:Key="WindowButtonPressedColor" Color="#FF14181B" />
+        
         <sw:WindowMinimizeCommand x:Key="MinimizeCommand">
         </sw:WindowMinimizeCommand>
         <sw:WindowMaximizeCommand x:Key="MaximizeCommand">
@@ -69,6 +70,8 @@
         <SolidColorBrush x:Key="Purplish" Color="#43425D" />
         <SolidColorBrush x:Key="FilterMain" Color="#292E34" />
         <SolidColorBrush x:Key="FilterAlt" Color="#33383F" />
+        <SolidColorBrush x:Key="Danger" Color="#FF6565" />
+        
         <Style x:Key="MultilineRoundedTextBox" TargetType="{x:Type TextBox}">
             <Setter Property="AcceptsReturn" Value="True"/>
             <Setter Property="AcceptsReturn" Value="True"/>
@@ -103,33 +106,56 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="TagLabel" TargetType="{x:Type Label}">
-            <Setter Property="FontSize" Value="16"/>
+        <Style x:Key="TagPanel" TargetType="{x:Type Border}">
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect Direction="270" Opacity="0.45" ShadowDepth="2" BlurRadius="9"/>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Width" Value="50"/>
+            <Setter Property="MinWidth" Value="50"/>
+
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Background" Value="{StaticResource FilterMain}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+        </Style>
+        <Style x:Key="TagTextBlock" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{StaticResource FilterMain}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TagButton" TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="{StaticResource BackgroundColor}"/>
+            <Setter Property="Background" Value="{StaticResource FilterMain}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Opacity" Value="0.35"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Label}">
-                        <Border Background="{TemplateBinding Background}" 
-                                x:Name="Bd" 
-                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
-                            <DockPanel>
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="Center"
-                            RecognizesAccessKey="True" />
-                                <Button HorizontalAlignment="Right" DockPanel.Dock="Right" VerticalAlignment="Center" Background="{StaticResource FilterAlt}" Foreground="{StaticResource BackgroundColor}" BorderThickness="0">X</Button>
-                            </DockPanel>
-                            <Border.Effect>
-                                <DropShadowEffect Direction="270" Opacity="0.45" ShadowDepth="2" BlurRadius="9"/>
-                            </Border.Effect>
-                        </Border>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <DockPanel x:Name="grid">
+                            <Border x:Name="border" CornerRadius="0, 5, 5, 0" BorderThickness="1" Background="{StaticResource FilterMain}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  >
+                                </ContentPresenter>
+                            </Border>
+
+                        </DockPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource MainTextColor}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource MainTextColor}"/>
+
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -254,6 +280,45 @@
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="BorderBrush" Value="{StaticResource MainTextColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RoundCornerDangerBtn" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="{StaticResource BackgroundColor}"/>
+            <Setter Property="Width" Value="400"/>
+            <Setter Property="Margin" Value="0 30 0 0"/>
+            <Setter Property="FontSize" Value="14px"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border Padding="20 20 20 20" x:Name="border" CornerRadius="5" BorderThickness="2" Background="{StaticResource Danger}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  >
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFFFFF"/>
+                                <Setter Property="Foreground" Value="{StaticResource Danger}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Danger}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource Danger}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
