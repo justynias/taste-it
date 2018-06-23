@@ -15,9 +15,9 @@ namespace taste_it.DataService
             var dbContext = new TasteItDbEntities();
 
             dbContext.Recipes.Add(recipe);
-            var currentRecipe = await dbContext.Recipes.FindAsync(recipe);
+            Recipe currentRecipe = await dbContext.Recipes.FirstOrDefaultAsync(r => r.name == recipe.name);
 
-            if(currentRecipe !=null)
+            if (currentRecipe !=null)
             {
 
                 dbContext.Have_category.Add(new Have_category{ id_c = category.id_c, id_r = currentRecipe.id_r });
@@ -33,7 +33,8 @@ namespace taste_it.DataService
             var dbContext = new TasteItDbEntities();
 
             dbContext.Recipes.Add(recipe);
-            var currentRecipe = await dbContext.Recipes.FindAsync(recipe);
+            Recipe currentRecipe = await dbContext.Recipes.FirstOrDefaultAsync(r => r.name == recipe.name);
+           
 
             if (currentRecipe != null)
             {
@@ -62,11 +63,12 @@ namespace taste_it.DataService
 
         }
 
-        public Task<IEnumerable<Recipe>> FindByCategory(Category category)
+        public async Task<IEnumerable<Recipe>> FindByCategory(Category category)
         {
-            // var dbContext = new TasteItDbEntities();
-
-            throw new NotImplementedException();
+            var dbContext = new TasteItDbEntities();
+            Category current = await dbContext.Categories.FirstOrDefaultAsync(c => c.name == category.name);
+            var list = current.Have_category.Select(f => f.id_r).ToList();
+            return await dbContext.Recipes.AsNoTracking().Where(r => list.Contains(r.id_r)).ToListAsync();
         }
 
         public Task<IEnumerable<Recipe>> FindByTagAsync(Tag tag)
