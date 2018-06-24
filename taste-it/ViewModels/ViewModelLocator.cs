@@ -62,6 +62,8 @@ namespace taste_it.ViewModels
             SimpleIoc.Default.Register<MainWindowViewModel>(true);
             SimpleIoc.Default.Register<SignInViewModel>(true);
             SimpleIoc.Default.Register<SignUpViewModel>(true);
+            SimpleIoc.Default.Register<AddRecipeViewModel>(true);
+
 
 
         }

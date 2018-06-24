@@ -24,17 +24,17 @@ namespace taste_it.ViewModels
         private User currentUser; // to merged author with the recipe // MVVM message?
         private IFrameNavigationService _navigationService;
         private readonly IRecipeDataService _recipeDataService;
-        private readonly ICategoryDataService _categoryDataService;  //get categories list 
-        private readonly ITagDataService _tagDataService;  // check if tag exists
+        private readonly ICategoryDataService _categoryDataService; 
+        private readonly ITagDataService _tagDataService;  
 
         private string recipeName;
         private string recipeIngredients;
         private string description;
-        private int duration; 
-        private int complexity;
-        private Category currentCategory;
-        private ObservableCollection<Tag> tags;
-        private ObservableCollection<Category> categories;
+        private int duration;   //bind from combobox? default value / bind to progress bar
+        private int complexity; 
+        private Category currentCategory; //selected item (radio button)
+        private ObservableCollection<Tag> tags; //itemControl, validation?
+        private ObservableCollection<Category> categoriesCollection; 
 
         #endregion
         #region properties
@@ -114,17 +114,17 @@ namespace taste_it.ViewModels
 
             }
         }
-        public ObservableCollection<Category> Categories
+        public ObservableCollection<Category> CategoriesCollection
         {
             get
             {
-                return categories;
+                return categoriesCollection;
             }
 
             set
             {
 
-                Set(ref categories, value);
+                Set(ref categoriesCollection, value);
 
             }
         }
@@ -169,7 +169,7 @@ namespace taste_it.ViewModels
 
             LoadCategories();
 
-            AddRecipeCommand = new RelayCommand(AddRecipe);
+            AddRecipeCommand = new RelayCommand(AddRecipe); // disable button on validation
             ResetRecipeCommand = new RelayCommand(ResetRecipe);
 
         }
@@ -177,11 +177,11 @@ namespace taste_it.ViewModels
         #region methods
         private void AddRecipe()
         {
-            var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
+            //var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
             //AddTags();
-            //var list = new List<Tag>(Tags);
-            //_recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, Tags);
-            ResetRecipe();
+            //var tagList = new List<Tag>(Tags);
+            //_recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
+            //ResetRecipe();
         }
         private void ResetRecipe()
         {
@@ -196,47 +196,46 @@ namespace taste_it.ViewModels
         }
         private async void AddTags()
         {
-            //if(Tags!=null)
-            //{
-            //    foreach (var t in Tags)
-            //    {
-            //        var existingTag = await _tagDataService.FindTag(t);
-            //        if(existingTag != null)
-            //        {
-            //            t.id_t = existingTag.id_t;
-            //        }
-            //        else
-            //        {
-            //           await _tagDataService.AddTagAsync(t);
-            //           var addedTag = await _tagDataService.FindTag(t);
-            //            if (addedTag != null)
-            //            {
-            //                t.id_t = addedTag.id_t;
-            //            }
-            //        }
-                
-            //    }
-            //}
-          
+            if (Tags != null)
+            {
+                foreach (var t in Tags)
+                {
+                    var existingTag = await _tagDataService.FindTag(t);
+                    if (existingTag != null)
+                    {
+                        t.id_t = existingTag.id_t;
+                    }
+                    else
+                    {
+                        await _tagDataService.AddTagAsync(t);
+                        var addedTag = await _tagDataService.FindTag(t);
+                        if (addedTag != null)
+                        {
+                            t.id_t = addedTag.id_t;
+                        }
+                    }
+
+                }
+            }
+
         }
 
         private async void LoadCategories()
         {
             var categoriesTemp = await _categoryDataService.GetCategoriesAsync();
-            Categories.Clear();
+            CategoriesCollection = new ObservableCollection<Category>();
             foreach (var c in categoriesTemp)
             {
-                Categories.Add(c);
+                CategoriesCollection.Add(c);
             }
-            //RaisePropertyChanged(() => UserCollection);
         }
         #endregion
 
 
         #region IDataErrorInfo Members
-        public string this[string columnName] //fields should nt be empty 
+        public string this[string columnName] //fields should not be empty (tags validation)
         {                                     //radio button and progress bar->default value
-            get                               //tags could be empty     
+            get                               //taglist could be empty     
             {
                 string result = string.Empty;
                 if (columnName == "RecipeName")

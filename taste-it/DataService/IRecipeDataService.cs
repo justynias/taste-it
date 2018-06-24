@@ -11,7 +11,7 @@ namespace taste_it.DataService
     {
         Task<IEnumerable<Recipe>> GetRecipesAsync();
         Task AddRecipeAsync(Recipe recipe,Category category, Tag tag);
-        Task AddRecipeAsync(Recipe recipe, List<Category> categories, List<Tag> tags);
+        Task AddRecipeAsync(Recipe recipe, Category category, List<Tag> tags);
         Task AddToFavourites(User user, Recipe recipe);
         Task<IEnumerable<Recipe>> FindFavouritesAsync(User user);
         Task<IEnumerable<Recipe>> FindByTagAsync(Tag tag);
