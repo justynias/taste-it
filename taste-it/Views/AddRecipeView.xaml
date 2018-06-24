@@ -43,34 +43,12 @@
                         </ws:WatermarkService.Watermark>
                     </TextBox>
                 </DockPanel>
-                <!--<ItemsControl Name="ic_Categories" ItemsSource="{Binding CategoriesCollection}" Background="{StaticResource Purplish}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="3" Rows="2">
 
-                        </UniformGrid>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton Name="rb_Category" Content="{Binding CategoryName}"></RadioButton>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
                 <DockPanel>
-                    <ItemsControl Name="ic_Categories" >
-                        <Border Padding="10" BorderThickness="5" CornerRadius="0, 90, 0, 90" Background="{StaticResource Purplish}" >
-                            <!--UNCOMMENT UPPER AND BIND CATEGORIES COLLECTION-->
-                            <UniformGrid Rows="2" Columns="3" HorizontalAlignment="Center">
-                                <RadioButton Style="{StaticResource CategoryRadioButton}">Breakfast</RadioButton>
-                                <RadioButton Style="{StaticResource CategoryRadioButton}">Snack</RadioButton>
-                                <RadioButton Style="{StaticResource CategoryRadioButton}">Lunch</RadioButton>
-                                <RadioButton Style="{StaticResource CategoryRadioButton}">Dinner</RadioButton>
-                                <RadioButton Style="{StaticResource CategoryRadioButton}">Tea</RadioButton>
-                                <RadioButton Style="{StaticResource CategoryRadioButton}">Supper</RadioButton>
-                            </UniformGrid>
-                        </Border>
-                    </ItemsControl>
+   
+                    <ComboBox  Style="{StaticResource ComboBoxFlatStyle}" Name="cb_Categories" ItemsSource="{Binding CategoriesCollection}" DisplayMemberPath="name" SelectedItem="{Binding CurrentCategory}"/>
+
+
                 </DockPanel>
                 <DockPanel>
                     <Border BorderThickness="1" BorderBrush="Transparent" CornerRadius="10">
@@ -116,33 +94,47 @@
                         <DockPanel VerticalAlignment="Center">
                             <Label>Complexity</Label>
                             <!--BINDING HERE-->
-                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}"></ComboBox>
+                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}" ItemsSource="{Binding availableComplexities}" SelectedValue="{Binding Complexity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
                             <!--BINDING HERE-->
-                            <ProgressBar Style="{StaticResource ProgressBarCustom}" Value="25"></ProgressBar>
+                            <ProgressBar Style="{StaticResource ProgressBarCustom}" Minimum="0" Value="{Binding Complexity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Maximum="10"></ProgressBar>
                         </DockPanel>
                         <!--TAGS PANEL-->
                         <DockPanel >
                             <Label VerticalAlignment="Center">Tags</Label>
-                            <TextBox Style="{StaticResource SinglelineRoundedTextBox}" MaxWidth="80" VerticalAlignment="Center"></TextBox>
+                            <TextBox Style="{StaticResource SinglelineRoundedTextBox}" MaxWidth="80" VerticalAlignment="Center" Text="{Binding TagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Return" Command="{Binding AddTagCommand, Mode=OneWay}"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
                             <ScrollViewer Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
-                                <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True">
-                                    <DockPanel VerticalAlignment="Center">
-                                        <Border Style="{StaticResource TagPanel}">
-                                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <!--BINDING HERE-->
-                                                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" >#tag222222222222</TextBlock>
-                                                <!--BINDING HERE-->
-                                                <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}">X</Button>
-                                            </Grid>
-                                        </Border>
-                                    </DockPanel>
+                                <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Tags}">
+                                    <ItemsControl.ItemsPanel>
+                                        
+                                        <ItemsPanelTemplate>
+                                            <DockPanel VerticalAlignment="Center">
+
+                                            </DockPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Style="{StaticResource TagPanel}">
+                                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <!--BINDING HERE-->
+                                                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}"></TextBlock>
+                                                    <!--BINDING HERE-->
+                                                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}">X</Button>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
                         </DockPanel>

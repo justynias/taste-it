@@ -31,7 +31,9 @@ namespace taste_it.ViewModels
         private string recipeIngredients;
         private string description;
         private int duration;   //bind from combobox? default value / bind to progress bar
-        private int complexity; 
+        private int complexity;
+        private Tag currentTag;
+        private string tagName;
         private Category currentCategory; //selected item (radio button)
         private ObservableCollection<Tag> tags; //itemControl, validation?
         private ObservableCollection<Category> categoriesCollection; 
@@ -41,6 +43,8 @@ namespace taste_it.ViewModels
 
         public ICommand AddRecipeCommand { get; private set; }
         public ICommand ResetRecipeCommand { get; private set; }
+        public ICommand AddTagCommand { get; private set; }
+
 
 
         public string RecipeName
@@ -157,6 +161,43 @@ namespace taste_it.ViewModels
 
             }
         }
+        public List<int> availableComplexities
+        {
+            get
+            {
+                List<int> vals = new List<int>();
+                for(int i = 1; i <= 10; i++)
+                {
+                    vals.Add(i);
+                }
+                return vals;
+            }
+        }
+        public Tag CurrentTag
+        {
+            get
+            {
+                return currentTag;
+            }
+
+            set
+            {
+                Set(ref currentTag, value);
+            }
+        }
+
+        public string TagName
+        {
+            get
+            {
+                return tagName;
+            }
+
+            set
+            {
+                Set(ref tagName, value);
+            }
+        }
         #endregion
 
         //ctr
@@ -169,8 +210,12 @@ namespace taste_it.ViewModels
 
             LoadCategories();
 
+            LoadTags();
+
             AddRecipeCommand = new RelayCommand(AddRecipe); // disable button on validation
             ResetRecipeCommand = new RelayCommand(ResetRecipe);
+            AddTagCommand = new RelayCommand(AddTag);
+
 
         }
 
@@ -182,6 +227,20 @@ namespace taste_it.ViewModels
             //var tagList = new List<Tag>(Tags);
             //_recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
             //ResetRecipe();
+        }
+        private async void LoadTags()
+        {
+            var tagsTemp = await _tagDataService.GetTagsAsync();
+            Tags = new ObservableCollection<Tag>();
+            foreach (var tag in tagsTemp)
+            {
+                Tags.Add(tag);
+            }
+        }
+        private void AddTag()
+        {
+            CurrentTag = new Tag() { name = TagName };
+            Tags.Add(CurrentTag);
         }
         private void ResetRecipe()
         {
@@ -261,6 +320,8 @@ namespace taste_it.ViewModels
         {
             get { return null; }
         }
+
+      
 
         private bool IsFieldEmpty(string field)
         {

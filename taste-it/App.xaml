@@ -155,6 +155,7 @@
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="TextElement.Foreground" Value="Black"/>
             <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Control.Template">
@@ -522,7 +523,7 @@
                                 </Grid>
                             </BulletDecorator.Bullet>
 
-                            <TextBlock Margin="10, 0, 10, 0" Foreground="{StaticResource BackgroundColor}" FontSize="18">
+                            <TextBlock Margin="10, 0, 10, 0" Foreground="{StaticResource FilterAlt}" FontSize="18">
        <ContentPresenter />
                             </TextBlock>
                         </BulletDecorator>
