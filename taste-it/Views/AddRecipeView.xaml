@@ -16,6 +16,7 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" FontFamily="Source Sans Pro"
+             DataContext="{Binding Source={StaticResource Locator}, Path=AddRecipe}"
              >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -179,5 +180,6 @@
         </ScrollViewer>
     </Grid>
 
-   
+
 </UserControl>
+
