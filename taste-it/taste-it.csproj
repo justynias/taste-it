@@ -255,7 +255,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Additionals\TokenizerService\" />
     <Folder Include="CustomCommands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

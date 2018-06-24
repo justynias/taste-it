@@ -24,7 +24,7 @@
         </Style>
 
     </Window.Resources>
-    <Grid>
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -32,12 +32,12 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Frame  Source="./Views/AddRecipeView.xaml" x:Name="MainFrame" 
+        <Frame Source="./Views/AddRecipeView.xaml" x:Name="MainFrame" 
                     NavigationUIVisibility="Hidden"
                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="1"
-                    Width="{Binding ActualWidth, 
+                    Width="{Binding ActualWidth - 100, 
                     RelativeSource = {RelativeSource AncestorType = {x:Type Window}}}" 
-                    Height="{Binding ActualHeight, 
+                    Height="{Binding ActualHeight - 75, 
                     RelativeSource ={RelativeSource AncestorType = {x:Type Window}}}"/>
     </Grid>
 
