@@ -28,7 +28,7 @@ namespace taste_it.DataService
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AddRecipeAsync(Recipe recipe, List<Category> categories, List<Tag> tags)
+        public async Task AddRecipeAsync(Recipe recipe, Category category, List<Tag> tags)
         {
             var dbContext = new TasteItDbEntities();
 
@@ -38,10 +38,11 @@ namespace taste_it.DataService
 
             if (currentRecipe != null)
             {
-                foreach (var category in categories)
-                {
-                    dbContext.Have_category.Add(new Have_category { id_c = category.id_c, id_r = currentRecipe.id_r });
-                }
+                //foreach (var category in categories)
+                //{
+                //    dbContext.Have_category.Add(new Have_category { id_c = category.id_c, id_r = currentRecipe.id_r });
+                //}
+                dbContext.Have_category.Add(new Have_category { id_c = category.id_c, id_r = currentRecipe.id_r });
 
                 foreach (var tag in tags)
                 {

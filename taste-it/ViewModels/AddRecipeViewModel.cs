@@ -24,14 +24,15 @@ namespace taste_it.ViewModels
         private User currentUser; // to merged author with the recipe // MVVM message?
         private IFrameNavigationService _navigationService;
         private readonly IRecipeDataService _recipeDataService;
-        //private readonly ICategoryDataService _categoryDataService;  //get categories list 
-        //private readonly ITagDataService _tagDataService;  // check if tag exists
+        private readonly ICategoryDataService _categoryDataService;  //get categories list 
+        private readonly ITagDataService _tagDataService;  // check if tag exists
 
         private string recipeName;
         private string recipeIngredients;
         private string description;
         private int duration; 
         private int complexity;
+        private Category currentCategory;
         private ObservableCollection<Tag> tags;
         private ObservableCollection<Category> categories;
 
@@ -127,6 +128,20 @@ namespace taste_it.ViewModels
 
             }
         }
+        public Category CurrentCategory
+        {
+            get
+            {
+                return currentCategory;
+            }
+
+            set
+            {
+
+                Set(ref currentCategory, value);
+
+            }
+        }
 
         public ObservableCollection<Tag> Tags
         {
@@ -142,15 +157,17 @@ namespace taste_it.ViewModels
 
             }
         }
-
-
         #endregion
 
         //ctr
-        public AddRecipeViewModel(IRecipeDataService  recipeData, IFrameNavigationService navigationService)
+        public AddRecipeViewModel(IRecipeDataService  recipeData,ITagDataService tagData, ICategoryDataService categoryData, IFrameNavigationService navigationService)
         {
             _navigationService = navigationService;
             _recipeDataService = recipeData;
+            _tagDataService = tagData;
+            _categoryDataService = categoryData;
+
+            LoadCategories();
 
             AddRecipeCommand = new RelayCommand(AddRecipe);
             ResetRecipeCommand = new RelayCommand(ResetRecipe);
@@ -160,20 +177,59 @@ namespace taste_it.ViewModels
         #region methods
         private void AddRecipe()
         {
-            
+            var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
+            //AddTags();
+            //var list = new List<Tag>(Tags);
+            //_recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, Tags);
+            ResetRecipe();
         }
         private void ResetRecipe()
         {
             RecipeName = string.Empty;
             RecipeIngredients = string.Empty;
             Description = string.Empty;
+            Tags.Clear();
+            //CurrentCategory=default?
             //Complexity = default value;
             //Duration = default value;
-            //Categories.Clear();
-            //Tags.Clear();
-            
+
+        }
+        private async void AddTags()
+        {
+            //if(Tags!=null)
+            //{
+            //    foreach (var t in Tags)
+            //    {
+            //        var existingTag = await _tagDataService.FindTag(t);
+            //        if(existingTag != null)
+            //        {
+            //            t.id_t = existingTag.id_t;
+            //        }
+            //        else
+            //        {
+            //           await _tagDataService.AddTagAsync(t);
+            //           var addedTag = await _tagDataService.FindTag(t);
+            //            if (addedTag != null)
+            //            {
+            //                t.id_t = addedTag.id_t;
+            //            }
+            //        }
+                
+            //    }
+            //}
+          
         }
 
+        private async void LoadCategories()
+        {
+            var categoriesTemp = await _categoryDataService.GetCategoriesAsync();
+            Categories.Clear();
+            foreach (var c in categoriesTemp)
+            {
+                Categories.Add(c);
+            }
+            //RaisePropertyChanged(() => UserCollection);
+        }
         #endregion
 
 
