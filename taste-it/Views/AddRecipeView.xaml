@@ -25,7 +25,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0, 15, 0, 0">
+        
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0, 0, 0, 0">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type DockPanel}">
                     <Setter Property="Margin" Value="0,10,0,0"/>
@@ -60,14 +61,14 @@
                 <ItemsControl Name="ic_Categories" >
                     <Border Padding="10" BorderThickness="5" CornerRadius="0, 90, 0, 90" Background="{StaticResource Purplish}" >
                         <!--UNCOMMENT UPPER AND BIND CATEGORIES COLLECTION-->
-                    <WrapPanel HorizontalAlignment="Center">
+                    <UniformGrid Rows="2" Columns="3" HorizontalAlignment="Center">
                         <RadioButton Style="{StaticResource CategoryRadioButton}">Breakfast</RadioButton>
                         <RadioButton Style="{StaticResource CategoryRadioButton}">Snack</RadioButton>
                         <RadioButton Style="{StaticResource CategoryRadioButton}">Lunch</RadioButton>
                         <RadioButton Style="{StaticResource CategoryRadioButton}">Dinner</RadioButton>
                         <RadioButton Style="{StaticResource CategoryRadioButton}">Tea</RadioButton>
                         <RadioButton Style="{StaticResource CategoryRadioButton}">Supper</RadioButton>
-                    </WrapPanel>
+                    </UniformGrid>
                     </Border>
                 </ItemsControl>
             </DockPanel>
@@ -86,12 +87,13 @@
             </DockPanel>
             <!--DETAIL PANEL-->
             <DockPanel>
-                <StackPanel>
-                    <StackPanel.Resources>
+                <UniformGrid Rows="3">
+                    <UniformGrid.Resources>
                         <!--STYLES FOR DETAILS PANEL-->
                         <Style TargetType="{x:Type Label}">
                             <Setter Property="FontSize" Value="16"/>
                             <Setter Property="Foreground" Value="{StaticResource FilterMain}"/>
+                            <Setter Property="Margin" Value="0, 0, 30, 0"/>
                         </Style>
                         <Style TargetType="{x:Type TextBox}">
                             <Setter Property="FontSize" Value="16" />
@@ -100,43 +102,39 @@
                             <Setter Property="Foreground" Value="{StaticResource FilterMain}" />
                             <Setter Property="Width" Value="200"/>
                             <Setter Property="HorizontalAlignment" Value="Left"/>
-
-
+                            <Setter Property="Margin" Value="0, 0, 30, 0"/>
                         </Style>
-                        <Style TargetType="{x:Type UniformGrid}">
+                        <Style TargetType="{x:Type DockPanel}">
                             <Setter Property="Margin" Value="10"/>
                         </Style>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="Margin" Value="0, 0, 30, 0"/>
+                        </Style>
                         
-                    </StackPanel.Resources>
+                    </UniformGrid.Resources>
                     
-                    <UniformGrid Columns="3" >
+                    <DockPanel  >
                         <Label>Complexity</Label>
                         <!--BINDING HERE-->
-                        <TextBox Style="{StaticResource SinglelineRoundedTextBox}"></TextBox>
+                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}"></ComboBox>
                         <!--BINDING HERE-->
                         <ProgressBar ></ProgressBar>
-                    </UniformGrid>
+                    </DockPanel>
                     <!--TAGS PANEL-->
-                    <UniformGrid Columns="3" >
+                    <DockPanel >
                         <Label VerticalAlignment="Center">Tags</Label>
-                        <TextBox Style="{StaticResource SinglelineRoundedTextBox}"></TextBox>
+                        <TextBox Style="{StaticResource SinglelineRoundedTextBox}" MaxWidth="80" VerticalAlignment="Center"></TextBox>
                         <ScrollViewer Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
                             <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True">
-                                <WrapPanel VerticalAlignment="Center">
+                                <DockPanel VerticalAlignment="Center">
                                     <Border Style="{StaticResource TagPanel}">
-                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
+                                        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" >
                                             <!--BINDING HERE-->
-                                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" >#tag22222</TextBlock>
+                                            <TextBlock Style="{StaticResource TagTextBlock}" >#tag22222</TextBlock>
                                             <!--BINDING HERE-->
-                                            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}">X</Button>
-                                        </Grid>
+                                            <Button Style="{StaticResource TagButton}">X</Button>
+                                        </DockPanel>
+                                        
                                     </Border>
                                     <Border Style="{StaticResource TagPanel}">
                                         <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
@@ -153,18 +151,18 @@
                                             <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}">X</Button>
                                         </Grid>
                                     </Border>
-                                </WrapPanel>
+                                </DockPanel>
                             </ItemsControl>
                         </ScrollViewer>
-                    </UniformGrid>
+                    </DockPanel>
 
-                    <UniformGrid Columns="3"  VerticalAlignment="Center">
+                    <DockPanel VerticalAlignment="Center">
                         <Label >Preparation time:</Label>
                         <TextBox Style="{StaticResource SinglelineRoundedTextBox}"></TextBox>
                         <!--BINDING HERE-->
                         <TextBlock></TextBlock>
-                    </UniformGrid>
-                </StackPanel>
+                    </DockPanel>
+                </UniformGrid>
             
             </DockPanel>
             <DockPanel>
