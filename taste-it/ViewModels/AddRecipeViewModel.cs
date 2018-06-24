@@ -24,6 +24,17 @@ namespace taste_it.ViewModels
         private User currentUser; // to merged author with the recipe
         private IFrameNavigationService _navigationService;
         private readonly IRecipeDataService _recipeDataService;
+        //private readonly ICategoryDataService _categoryDataService;  //get categories list 
+        //private readonly ITagDataService _tagDataService;  // check if tag exists
+
+        private string recipeName;
+        private string ingredients;
+        private string description;
+        private int duration; 
+        private int complexity;
+        private List<Tag> tags;
+        private List<Category> categories;
+
         public AddRecipeViewModel(IRecipeDataService  recipeData, IFrameNavigationService navigationService)
         {
             _navigationService = navigationService;
