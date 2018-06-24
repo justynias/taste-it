@@ -24,8 +24,8 @@ namespace taste_it.Models
     
         public int id_r { get; set; }
         public string name { get; set; }
-        public decimal duration { get; set; }
-        public string complexity { get; set; }
+        public int duration { get; set; }
+        public int complexity { get; set; }
         public string ingredients { get; set; }
         public string description { get; set; }
     
