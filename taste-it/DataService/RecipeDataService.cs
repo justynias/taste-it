@@ -15,6 +15,7 @@ namespace taste_it.DataService
             var dbContext = new TasteItDbEntities();
 
             dbContext.Recipes.Add(recipe);
+            await dbContext.SaveChangesAsync();
             Recipe currentRecipe = await dbContext.Recipes.FirstOrDefaultAsync(r => r.name == recipe.name);
 
             if (currentRecipe !=null)
@@ -33,6 +34,7 @@ namespace taste_it.DataService
             var dbContext = new TasteItDbEntities();
 
             dbContext.Recipes.Add(recipe);
+            await dbContext.SaveChangesAsync();
             Recipe currentRecipe = await dbContext.Recipes.FirstOrDefaultAsync(r => r.name == recipe.name);
            
 
