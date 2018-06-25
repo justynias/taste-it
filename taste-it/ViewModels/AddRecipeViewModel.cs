@@ -36,10 +36,11 @@ namespace taste_it.ViewModels
         private string tagName;
         private Category currentCategory; //selected item (radio button)
         private ObservableCollection<Tag> tags; //itemControl, validation?
-        private ObservableCollection<Category> categoriesCollection; 
+        private ObservableCollection<Category> categoriesCollection;
+        private TimeSpan durationTime;
 
         #endregion
-        #region properties
+        #region Properties
 
         public ICommand AddRecipeCommand { get; private set; }
         public ICommand ResetRecipeCommand { get; private set; }
@@ -60,6 +61,19 @@ namespace taste_it.ViewModels
 
                 Set(ref recipeName, value);
 
+            }
+        }
+        public TimeSpan DurationTime
+        {
+            get
+            {
+                durationTime = TimeSpan.FromMinutes(Duration);
+                return durationTime;
+            }
+
+            set
+            {
+                Set(ref durationTime, value);
             }
         }
         public string RecipeIngredients
@@ -100,8 +114,12 @@ namespace taste_it.ViewModels
 
             set
             {
+                if (double.IsNaN(value))
+                    Set(ref duration, 0);
+                else
+                    Set(ref duration, value);
 
-                Set(ref duration, value);
+                RaisePropertyChanged(() => DurationTime);
 
             }
         }
@@ -314,6 +332,11 @@ namespace taste_it.ViewModels
                     if (IsFieldEmpty(RecipeIngredients)) { return "Field should not be empty"; }
 
                 }
+                else if (columnName == "Duration")
+                {
+                    if (double.IsNaN(Duration)) { return "Field must be numeric value"; }
+
+                }
                 else if (columnName == "Description")
                 {
                     if (IsFieldEmpty(Description)) { return "Field should not be empty"; }
@@ -328,7 +351,7 @@ namespace taste_it.ViewModels
             get { return null; }
         }
 
-      
+       
 
         private bool IsFieldEmpty(string field)
         {

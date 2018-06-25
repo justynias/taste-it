@@ -140,10 +140,10 @@
                         </DockPanel>
 
                         <DockPanel VerticalAlignment="Center">
-                            <Label >Preparation time:</Label>
-                            <TextBox Style="{StaticResource SinglelineRoundedTextBox}"></TextBox>
+                            <Label >Preparation time: (minutes)</Label>
+                            <TextBox Style="{StaticResource SinglelineRoundedTextBox}" Text="{Binding Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <!--BINDING HERE-->
-                            <TextBlock VerticalAlignment="Center" FontSize="16" Margin="30, 0, 0, 0">30 minutes</TextBlock>
+                            <TextBlock VerticalAlignment="Center" FontSize="16" Margin="30, 0, 0, 0" Text="{Binding DurationTime, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                         </DockPanel>
                     </UniformGrid>
 
