@@ -44,6 +44,7 @@ namespace taste_it.ViewModels
         public ICommand AddRecipeCommand { get; private set; }
         public ICommand ResetRecipeCommand { get; private set; }
         public ICommand AddTagCommand { get; private set; }
+        public ICommand RemoveTagCommand { get; private set; }
 
 
 
@@ -215,6 +216,7 @@ namespace taste_it.ViewModels
             AddRecipeCommand = new RelayCommand(AddRecipe); // disable button on validation
             ResetRecipeCommand = new RelayCommand(ResetRecipe);
             AddTagCommand = new RelayCommand(AddTag);
+            RemoveTagCommand = new RelayCommand<object>(RemoveTag);
 
 
         }
@@ -237,9 +239,14 @@ namespace taste_it.ViewModels
                 Tags.Add(tag);
             }
         }
+        private void RemoveTag(object parameter)
+        {
+            int id = (int)parameter;
+            Tags.Remove(Tags.Where(i => i.id_t == id).Single());
+        }
         private void AddTag()
         {
-            CurrentTag = new Tag() { name = TagName };
+            CurrentTag = new Tag() { name = TagName, id_t = Tags.Count };
             Tags.Add(CurrentTag);
         }
         private void ResetRecipe()

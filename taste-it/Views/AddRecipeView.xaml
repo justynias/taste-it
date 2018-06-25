@@ -130,7 +130,7 @@
                                                     <!--BINDING HERE-->
                                                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}"></TextBlock>
                                                     <!--BINDING HERE-->
-                                                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}">X</Button>
+                                                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding id_t}">X</Button>
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>
