@@ -240,22 +240,17 @@ namespace taste_it.ViewModels
         }
 
         #region methods
-        private void AddRecipe()
+        private async void AddRecipe()
         {
             var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
-            AddTags();
+            await AddTags();
             var tagList = new List<Tag>(Tags);
-            _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
+            await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
             ResetRecipe();
         }
-        private async void LoadTags()
+        private void LoadTags()
         {
-            var tagsTemp = await _tagDataService.GetTagsAsync();
             Tags = new ObservableCollection<Tag>();
-            foreach (var tag in tagsTemp)
-            {
-                Tags.Add(tag);
-            }
         }
         private void RemoveTag(object parameter)
         {
@@ -279,7 +274,7 @@ namespace taste_it.ViewModels
             //Duration = default value;
 
         }
-        private async void AddTags()
+        private async Task AddTags()
         {
             if (Tags != null)
             {
