@@ -254,13 +254,15 @@ namespace taste_it.ViewModels
         }
         private void RemoveTag(object parameter)
         {
-            int id = (int)parameter;
-            Tags.Remove(Tags.Where(i => i.id_t == id).Single());
+            string name = (string)parameter;
+            Tags.Remove(Tags.Where(i => i.name == name).Single());
         }
         private void AddTag()
         {
-            CurrentTag = new Tag() { name = TagName, id_t = Tags.Count };
-            Tags.Add(CurrentTag);
+            CurrentTag = new Tag() { name = TagName };
+            bool containsItem = Tags.Any(item => item.name == CurrentTag.name);
+            if(!containsItem)
+                Tags.Add(CurrentTag);
             TagName = string.Empty;
         }
         private void ResetRecipe()
@@ -337,6 +339,11 @@ namespace taste_it.ViewModels
                 {
                     if (IsFieldEmpty(Description)) { return "Field should not be empty"; }
 
+                }
+                else if(columnName == "TagName")
+                {
+                    bool containsItem = Tags.Any(item => item.name == CurrentTag.name);
+                    if (containsItem) { return "Tag already exists!"; }
                 }
                 return result;
             }
