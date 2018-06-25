@@ -242,11 +242,11 @@ namespace taste_it.ViewModels
         #region methods
         private void AddRecipe()
         {
-            //var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
-            //AddTags();
-            //var tagList = new List<Tag>(Tags);
-            //_recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
-            //ResetRecipe();
+            var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
+            AddTags();
+            var tagList = new List<Tag>(Tags);
+            _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
+            ResetRecipe();
         }
         private async void LoadTags()
         {
@@ -266,6 +266,7 @@ namespace taste_it.ViewModels
         {
             CurrentTag = new Tag() { name = TagName, id_t = Tags.Count };
             Tags.Add(CurrentTag);
+            TagName = string.Empty;
         }
         private void ResetRecipe()
         {
