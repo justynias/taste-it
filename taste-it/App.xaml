@@ -76,6 +76,25 @@
             <Setter Property="AcceptsReturn" Value="True"/>
             <Setter Property="AcceptsReturn" Value="True"/>
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate >
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right"
+                Padding="4"
+                CornerRadius="5"
+                Background="Red">
+                                <TextBlock TextWrapping="Wrap"
+                   Margin="4"
+                   MaxWidth="100"
+                                                   Foreground="White"
+                   Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
+                            </Border>
+                            <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect Direction="270" Opacity="0.45" ShadowDepth="2" BlurRadius="9"/>
@@ -343,6 +362,25 @@
         <Style x:Key="SinglelineRoundedTextBox" TargetType="{x:Type TextBox}">
 
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate >
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right"
+                Padding="4"
+                CornerRadius="5"
+                Background="Red">
+                                <TextBlock TextWrapping="Wrap"
+                   Margin="4"
+                   MaxWidth="100"
+                                                   Foreground="White"
+                   Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
+                            </Border>
+                            <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect Direction="270" Opacity="0.45" ShadowDepth="2" BlurRadius="9"/>
