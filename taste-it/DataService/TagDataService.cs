@@ -25,8 +25,17 @@ namespace taste_it.DataService
         public async Task<Tag> FindTag(Tag tag)
         {
             var dbContext = new TasteItDbEntities();
-            Tag current = await dbContext.Tags.FirstOrDefaultAsync(t => t.name == tag.name);
-            return current;
+            if(await dbContext.Tags.AnyAsync(t => t.name == tag.name))
+            {
+                Tag current = await dbContext.Tags.FirstOrDefaultAsync(t => t.name == tag.name);
+                return current;
+
+            }
+            else
+            {
+                return null;
+            }
+          
         }
     }
 }
