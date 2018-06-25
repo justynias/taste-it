@@ -20,7 +20,7 @@
              >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1024"/>
+            <ColumnDefinition Width="*" MaxWidth="500"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -35,10 +35,10 @@
                 </Style>
             </StackPanel.Resources>
             <DockPanel>
-                <TextBox  Style="{StaticResource LineTextbox}" Width="1200" Name="tb_RecipeName">
+                <TextBox  Style="{StaticResource LineTextbox}" HorizontalAlignment="Stretch" Name="tb_RecipeName">
                     <TextBox.Text>
                         <!--BINDING HERE-->
-                        <Binding Mode="TwoWay" Path="RecipeName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
+                        <Binding Mode="TwoWay" Path="RecipeName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True"></Binding>
                     </TextBox.Text>
                     <ws:WatermarkService.Watermark>
                         <TextBlock Margin ="0 -40 0 0" FontSize="18px" >Recipe name...</TextBlock>
@@ -174,8 +174,8 @@
             <DockPanel>
                 <StackPanel>
                     <!--BINDING HERE-->
-                    <Button Style="{StaticResource RoundCornerPrimaryBtn}" Width="1000" Command="{Binding AddRecipeCommand, Mode=OneWay}">Add</Button>
-                    <Button Style="{StaticResource RoundCornerDangerBtn}" Width="1000" Command="{Binding ResetRecipeCommand, Mode=OneWay}">Clear form</Button>
+                    <Button Style="{StaticResource RoundCornerPrimaryBtn}" Width="500" MaxWidth="1000" Command="{Binding AddRecipeCommand, Mode=OneWay}">Add</Button>
+                    <Button Style="{StaticResource RoundCornerDangerBtn}" Width="500" MaxWidth="1000" Command="{Binding ResetRecipeCommand, Mode=OneWay}">Clear form</Button>
                 </StackPanel>
             </DockPanel>
         </StackPanel>
