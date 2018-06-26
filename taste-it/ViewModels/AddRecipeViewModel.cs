@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using taste_it.Additionals.NavigationService;
@@ -30,7 +31,7 @@ namespace taste_it.ViewModels
         private string recipeName;
         private string recipeIngredients;
         private string description;
-        private int duration;   
+        private string duration;   
         private int complexity;
         private Tag currentTag;
         private string tagName;
@@ -39,6 +40,7 @@ namespace taste_it.ViewModels
         private ObservableCollection<Category> categoriesCollection;
         private TimeSpan durationTime;
         private string tagError;
+        private bool durationValid;
         #endregion
         #region Properties
 
@@ -67,7 +69,9 @@ namespace taste_it.ViewModels
         {
             get
             {
-                durationTime = TimeSpan.FromMinutes(Duration);
+                int newDuration;
+                Int32.TryParse(Duration, out newDuration);
+                durationTime = TimeSpan.FromMinutes(newDuration);
                 return durationTime;
             }
 
@@ -105,7 +109,7 @@ namespace taste_it.ViewModels
             }
         }
 
-        public int Duration
+        public string Duration
         {
             get
             {
@@ -114,12 +118,12 @@ namespace taste_it.ViewModels
 
             set
             {
-                if (double.IsNaN(value))
-                    Set(ref duration, 0);
-                else
-                    Set(ref duration, value);
+                var regex = new Regex("[^0-9]+");
+                durationValid = !regex.IsMatch(value);
 
+                Set(ref duration, value);
                 RaisePropertyChanged(() => DurationTime);
+
 
             }
         }
@@ -243,7 +247,7 @@ namespace taste_it.ViewModels
         #region methods
         private async void AddRecipe()
         {
-            var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
+            var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = int.Parse(Duration) };
             await AddTagsToDatabase();
             var tagList = new List<Tag>(Tags);
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
@@ -257,7 +261,7 @@ namespace taste_it.ViewModels
             Tags.Clear();
             CurrentCategory = null;
             Complexity = 0;
-            Duration = 0;
+            Duration = "0";
 
         }
         private async Task AddTagsToDatabase()
@@ -419,13 +423,14 @@ namespace taste_it.ViewModels
         private bool IsDurationValid(out string message)
         {
             message = string.Empty;
-            if (Duration == 0)
+            if (Duration == "0")
             {
                 message = "Insert duration value!";
                 return false;
             }
-            else if (double.IsNaN(Duration))
+            else if (!durationValid)
             {
+                durationValid = false;
                 message = "Duration must have numeric value";
                 return false;
             }
