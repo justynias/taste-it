@@ -30,15 +30,15 @@ namespace taste_it.ViewModels
         private string recipeName;
         private string recipeIngredients;
         private string description;
-        private int duration;   //bind from combobox? default value / bind to progress bar
+        private int duration;   
         private int complexity;
         private Tag currentTag;
         private string tagName;
-        private Category currentCategory; //selected item (radio button)
-        private ObservableCollection<Tag> tags; //itemControl, validation?
+        private Category currentCategory;
+        private ObservableCollection<Tag> tags; 
         private ObservableCollection<Category> categoriesCollection;
         private TimeSpan durationTime;
-        private bool isTagExistingAlready;
+        private string tagError;
         #endregion
         #region Properties
 
@@ -217,18 +217,7 @@ namespace taste_it.ViewModels
                 Set(ref tagName, value);
             }
         }
-        public bool IsTagExistingAlready
-        {
-            get
-            {
-                return isTagExistingAlready;
-            }
 
-            set
-            {
-                Set(ref isTagExistingAlready, value);
-            }
-        }
         #endregion
 
         //ctr
@@ -243,7 +232,7 @@ namespace taste_it.ViewModels
 
             LoadTags();
 
-            AddRecipeCommand = new RelayCommand(AddRecipe, ()=>IsRecipeValid()); // disable button on validation
+            AddRecipeCommand = new RelayCommand(AddRecipe, ()=>IsRecipeValid()); 
             ResetRecipeCommand = new RelayCommand(ResetRecipe);
             AddTagCommand = new RelayCommand(AddTag);
             RemoveTagCommand = new RelayCommand<object>(RemoveTag);
@@ -268,17 +257,52 @@ namespace taste_it.ViewModels
         {
             string name = (string)parameter;
             Tags.Remove(Tags.Where(i => i.name == name).Single());
+            RaisePropertyChanged(() => Tags);
         }
         private void AddTag()
         {
             CurrentTag = new Tag() { name = TagName };
-            isTagExistingAlready = Tags.Any(item => item.name == CurrentTag.name);
-            if (!isTagExistingAlready && Tags.Count<11)
+            if(IsTagsValid(ref tagError))
             {
+                CurrentTag.name = "#" + CurrentTag.name;
                 Tags.Add(CurrentTag);
-
+                RaisePropertyChanged(() => Tags);
             }
+
             TagName = string.Empty;
+        }
+
+        private bool IsTagsValid(ref string message)
+        {
+            message = string.Empty;
+
+            if (Tags.Count > 10)
+            {
+                message = "Number of tags must be maximum 10";
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(TagName) || string.IsNullOrEmpty(TagName))
+            {
+                message = "Field should not be empty";
+                return false;
+            }
+            else if (TagName.Length > 20)
+            {
+                message = "Tag should contains maximum 20 characters";
+                return false;
+            }
+            else if (TagName.Contains(" "))
+            {
+                message = "Tag should not contains spaces!";
+                return false;
+            }
+            else if (Tags.Any(item => item.name == CurrentTag.name))
+            {
+                message = "Tag already exists!";
+                return false;
+            }
+            
+            return true;
         }
         private void ResetRecipe()
         {
@@ -330,9 +354,9 @@ namespace taste_it.ViewModels
 
 
         #region IDataErrorInfo Members
-        public string this[string columnName] //fields should not be empty (tags validation)
-        {                                     //radio button and progress bar->default value
-            get                               //taglist could be empty     
+        public string this[string columnName] 
+        {                                     
+            get                                  
             {
                 string result = string.Empty;
                 if (columnName == "RecipeName")
@@ -367,12 +391,19 @@ namespace taste_it.ViewModels
                     }
 
                 }
+                else if (columnName == "Tags")
+                {
+                    if (!IsTagsNumberValid(out result))
+                    {
+                        return result;
+                    }
+                }
                 else if (columnName == "TagName")
                 {
 
-                    if (!IsTagsValid(out result))
+                    if (tagError!=string.Empty)
                     {
-                        return result;
+                        return tagError;
                     }
                 }
                 else if (columnName == "CurrentCategory")
@@ -402,8 +433,6 @@ namespace taste_it.ViewModels
         }
 
 
-
-
         private bool IsRecipeNameValid(out string message)
         {
             message = string.Empty;
@@ -420,26 +449,19 @@ namespace taste_it.ViewModels
             }
             return true;
         }
-        private bool IsTagsValid(out string message)
+        
+        private bool IsTagsNumberValid(out string message)
         {
             message = string.Empty;
-            if (isTagExistingAlready)
+            if (Tags.Count < 2)
             {
-                message = "Tag already exists!";
-                return false;
-            }
-            else if (Tags.Count < 2)
-            {
+                Debug.WriteLine(Tags.Count);
                 message = "Number of tags must be minimum 2";
-                return false;
-            }
-            else if (Tags.Count > 10)
-            {
-                message = "Number of tags must be maximum 10";
                 return false;
             }
             return true;
         }
+       
         private bool IsRecipeIngredientsValid(out string message)
         {
             message = string.Empty;
@@ -515,8 +537,8 @@ namespace taste_it.ViewModels
         private bool IsRecipeValid()
         {
             string temp;
-            return (IsCategoryValid(out temp) && IsComplexityValid(out temp) && IsDescriptionValid(out temp)
-                && IsDurationValid(out temp) && IsRecipeIngredientsValid(out temp) && IsRecipeNameValid(out temp) && IsTagsValid(out temp));
+            return (IsCategoryValid(out temp) && IsComplexityValid(out temp) && IsDescriptionValid(out temp) && IsTagsNumberValid(out temp)
+                && IsDurationValid(out temp) && IsRecipeIngredientsValid(out temp) && IsRecipeNameValid(out temp) );
         }
 
         #endregion
