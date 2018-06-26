@@ -249,61 +249,6 @@ namespace taste_it.ViewModels
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
             ResetRecipe();
         }
-        private void LoadTags()
-        {
-            Tags = new ObservableCollection<Tag>();
-        }
-        private void RemoveTag(object parameter)
-        {
-            string name = (string)parameter;
-            Tags.Remove(Tags.Where(i => i.name == name).Single());
-            RaisePropertyChanged(() => Tags);
-        }
-        private void AddTag()
-        {
-            CurrentTag = new Tag() { name = TagName };
-            if(IsTagsValid(ref tagError))
-            {
-                CurrentTag.name = "#" + CurrentTag.name;
-                Tags.Add(CurrentTag);
-                RaisePropertyChanged(() => Tags);
-            }
-
-            TagName = string.Empty;
-        }
-
-        private bool IsTagsValid(ref string message)
-        {
-            message = string.Empty;
-
-            if (Tags.Count > 10)
-            {
-                message = "Number of tags must be maximum 10";
-                return false;
-            }
-            else if (string.IsNullOrWhiteSpace(TagName) || string.IsNullOrEmpty(TagName))
-            {
-                message = "Field should not be empty";
-                return false;
-            }
-            else if (TagName.Length > 20)
-            {
-                message = "Tag should contains maximum 20 characters";
-                return false;
-            }
-            else if (TagName.Contains(" "))
-            {
-                message = "Tag should not contains spaces!";
-                return false;
-            }
-            else if (Tags.Any(item => item.name == CurrentTag.name))
-            {
-                message = "Tag already exists!";
-                return false;
-            }
-            
-            return true;
-        }
         private void ResetRecipe()
         {
             RecipeName = string.Empty;
@@ -350,89 +295,62 @@ namespace taste_it.ViewModels
                 CategoriesCollection.Add(c);
             }
         }
-        #endregion
-
-
-        #region IDataErrorInfo Members
-        public string this[string columnName] 
-        {                                     
-            get                                  
-            {
-                string result = string.Empty;
-                if (columnName == "RecipeName")
-                {
-                    if (!IsRecipeNameValid(out result))
-                    {
-                        return result;
-                    }
-
-                }
-                else if (columnName == "RecipeIngredients")
-                {
-                    if (!IsRecipeIngredientsValid(out result))
-                    {
-                        return result;
-                    }
-
-                }
-                else if (columnName == "Duration")
-                {
-                    if (!IsDurationValid(out result))
-                    {
-                        return result;
-                    }
-
-                }
-                else if (columnName == "Description")
-                {
-                    if (!IsDescriptionValid(out result))
-                    {
-                        return result;
-                    }
-
-                }
-                else if (columnName == "Tags")
-                {
-                    if (!IsTagsNumberValid(out result))
-                    {
-                        return result;
-                    }
-                }
-                else if (columnName == "TagName")
-                {
-
-                    if (tagError!=string.Empty)
-                    {
-                        return tagError;
-                    }
-                }
-                else if (columnName == "CurrentCategory")
-                {
-
-                    if (!IsCategoryValid(out result))
-                    {
-                        return result;
-                    }
-                }
-                else if (columnName == "Complexity")
-                {
-
-                    if (!IsComplexityValid(out result))
-                    {
-                        return result;
-                    }
-                }
-
-                return result;
-            }
-        }
-
-        public string Error
+        private void LoadTags()
         {
-            get { return null; }
+            Tags = new ObservableCollection<Tag>();
         }
+        private void RemoveTag(object parameter)
+        {
+            string name = (string)parameter;
+            Tags.Remove(Tags.Where(i => i.name == name).Single());
+            RaisePropertyChanged(() => Tags);
+        }
+        private void AddTag()
+        {
+            CurrentTag = new Tag() { name = TagName };
+            if(IsTagsValid(ref tagError))
+            {
+                CurrentTag.name = "#" + CurrentTag.name;
+                Tags.Add(CurrentTag);
+                RaisePropertyChanged(() => Tags);
+            }
 
+            TagName = string.Empty;
+        }
+        #endregion
+        #region validation
+        private bool IsTagsValid(ref string message)
+        {
+            message = string.Empty;
 
+            if (Tags.Count > 10)
+            {
+                message = "Number of tags must be maximum 10";
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(TagName) || string.IsNullOrEmpty(TagName))
+            {
+                message = "Field should not be empty";
+                return false;
+            }
+            else if (TagName.Length > 20)
+            {
+                message = "Tag should contains maximum 20 characters";
+                return false;
+            }
+            else if (TagName.Contains(" "))
+            {
+                message = "Tag should not contains spaces!";
+                return false;
+            }
+            else if (Tags.Any(item => item.name.Substring(1) == CurrentTag.name))
+            {
+                message = "Tag already exists!";
+                return false;
+            }
+            
+            return true;
+        }
         private bool IsRecipeNameValid(out string message)
         {
             message = string.Empty;
@@ -449,7 +367,7 @@ namespace taste_it.ViewModels
             }
             return true;
         }
-        
+
         private bool IsTagsNumberValid(out string message)
         {
             message = string.Empty;
@@ -461,7 +379,7 @@ namespace taste_it.ViewModels
             }
             return true;
         }
-       
+
         private bool IsRecipeIngredientsValid(out string message)
         {
             message = string.Empty;
@@ -538,9 +456,80 @@ namespace taste_it.ViewModels
         {
             string temp;
             return (IsCategoryValid(out temp) && IsComplexityValid(out temp) && IsDescriptionValid(out temp) && IsTagsNumberValid(out temp)
-                && IsDurationValid(out temp) && IsRecipeIngredientsValid(out temp) && IsRecipeNameValid(out temp) );
+                && IsDurationValid(out temp) && IsRecipeIngredientsValid(out temp) && IsRecipeNameValid(out temp));
+        }
+        #endregion
+
+
+        #region IDataErrorInfo Members
+        public string this[string columnName] 
+        {                                     
+            get                                  
+            {
+                string result = string.Empty;
+                switch (columnName)
+                {
+                    case "RecipeName":
+                            if (!IsRecipeNameValid(out result))
+                            {
+                                return result;
+                            }
+                            break;
+                    case "RecipeIngredients":
+                            if (!IsRecipeIngredientsValid(out result))
+                            {
+                                return result;
+                            }
+                            break;
+                    case "Duration":
+                        if (!IsDurationValid(out result))
+                        {
+                            return result;
+                        }
+                        break;
+                    case "Description":
+                            if (!IsDescriptionValid(out result))
+                            {
+                                return result;
+                            }
+                        break;
+                    case "Tags":
+                        if (!IsTagsNumberValid(out result))
+                        {
+                            return result;
+                        }
+                        break;
+                    case "TagName":
+                        if (tagError != string.Empty)
+                        {
+                            return tagError;
+                        }
+                        break;
+                    case "CurrentCategory":
+                        if (!IsCategoryValid(out result))
+                        {
+                            return result;
+                        }
+                        break;
+                    case "Complexity":
+                        if (!IsComplexityValid(out result))
+                        {
+                            return result;
+                        }
+                        break;
+
+                }
+                return result;
+            }
+        }
+
+        public string Error
+        {
+            get { return null; }
         }
 
         #endregion
+       
+      
     }
 }
