@@ -48,7 +48,7 @@
 
             <DockPanel>
 
-                <ComboBox  Style="{StaticResource ComboBoxFlatStyle}" Name="cb_Categories" ItemsSource="{Binding CategoriesCollection}" DisplayMemberPath="name" SelectedItem="{Binding CurrentCategory}">
+                <ComboBox  Style="{StaticResource ComboBoxFlatStyle}" Name="cb_Categories" ItemsSource="{Binding CategoriesCollection}" DisplayMemberPath="name" SelectedItem="{Binding CurrentCategory, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
                     <ws:WatermarkService.Watermark>
                         <TextBlock Margin ="0 0 0 0" FontSize="16" >Choose dish category...</TextBlock>
                     </ws:WatermarkService.Watermark>
@@ -100,7 +100,7 @@
                     <DockPanel VerticalAlignment="Center">
                         <Label>Complexity</Label>
                         <!--BINDING HERE-->
-                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}" ItemsSource="{Binding availableComplexities}" SelectedValue="{Binding Complexity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}" ItemsSource="{Binding availableComplexities}" SelectedValue="{Binding Complexity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
                             <ws:WatermarkService.Watermark>
                                 <TextBlock Margin ="0 0 0 0" FontSize="16" >Set complexity of your dish...</TextBlock>
                             </ws:WatermarkService.Watermark>

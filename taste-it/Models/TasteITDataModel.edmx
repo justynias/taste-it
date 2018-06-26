@@ -217,7 +217,7 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="duration" Type="Int32" Nullable="false" />
           <Property Name="complexity" Type="Int32" Nullable="false" />
-          <Property Name="ingredients" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ingredients" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Have_category" Relationship="Self.FK_Have_category_Recipes" FromRole="Recipes" ToRole="Have_category" />
           <NavigationProperty Name="Have_favourites" Relationship="Self.FK_Have_favourites_Recipes" FromRole="Recipes" ToRole="Have_favourites" />

@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,15 +17,15 @@ using taste_it.Models;
 
 namespace taste_it.ViewModels
 {
-   
+
     public class AddRecipeViewModel : ViewModelBase, IDataErrorInfo
     {
         #region private fields
         private User currentUser; // to merged author with the recipe // MVVM message?
         private IFrameNavigationService _navigationService;
         private readonly IRecipeDataService _recipeDataService;
-        private readonly ICategoryDataService _categoryDataService; 
-        private readonly ITagDataService _tagDataService;  
+        private readonly ICategoryDataService _categoryDataService;
+        private readonly ITagDataService _tagDataService;
 
         private string recipeName;
         private string recipeIngredients;
@@ -39,7 +39,6 @@ namespace taste_it.ViewModels
         private ObservableCollection<Category> categoriesCollection;
         private TimeSpan durationTime;
         private bool isTagExistingAlready;
-
         #endregion
         #region Properties
 
@@ -186,7 +185,7 @@ namespace taste_it.ViewModels
             get
             {
                 List<int> vals = new List<int>();
-                for(int i = 1; i <= 10; i++)
+                for (int i = 1; i <= 10; i++)
                 {
                     vals.Add(i);
                 }
@@ -233,7 +232,7 @@ namespace taste_it.ViewModels
         #endregion
 
         //ctr
-        public AddRecipeViewModel(IRecipeDataService  recipeData,ITagDataService tagData, ICategoryDataService categoryData, IFrameNavigationService navigationService)
+        public AddRecipeViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData, IFrameNavigationService navigationService)
         {
             _navigationService = navigationService;
             _recipeDataService = recipeData;
@@ -244,7 +243,7 @@ namespace taste_it.ViewModels
 
             LoadTags();
 
-            AddRecipeCommand = new RelayCommand(AddRecipe); // disable button on validation
+            AddRecipeCommand = new RelayCommand(AddRecipe, ()=>IsRecipeValid()); // disable button on validation
             ResetRecipeCommand = new RelayCommand(ResetRecipe);
             AddTagCommand = new RelayCommand(AddTag);
             RemoveTagCommand = new RelayCommand<object>(RemoveTag);
@@ -256,7 +255,7 @@ namespace taste_it.ViewModels
         private async void AddRecipe()
         {
             var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = Duration };
-            await AddTags();
+            await AddTagsToDatabase();
             var tagList = new List<Tag>(Tags);
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
             ResetRecipe();
@@ -274,10 +273,10 @@ namespace taste_it.ViewModels
         {
             CurrentTag = new Tag() { name = TagName };
             isTagExistingAlready = Tags.Any(item => item.name == CurrentTag.name);
-            if (!isTagExistingAlready)
+            if (!isTagExistingAlready && Tags.Count<11)
             {
                 Tags.Add(CurrentTag);
-                
+
             }
             TagName = string.Empty;
         }
@@ -287,12 +286,12 @@ namespace taste_it.ViewModels
             RecipeIngredients = string.Empty;
             Description = string.Empty;
             Tags.Clear();
-            //CurrentCategory=default?
-            //Complexity = default value;
-            //Duration = default value;
+            CurrentCategory = null;
+            Complexity = 0;
+            Duration = 0;
 
         }
-        private async Task AddTags()
+        private async Task AddTagsToDatabase()
         {
             if (Tags != null)
             {
@@ -338,29 +337,61 @@ namespace taste_it.ViewModels
                 string result = string.Empty;
                 if (columnName == "RecipeName")
                 {
-                    if (IsFieldEmpty(RecipeName)) { return "Field should not be empty"; }
+                    if (!IsRecipeNameValid(out result))
+                    {
+                        return result;
+                    }
 
                 }
                 else if (columnName == "RecipeIngredients")
                 {
-                    if (IsFieldEmpty(RecipeIngredients)) { return "Field should not be empty"; }
+                    if (!IsRecipeIngredientsValid(out result))
+                    {
+                        return result;
+                    }
 
                 }
                 else if (columnName == "Duration")
                 {
-                    if (double.IsNaN(Duration)) { return "Field must be numeric value"; }
+                    if (!IsDurationValid(out result))
+                    {
+                        return result;
+                    }
 
                 }
                 else if (columnName == "Description")
                 {
-                    if (IsFieldEmpty(Description)) { return "Field should not be empty"; }
+                    if (!IsDescriptionValid(out result))
+                    {
+                        return result;
+                    }
 
                 }
-                else if(columnName == "TagName")
+                else if (columnName == "TagName")
                 {
-                   
-                    if (isTagExistingAlready) { return "Tag already exists!"; }
+
+                    if (!IsTagsValid(out result))
+                    {
+                        return result;
+                    }
                 }
+                else if (columnName == "CurrentCategory")
+                {
+
+                    if (!IsCategoryValid(out result))
+                    {
+                        return result;
+                    }
+                }
+                else if (columnName == "Complexity")
+                {
+
+                    if (!IsComplexityValid(out result))
+                    {
+                        return result;
+                    }
+                }
+
                 return result;
             }
         }
@@ -372,12 +403,122 @@ namespace taste_it.ViewModels
 
 
 
-        private bool IsFieldEmpty(string field)
+
+        private bool IsRecipeNameValid(out string message)
         {
-            return (string.IsNullOrWhiteSpace(field) || string.IsNullOrEmpty(field));
+            message = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(RecipeName) || string.IsNullOrEmpty(RecipeName))
+            {
+                message = "Field should not be empty";
+                return false;
+            }
+            else if (RecipeName.Length > 50)
+            {
+                message = "Length of name should not exceed more than 50 char";
+                return false;
+            }
+            return true;
+        }
+        private bool IsTagsValid(out string message)
+        {
+            message = string.Empty;
+            if (isTagExistingAlready)
+            {
+                message = "Tag already exists!";
+                return false;
+            }
+            else if (Tags.Count < 2)
+            {
+                message = "Number of tags must be minimum 2";
+                return false;
+            }
+            else if (Tags.Count > 10)
+            {
+                message = "Number of tags must be maximum 10";
+                return false;
+            }
+            return true;
+        }
+        private bool IsRecipeIngredientsValid(out string message)
+        {
+            message = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(RecipeIngredients) || string.IsNullOrEmpty(RecipeIngredients))
+            {
+                message = "Field should not be empty";
+                return false;
+            }
+            else if (RecipeIngredients.Length > 500)
+            {
+                message = "the maximum number of characters is 500";
+                return false;
+
+            }
+            return true;
+
+        }
+        private bool IsDescriptionValid(out string message)
+        {
+            message = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(RecipeIngredients) || string.IsNullOrEmpty(RecipeIngredients))
+            {
+                message = "Field should not be empty";
+                return false;
+            }
+            else if (RecipeIngredients.Length > 1000)
+            {
+                message = "the maximum number of characters is 1000";
+                return false;
+
+            }
+            return true;
+
+        }
+        private bool IsDurationValid(out string message)
+        {
+            message = string.Empty;
+            if (Duration == 0)
+            {
+                message = "Insert duration value!";
+                return false;
+            }
+            else if (double.IsNaN(Duration))
+            {
+                message = "Duration must have numeric value";
+                return false;
+            }
+            else return true;
+        }
+
+        private bool IsCategoryValid(out string message)
+        {
+            message = string.Empty;
+            if (CurrentCategory == null)
+            {
+                message = "Select Category!";
+                return false;
+            }
+            else return true;
+        }
+        private bool IsComplexityValid(out string message)
+        {
+            message = string.Empty;
+            if (Complexity == 0)
+            {
+                message = "Select complexity!";
+                return false;
+            }
+            else return true;
+        }
+        private bool IsRecipeValid()
+        {
+            string temp;
+            return (IsCategoryValid(out temp) && IsComplexityValid(out temp) && IsDescriptionValid(out temp)
+                && IsDurationValid(out temp) && IsRecipeIngredientsValid(out temp) && IsRecipeNameValid(out temp) && IsTagsValid(out temp));
         }
 
         #endregion
-
     }
 }
