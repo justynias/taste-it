@@ -38,6 +38,7 @@ namespace taste_it.ViewModels
         private ObservableCollection<Tag> tags; //itemControl, validation?
         private ObservableCollection<Category> categoriesCollection;
         private TimeSpan durationTime;
+        private bool isTagExistingAlready;
 
         #endregion
         #region Properties
@@ -217,6 +218,18 @@ namespace taste_it.ViewModels
                 Set(ref tagName, value);
             }
         }
+        public bool IsTagExistingAlready
+        {
+            get
+            {
+                return isTagExistingAlready;
+            }
+
+            set
+            {
+                Set(ref isTagExistingAlready, value);
+            }
+        }
         #endregion
 
         //ctr
@@ -260,9 +273,12 @@ namespace taste_it.ViewModels
         private void AddTag()
         {
             CurrentTag = new Tag() { name = TagName };
-            bool containsItem = Tags.Any(item => item.name == CurrentTag.name);
-            if(!containsItem)
+            isTagExistingAlready = Tags.Any(item => item.name == CurrentTag.name);
+            if (!isTagExistingAlready)
+            {
                 Tags.Add(CurrentTag);
+                
+            }
             TagName = string.Empty;
         }
         private void ResetRecipe()
@@ -342,8 +358,8 @@ namespace taste_it.ViewModels
                 }
                 else if(columnName == "TagName")
                 {
-                    bool containsItem = Tags.Any(item => item.name == CurrentTag.name);
-                    if (containsItem) { return "Tag already exists!"; }
+                   
+                    if (isTagExistingAlready) { return "Tag already exists!"; }
                 }
                 return result;
             }
@@ -354,7 +370,7 @@ namespace taste_it.ViewModels
             get { return null; }
         }
 
-       
+
 
         private bool IsFieldEmpty(string field)
         {

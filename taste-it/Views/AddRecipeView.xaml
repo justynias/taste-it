@@ -111,7 +111,7 @@
                     <!--TAGS PANEL-->
                     <DockPanel >
                         <Label VerticalAlignment="Center">Tags</Label>
-                        <TextBox Style="{StaticResource SinglelineRoundedTextBox}" MaxWidth="80" VerticalAlignment="Center" Text="{Binding TagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox Style="{StaticResource SinglelineRoundedTextBox}" MaxWidth="80" VerticalAlignment="Center" Text="{Binding TagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
                             <TextBox.InputBindings>
                                 <KeyBinding Key="Return" Command="{Binding AddTagCommand, Mode=OneWay}"/>
                             </TextBox.InputBindings>
@@ -175,7 +175,7 @@
                 <StackPanel>
                     <!--BINDING HERE-->
                     <Button Style="{StaticResource RoundCornerPrimaryBtn}" Width="500" MaxWidth="1000" Command="{Binding AddRecipeCommand, Mode=OneWay}">Add</Button>
-                    <Button Style="{StaticResource RoundCornerDangerBtn}" Width="500" MaxWidth="1000" Command="{Binding ResetRecipeCommand, Mode=OneWay}">Clear form</Button>
+                    <Button Style="{StaticResource RoundCornerDarkBtn}" Width="500" MaxWidth="1000" Command="{Binding ResetRecipeCommand, Mode=OneWay}">Clear form</Button>
                 </StackPanel>
             </DockPanel>
         </StackPanel>
