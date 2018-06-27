@@ -33,17 +33,26 @@
             <ColumnDefinition Width=".2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-            <ItemsControl ItemsSource="{Binding PageViewModels}" Background="Red">
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="1">
+            <ItemsControl ItemsSource="{Binding PageViewModels}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding name}"
+                        <Button
+                            Style="{StaticResource RoundCornerNavBtn}"
+                                Content="{Binding name}"
                                 Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
-                                CommandParameter="{Binding }"
-                                Margin="2,5"/>
+                                CommandParameter="{Binding }" IsEnabled="{Binding  }"
+                                />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+        </DockPanel>
+            
 
         <ContentControl Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1"  Content="{Binding CurrentPageViewModel}" />
     </Grid>

@@ -25,7 +25,9 @@ namespace taste_it.ViewModels
 
             CurrentPageViewModel = PageViewModels[0];
 
-            ChangePageCommand = new RelayCommand<IPageViewModel>(p =>  ChangeViewModel((IPageViewModel)p) , (p) => p is IPageViewModel);
+            ChangePageCommand = new RelayCommand<IPageViewModel>(p =>  ChangeViewModel(
+                (IPageViewModel)p) , 
+                (p) => p is IPageViewModel && CurrentPageViewModel.name != p.name );
 
         }
         private void ChangeViewModel(IPageViewModel viewModel)
@@ -64,5 +66,7 @@ namespace taste_it.ViewModels
                 }
             }
         }
+
+      
     }
 }
