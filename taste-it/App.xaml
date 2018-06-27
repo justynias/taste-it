@@ -81,15 +81,15 @@
                     <ControlTemplate >
                         <DockPanel LastChildFill="True">
                             <Border DockPanel.Dock="Right"
-                Padding="4"
-                CornerRadius="0, 25, 25, 0"
-                Background="{StaticResource Danger}">
+                                    Padding="4"
+                                    CornerRadius="0, 25, 25, 0"
+                                    Background="{StaticResource Danger}">
                                 <TextBlock TextWrapping="Wrap"
                    Margin="4"
                    HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                           
-                   MaxWidth="100"
+                   MaxWidth="250"
                                                    Foreground="White"
                    Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
                             </Border>
@@ -375,7 +375,7 @@
                 Background="{StaticResource Danger}">
                                 <TextBlock TextWrapping="Wrap"
                    Margin="4"
-                   MaxWidth="100"
+                   MaxWidth="250"
                                                    Foreground="White"
                    Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
                             </Border>
@@ -433,7 +433,7 @@
                 Background="{StaticResource Danger}">
                                 <TextBlock TextWrapping="Wrap"
                    Margin="4"
-                   MaxWidth="100"
+                   MaxWidth="250"
                                                    Foreground="White"
                    Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
                             </Border>
@@ -456,12 +456,15 @@
                     <ControlTemplate >
                         <DockPanel LastChildFill="True">
                             <Border DockPanel.Dock="Right"
-                Padding="4"
-                CornerRadius="5"
-                Background="Red">
+                                    Padding="4"
+                                    CornerRadius="0, 25, 25, 0"
+                                    Background="{StaticResource Danger}">
                                 <TextBlock TextWrapping="Wrap"
                    Margin="4"
-                   MaxWidth="100"
+                   HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                          
+                   MaxWidth="250"
                                                    Foreground="White"
                    Text="{Binding Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Adorner}}}" />
                             </Border>
