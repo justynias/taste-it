@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Additionals\ContentNavigationService\IPageViewModel.cs" />
     <Compile Include="Additionals\NavigationService\FrameNavigationService.cs" />
     <Compile Include="Additionals\NavigationService\IFrameNavigationService.cs" />
     <Compile Include="Additionals\PasswordService\PasswordBoxAssistant.cs" />
@@ -152,11 +153,15 @@
     </Compile>
     <Compile Include="ViewModels\AddRecipeViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\NavigableContentViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignUpViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\AddRecipeView.xaml.cs">
       <DependentUpon>AddRecipeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NavigableContentView.xaml.cs">
+      <DependentUpon>NavigableContentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
@@ -185,6 +190,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddRecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NavigableContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -95,7 +95,7 @@ namespace taste_it.ViewModels
         public void SignIn()   // Method execute after button clicked
         {
 
-           CheckCredentials();
+            if (CheckCredentials()) _navigationService.NavigateTo("NavigableContent");
             //if (CheckCredentials()) NavigateTo...(); // after logged in display anot her view
         }
 

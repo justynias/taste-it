@@ -1,0 +1,48 @@
+﻿<Page x:Class="taste_it.Views.NavigableContentView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:taste_it.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:my="clr-namespace:taste_it.Additionals" 
+             xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow"
+             xmlns:ws="clr-namespace:taste_it.Additionals.WatermarkService"
+             xmlns:ps="clr-namespace:taste_it.Additionals.PasswordService"
+             xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
+             xmlns:views="clr-namespace:taste_it.Views" 
+             xmlns:models="clr-namespace:taste_it.Models"
+      
+      DataContext="{Binding Source={StaticResource Locator}, Path=NavigableContent}"
+      >
+    <Page.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:AddRecipeViewModel}">
+            <local:AddRecipeView />
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+            <ItemsControl ItemsSource="{Binding PageViewModels}" Background="Red">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Name}"
+                                Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                CommandParameter="{Binding }"
+                                Margin="2,5"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+    </Grid>
+</Page>

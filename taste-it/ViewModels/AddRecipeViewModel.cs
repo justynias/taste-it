@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using taste_it.Additionals.ContentNavigationService;
 using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 using taste_it.Models;
@@ -19,7 +20,7 @@ using taste_it.Models;
 namespace taste_it.ViewModels
 {
 
-    public class AddRecipeViewModel : ViewModelBase, IDataErrorInfo
+    public class AddRecipeViewModel : ViewModelBase, IDataErrorInfo, IPageViewModel
     {
         #region private fields
         private User currentUser; // to merged author with the recipe // MVVM message?
@@ -225,9 +226,8 @@ namespace taste_it.ViewModels
         #endregion
 
         //ctr
-        public AddRecipeViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData, IFrameNavigationService navigationService)
+        public AddRecipeViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
         {
-            _navigationService = navigationService;
             _recipeDataService = recipeData;
             _tagDataService = tagData;
             _categoryDataService = categoryData;
@@ -532,8 +532,19 @@ namespace taste_it.ViewModels
             get { return null; }
         }
 
+
+
         #endregion
-       
-      
+        #region IPageViewModel Member
+        public string name
+        {
+            get
+            {
+                return "Add Recipe";
+            }
+        }
+        #endregion
+
+
     }
 }
