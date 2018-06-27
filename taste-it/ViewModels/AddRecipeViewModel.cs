@@ -377,7 +377,6 @@ namespace taste_it.ViewModels
             message = string.Empty;
             if (Tags.Count < 2)
             {
-                Debug.WriteLine(Tags.Count);
                 message = "Number of tags must be minimum 2";
                 return false;
             }
