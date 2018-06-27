@@ -30,19 +30,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".4*"/>
+            <ColumnDefinition Width=".2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
             <ItemsControl ItemsSource="{Binding PageViewModels}" Background="Red">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding Name}"
-                                Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                        <Button Content="{Binding name}"
+                                Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                                 CommandParameter="{Binding }"
                                 Margin="2,5"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+
+        <ContentControl Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1"  Content="{Binding CurrentPageViewModel}" />
     </Grid>
 </Page>

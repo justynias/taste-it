@@ -14,7 +14,7 @@ namespace taste_it.ViewModels
     public class NavigableContentViewModel : ViewModelBase
     {
 
-        private ICommand changePageCommand;
+        public ICommand ChangePageCommand { get; private set; }
 
         private IPageViewModel currentPageViewModel;
         private List<IPageViewModel> pageViewModels;
@@ -23,7 +23,9 @@ namespace taste_it.ViewModels
         {
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
 
-            changePageCommand = new RelayCommand<IPageViewModel>(p =>  ChangeViewModel((IPageViewModel)p) , (p) => p is IPageViewModel);
+            CurrentPageViewModel = PageViewModels[0];
+
+            ChangePageCommand = new RelayCommand<IPageViewModel>(p =>  ChangeViewModel((IPageViewModel)p) , (p) => p is IPageViewModel);
 
         }
         private void ChangeViewModel(IPageViewModel viewModel)

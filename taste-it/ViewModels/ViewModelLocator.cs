@@ -37,7 +37,7 @@ namespace taste_it.ViewModels
             navigationService.Configure("Main", new Uri("../MainWindowView.xaml", UriKind.Relative));
             navigationService.Configure("SignIn", new Uri("../Views/SignInView.xaml", UriKind.Relative));
             navigationService.Configure("SignUp", new Uri("../Views/SignUpView.xaml", UriKind.Relative));
-            navigationService.Configure("AddRecipe", new Uri("../Views/AddRecipeView.xaml", UriKind.Relative));
+            //navigationService.Configure("AddRecipe", new Uri("../Views/AddRecipeView.xaml", UriKind.Relative));
             navigationService.Configure("NavigableContent", new Uri("../Views/NavigableContentView.xaml", UriKind.Relative));
 
 
@@ -51,7 +51,7 @@ namespace taste_it.ViewModels
             SimpleIoc.Default.Register<MainWindowViewModel>(true);
             SimpleIoc.Default.Register<SignInViewModel>(true);
             SimpleIoc.Default.Register<SignUpViewModel>(true);
-            SimpleIoc.Default.Register<AddRecipeViewModel>(true);
+            //SimpleIoc.Default.Register<AddRecipeViewModel>(true);
             SimpleIoc.Default.Register<NavigableContentViewModel>(true);
 
 

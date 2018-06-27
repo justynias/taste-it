@@ -16,214 +16,214 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" FontFamily="Source Sans Pro"
-             DataContext="{Binding Source={StaticResource Locator}, Path=AddRecipe}"
+
              >
-    <Grid>
+    <Grid Name="grid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MaxWidth="600"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!--<ScrollViewer Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" VerticalScrollBarVisibility="Visible" >
+        <ScrollViewer Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Width="1400" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Visible" >
+            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="1000">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type DockPanel}">
+                        <Setter Property="Margin" Value="0,10,0,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <DockPanel>
+                    <TextBox  Style="{StaticResource LineTextbox}" Name="tb_RecipeName">
+                        <TextBox.Text>
+                            <!--BINDING HERE-->
+                            <Binding Mode="TwoWay" Path="RecipeName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                        <ws:WatermarkService.Watermark>
+                            <TextBlock Margin ="0 -40 0 0" FontSize="18px" >Recipe name...</TextBlock>
+                        </ws:WatermarkService.Watermark>
+                    </TextBox>
+                </DockPanel>
 
-        </ScrollViewer>-->
-        <StackPanel >
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type DockPanel}">
-                    <Setter Property="Margin" Value="0,10,0,0"/>
-                </Style>
-            </StackPanel.Resources>
-            <DockPanel>
-                <TextBox  Style="{StaticResource LineTextbox}" Name="tb_RecipeName">
-                    <TextBox.Text>
-                        <!--BINDING HERE-->
-                        <Binding Mode="TwoWay" Path="RecipeName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                            <Binding.ValidationRules>
-                                <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                    <ws:WatermarkService.Watermark>
-                        <TextBlock Margin ="0 -40 0 0" FontSize="18px" >Recipe name...</TextBlock>
-                    </ws:WatermarkService.Watermark>
-                </TextBox>
-            </DockPanel>
+                <DockPanel>
 
-            <DockPanel>
-
-                <ComboBox  Style="{StaticResource ComboBoxFlatStyle}" Name="cb_Categories" 
+                    <ComboBox  Style="{StaticResource ComboBoxFlatStyle}" Name="cb_Categories" 
                            ItemsSource="{Binding CategoriesCollection}" DisplayMemberPath="name" 
                             >
-                    <ComboBox.SelectedItem>
-                        <Binding Mode="TwoWay" Path="CurrentCategory" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                            <Binding.ValidationRules>
-                                <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.SelectedItem>
-                    <ws:WatermarkService.Watermark>
-                        <TextBlock Margin ="0 0 0 0" FontSize="16" >Choose dish category...</TextBlock>
-                    </ws:WatermarkService.Watermark>
-                </ComboBox>
-
-
-            </DockPanel>
-            <DockPanel>
-                <Border BorderThickness="1" BorderBrush="Transparent" CornerRadius="10">
-                    <TextBox Style="{StaticResource MultilineRoundedTextBox}" Height="100" Name="tb_RecipeIngredients" VerticalScrollBarVisibility="Visible">
-                        <TextBox.Text>
-                            <!--BINDING HERE-->
-                            <Binding Mode="TwoWay" Path="RecipeIngredients" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Mode="TwoWay" Path="CurrentCategory" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                                 <Binding.ValidationRules>
-                                    <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
+                                    <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </TextBox.Text>
+                        </ComboBox.SelectedItem>
                         <ws:WatermarkService.Watermark>
-                            <TextBlock FontSize="16" >Ingredients...</TextBlock>
+                            <TextBlock Margin ="0 0 0 0" FontSize="16" >Choose dish category...</TextBlock>
                         </ws:WatermarkService.Watermark>
-                    </TextBox>
-                </Border>
-            </DockPanel>
-            <!--DETAIL PANEL-->
-            <DockPanel>
-                <UniformGrid Rows="3">
-                    <UniformGrid.Resources>
-                        <!--STYLES FOR DETAILS PANEL-->
-                        <Style TargetType="{x:Type Label}">
-                            <Setter Property="FontSize" Value="16"/>
-                            <Setter Property="Foreground" Value="{StaticResource FilterMain}"/>
-                            <Setter Property="Margin" Value="0, 0, 30, 0"/>
-                        </Style>
-                        <Style TargetType="{x:Type TextBox}">
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="BorderBrush" Value="{x:Null}"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="Foreground" Value="{StaticResource FilterMain}" />
-                            <Setter Property="Width" Value="200"/>
-                            <Setter Property="HorizontalAlignment" Value="Left"/>
-                            <Setter Property="Margin" Value="0, 0, 30, 0"/>
-                        </Style>
-                        <Style TargetType="{x:Type DockPanel}">
-                            <Setter Property="Margin" Value="10"/>
-                        </Style>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="Margin" Value="0, 0, 30, 0"/>
-                        </Style>
+                    </ComboBox>
 
-                    </UniformGrid.Resources>
 
-                    <DockPanel VerticalAlignment="Center">
-                        <Label>Complexity</Label>
-                        <!--BINDING HERE-->
-                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}" ItemsSource="{Binding availableComplexities}">
-                            <ComboBox.SelectedItem>
-                                <Binding Mode="TwoWay" Path="Complexity" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                </DockPanel>
+                <DockPanel>
+                    <Border BorderThickness="1" BorderBrush="Transparent" CornerRadius="10">
+                        <TextBox Style="{StaticResource MultilineRoundedTextBox}" Height="100" Name="tb_RecipeIngredients" VerticalScrollBarVisibility="Visible">
+                            <TextBox.Text>
+                                <!--BINDING HERE-->
+                                <Binding Mode="TwoWay" Path="RecipeIngredients" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                                     <Binding.ValidationRules>
                                         <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </ComboBox.SelectedItem>
+                            </TextBox.Text>
                             <ws:WatermarkService.Watermark>
-                                <TextBlock Margin ="0 0 0 0" FontSize="16" >Set complexity of your dish...</TextBlock>
+                                <TextBlock FontSize="16" >Ingredients...</TextBlock>
                             </ws:WatermarkService.Watermark>
-                        </ComboBox>
-                        <!--BINDING HERE-->
-                        <ProgressBar Style="{StaticResource ProgressBarCustom}" Minimum="0" Value="{Binding Complexity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Maximum="10"></ProgressBar>
-                    </DockPanel>
-                    <!--TAGS PANEL-->
-                    <DockPanel >
-                        <Label VerticalAlignment="Center">Tags</Label>
-                        <TextBox Style="{StaticResource SinglelineRoundedTextBox}" MaxWidth="80" VerticalAlignment="Center" >
-                            <TextBox.InputBindings>
-                                <KeyBinding Key="Return" Command="{Binding AddTagCommand, Mode=OneWay}"/>
-                            </TextBox.InputBindings>
-                            <TextBox.Text>
-                                <Binding Mode="TwoWay" Path="TagName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                                    <Binding.ValidationRules>
-                                        <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
                         </TextBox>
-                        <ScrollViewer Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
-                            <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Tags, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
-                                <ItemsControl.ItemsPanel>
+                    </Border>
+                </DockPanel>
+                <!--DETAIL PANEL-->
+                <DockPanel>
+                    <UniformGrid Rows="3">
+                        <UniformGrid.Resources>
+                            <!--STYLES FOR DETAILS PANEL-->
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="Foreground" Value="{StaticResource FilterMain}"/>
+                                <Setter Property="Margin" Value="0, 0, 30, 0"/>
+                            </Style>
+                            <Style TargetType="{x:Type TextBox}">
+                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="BorderBrush" Value="{x:Null}"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Foreground" Value="{StaticResource FilterMain}" />
+                                <Setter Property="Width" Value="200"/>
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                                <Setter Property="Margin" Value="0, 0, 30, 0"/>
+                            </Style>
+                            <Style TargetType="{x:Type DockPanel}">
+                                <Setter Property="Margin" Value="10"/>
+                            </Style>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <Setter Property="Margin" Value="0, 0, 30, 0"/>
+                            </Style>
 
-                                    <ItemsPanelTemplate>
-                                        <DockPanel VerticalAlignment="Center">
+                        </UniformGrid.Resources>
 
-                                        </DockPanel>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Style="{StaticResource TagPanel}">
-                                            <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <!--BINDING HERE-->
-                                                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}">
-                                                    
-                                                </TextBlock>
-                                                <!--BINDING HERE-->
-                                                <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </DockPanel>
-
-                    <DockPanel VerticalAlignment="Center">
-                        <Label >Preparation time: (minutes)</Label>
-                        <TextBox Style="{StaticResource SinglelineRoundedTextBox}" >
-                            <TextBox.Text>
-                                <Binding Mode="TwoWay" Path="Duration" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                                    <Binding.ValidationRules>
-                                        <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <!--BINDING HERE-->
-                        <TextBlock VerticalAlignment="Center" FontSize="16" Margin="30, 0, 0, 0" Text="{Binding DurationTime, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-                    </DockPanel>
-                </UniformGrid>
-
-            </DockPanel>
-            <DockPanel>
-                <Border BorderThickness="1" BorderBrush="Transparent" CornerRadius="10">
-                    <TextBox Style="{StaticResource MultilineRoundedTextBox}" Height="200" Name="tb_RecipeDescription" VerticalScrollBarVisibility="Visible">
-                        <TextBox.Text>
+                        <DockPanel VerticalAlignment="Center">
+                            <Label>Complexity</Label>
                             <!--BINDING HERE-->
-                            <Binding Mode="TwoWay" Path="Description" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                                <Binding.ValidationRules>
-                                    <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <ws:WatermarkService.Watermark>
-                            <TextBlock FontSize="16" >Steps of preparation...</TextBlock>
-                        </ws:WatermarkService.Watermark>
-                    </TextBox>
-                </Border>
-            </DockPanel>
-            <DockPanel>
-                <StackPanel>
-                    <!--BINDING HERE-->
-                    <Button Style="{StaticResource RoundCornerPrimaryBtn}" Width="500" MaxWidth="1000" Command="{Binding AddRecipeCommand, Mode=OneWay}">Add</Button>
-                    <Button Style="{StaticResource RoundCornerDarkBtn}" Width="500" MaxWidth="1000" Command="{Binding ResetRecipeCommand, Mode=OneWay}">Clear form</Button>
-                </StackPanel>
-            </DockPanel>
-        </StackPanel>
+                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}" ItemsSource="{Binding availableComplexities}">
+                                <ComboBox.SelectedItem>
+                                    <Binding Mode="TwoWay" Path="Complexity" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                                <ws:WatermarkService.Watermark>
+                                    <TextBlock Margin ="0 0 0 0" FontSize="16" >Set complexity of your dish...</TextBlock>
+                                </ws:WatermarkService.Watermark>
+                            </ComboBox>
+                            <!--BINDING HERE-->
+                            <ProgressBar Style="{StaticResource ProgressBarCustom}" Minimum="0" Value="{Binding Complexity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Maximum="10"></ProgressBar>
+                        </DockPanel>
+                        <!--TAGS PANEL-->
+                        <DockPanel >
+                            <Label VerticalAlignment="Center">Tags</Label>
+                            <TextBox Style="{StaticResource SinglelineRoundedTextBox}" MaxWidth="80" VerticalAlignment="Center" >
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Return" Command="{Binding AddTagCommand, Mode=OneWay}"/>
+                                </TextBox.InputBindings>
+                                <TextBox.Text>
+                                    <Binding Mode="TwoWay" Path="TagName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <ScrollViewer Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
+                                <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Tags, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+                                    <ItemsControl.ItemsPanel>
+
+                                        <ItemsPanelTemplate>
+                                            <DockPanel VerticalAlignment="Center">
+
+                                            </DockPanel>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Style="{StaticResource TagPanel}">
+                                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <!--BINDING HERE-->
+                                                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}">
+
+                                                    </TextBlock>
+                                                    <!--BINDING HERE-->
+                                                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </DockPanel>
+
+                        <DockPanel VerticalAlignment="Center">
+                            <Label >Preparation time: (minutes)</Label>
+                            <TextBox Style="{StaticResource SinglelineRoundedTextBox}" >
+                                <TextBox.Text>
+                                    <Binding Mode="TwoWay" Path="Duration" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <!--BINDING HERE-->
+                            <TextBlock VerticalAlignment="Center" FontSize="16" Margin="30, 0, 0, 0" Text="{Binding DurationTime, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                        </DockPanel>
+                    </UniformGrid>
+
+                </DockPanel>
+                <DockPanel>
+                    <Border BorderThickness="1" BorderBrush="Transparent" CornerRadius="10">
+                        <TextBox Style="{StaticResource MultilineRoundedTextBox}" Height="200" Name="tb_RecipeDescription" VerticalScrollBarVisibility="Visible">
+                            <TextBox.Text>
+                                <!--BINDING HERE-->
+                                <Binding Mode="TwoWay" Path="Description" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            <ws:WatermarkService.Watermark>
+                                <TextBlock FontSize="16" >Steps of preparation...</TextBlock>
+                            </ws:WatermarkService.Watermark>
+                        </TextBox>
+                    </Border>
+                </DockPanel>
+                <DockPanel>
+                    <StackPanel>
+                        <!--BINDING HERE-->
+                        <Button Style="{StaticResource RoundCornerPrimaryBtn}" Width="500" MaxWidth="1000" Command="{Binding AddRecipeCommand, Mode=OneWay}">Add</Button>
+                        <Button Style="{StaticResource RoundCornerDarkBtn}" Width="500" MaxWidth="1000" Command="{Binding ResetRecipeCommand, Mode=OneWay}">Clear form</Button>
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </ScrollViewer>
+    
     </Grid>
 
 
