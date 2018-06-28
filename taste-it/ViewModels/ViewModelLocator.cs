@@ -53,6 +53,7 @@ namespace taste_it.ViewModels
             SimpleIoc.Default.Register<SignUpViewModel>(true);
             //SimpleIoc.Default.Register<AddRecipeViewModel>(true);
             SimpleIoc.Default.Register<NavigableContentViewModel>(true);
+            SimpleIoc.Default.Register<SidebarViewModel>(true);
 
 
 
@@ -94,6 +95,13 @@ namespace taste_it.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<NavigableContentViewModel>();
+            }
+        }
+        public SidebarViewModel Sidebar
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SidebarViewModel>();
             }
         }
 

@@ -13,6 +13,13 @@ namespace taste_it.ViewModels
         private string message; // Message shown to user with his/her name e.g Hello root
         private IPageViewModel currentPageViewModel;
         private List<IPageViewModel> pageViewModels; // Switching between filterview and TASTE.IT view
+        public string Message
+        {
+            get
+            {
+                return "Hello Root, it is just a template communicate, where we have to bind username!";
+            }
+        }
         public SidebarViewModel() // Here we have to pass user probably from NavigableContentViewModel
         {
 

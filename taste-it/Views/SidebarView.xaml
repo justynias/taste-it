@@ -5,23 +5,25 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:taste_it.ViewModels"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300">
+      d:DesignHeight="300" d:DesignWidth="300"
+            DataContext="{Binding Source={StaticResource Locator}, Path=Sidebar}"    
+      >
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".1*"/>
+            <RowDefinition Height=".2*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height=".1*"/>
         </Grid.RowDefinitions>
 
 
         <DockPanel Grid.Row="0" Background="{StaticResource FilterAlt}">
-            <UniformGrid Rows="2">
+            <UniformGrid Margin="15" Rows="2">
                 <TextBlock Text="T A S T E . I T" Foreground="{StaticResource MainTextColor}" FontSize="24px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Bold" />
-                <TextBlock Text="{Binding Communicate}" Foreground="{StaticResource BackgroundColor}" FontSize="16px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Bold" />
+                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Foreground="{StaticResource BackgroundColor}" FontSize="12px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Light" />
             </UniformGrid>
         </DockPanel>
 
@@ -30,7 +32,10 @@
         </DockPanel>
 
         <DockPanel Grid.Row="2" Background="{StaticResource FilterAlt}">
-            
+            <UniformGrid Margin="15" Rows="2">
+                <TextBlock Text="Created by:" TextWrapping="Wrap" Foreground="{StaticResource BackgroundColor}" FontSize="12px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Bold" />
+                <TextBlock Text="Justynka, Damianek, Łukaszek" TextWrapping="Wrap" Foreground="{StaticResource BackgroundColor}" FontSize="12px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Light" />
+            </UniformGrid>
         </DockPanel>
     </Grid>
 </UserControl>
