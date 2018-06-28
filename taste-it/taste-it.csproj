@@ -154,6 +154,7 @@
     <Compile Include="ViewModels\AddRecipeViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigableContentViewModel.cs" />
+    <Compile Include="ViewModels\SidebarViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignUpViewModel.cs" />
     <Compile Include="ViewModels\TempVM.cs" />
@@ -163,6 +164,9 @@
     </Compile>
     <Compile Include="Views\NavigableContentView.xaml.cs">
       <DependentUpon>NavigableContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SidebarView.xaml.cs">
+      <DependentUpon>SidebarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
@@ -200,6 +204,10 @@
     <Page Include="Views\NavigableContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SidebarView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SignInView.xaml">
       <SubType>Designer</SubType>
