@@ -22,6 +22,7 @@ namespace taste_it.ViewModels
         public NavigableContentViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
         {
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
+            PageViewModels.Add(new TempVM());
 
             CurrentPageViewModel = PageViewModels[0];
 
