@@ -19,7 +19,10 @@
 
 
         <DockPanel Grid.Row="0" Background="{StaticResource FilterAlt}">
-            
+            <UniformGrid Rows="2">
+                <TextBlock Text="T A S T E . I T" Foreground="{StaticResource MainTextColor}" FontSize="24px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Bold" />
+                <TextBlock Text="{Binding Communicate}" Foreground="{StaticResource BackgroundColor}" FontSize="16px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Bold" />
+            </UniformGrid>
         </DockPanel>
 
         <DockPanel Grid.Row="1" Background="{StaticResource FilterMain}">
