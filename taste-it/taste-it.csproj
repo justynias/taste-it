@@ -153,6 +153,7 @@
       <DependentUpon>TasteITDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddRecipeViewModel.cs" />
+    <Compile Include="ViewModels\AllRecipesViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigableContentViewModel.cs" />
