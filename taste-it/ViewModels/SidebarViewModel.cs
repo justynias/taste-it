@@ -57,7 +57,7 @@ namespace taste_it.ViewModels
         public SidebarViewModel() // Here we have to pass user probably from NavigableContentViewModel
         {
             PageViewModels.Add(new FilterViewModel());
-            PageViewModels.Add(new TasteItViewModel());
+            PageViewModels.Add(new TasteItViewModel()); 
 
             CurrentPageViewModel = PageViewModels[0];
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);

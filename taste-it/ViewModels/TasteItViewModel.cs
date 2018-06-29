@@ -14,7 +14,7 @@ namespace taste_it.ViewModels
         {
             get
             {
-                return "T A S T E . I T";
+                return "T A S T E . I T"; 
             }
         }
     }
