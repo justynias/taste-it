@@ -6,8 +6,26 @@
       xmlns:local="clr-namespace:taste_it.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
+             
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:my="clr-namespace:taste_it.Additionals" 
+             xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow"
+             xmlns:ws="clr-namespace:taste_it.Additionals.WatermarkService"
+             xmlns:ps="clr-namespace:taste_it.Additionals.PasswordService"
+             xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
+             xmlns:views="clr-namespace:taste_it.Views" 
+             xmlns:models="clr-namespace:taste_it.Models"
+             
             DataContext="{Binding Source={StaticResource Locator}, Path=Sidebar}"    
       >
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:FilterViewModel}">
+            <views:FilterView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TasteItViewModel}">
+            <views:TasteItView />
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -28,7 +46,7 @@
         </DockPanel>
 
         <DockPanel Grid.Row="1" Background="{StaticResource FilterMain}">
-            
+            <ContentControl Content="{Binding CurrentPageViewModel}" />
         </DockPanel>
 
         <DockPanel Grid.Row="2" Background="{StaticResource FilterAlt}">
