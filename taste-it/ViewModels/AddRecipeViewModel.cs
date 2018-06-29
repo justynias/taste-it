@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using taste_it.Additionals.ContentNavigationService;
+//using taste_it.Additionals.Messages;
 using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 using taste_it.Models;
@@ -23,7 +25,7 @@ namespace taste_it.ViewModels
     public class AddRecipeViewModel : ViewModelBase, IDataErrorInfo, IPageViewModel
     {
         #region private fields
-        private User currentUser; // to merged author with the recipe // MVVM message?
+        private User _currentUser; // to merged author with the recipe // MVVM message?
         private IFrameNavigationService _navigationService;
         private readonly IRecipeDataService _recipeDataService;
         private readonly ICategoryDataService _categoryDataService;
@@ -231,7 +233,6 @@ namespace taste_it.ViewModels
             _recipeDataService = recipeData;
             _tagDataService = tagData;
             _categoryDataService = categoryData;
-
             LoadCategories();
 
             LoadTags();
@@ -242,15 +243,24 @@ namespace taste_it.ViewModels
             RemoveTagCommand = new RelayCommand<object>(RemoveTag);
 
 
+           // Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
+
+
         }
 
         #region methods
+        //private void HandleCurrentUserMessage(CurrentUserMessage message)
+        //{
+        //    this._currentUser = message.CurrentUser;
+
+        //}
         private async void AddRecipe()
         {
             var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = int.Parse(Duration) };
             await AddTagsToDatabase();
             var tagList = new List<Tag>(Tags);
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
+           /// await _recipeDataService.AddToFavourites(_currentUser, newRecipe); // have favourites=author?
             ResetRecipe();
         }
         private void ResetRecipe()

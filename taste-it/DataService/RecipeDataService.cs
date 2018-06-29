@@ -66,7 +66,7 @@ namespace taste_it.DataService
 
         }
 
-        public async Task<IEnumerable<Recipe>> FindByCategory(Category category)
+        public async Task<IEnumerable<Recipe>> FindByCategory(Category category)  //one cateogory?
         {
             var dbContext = new TasteItDbEntities();
             Category current = await dbContext.Categories.FirstOrDefaultAsync(c => c.name == category.name);
@@ -74,14 +74,25 @@ namespace taste_it.DataService
             return await dbContext.Recipes.AsNoTracking().Where(r => list.Contains(r.id_r)).ToListAsync();
         }
 
-        public Task<IEnumerable<Recipe>> FindByTagAsync(Tag tag)
+        public async Task<IEnumerable<Recipe>> FindByTagAsync(Tag tag)
         {
-            throw new NotImplementedException();
+            var dbContext = new TasteItDbEntities();
+            Tag current = await dbContext.Tags.FirstOrDefaultAsync(t => t.name == tag.name);
+            var list = current.Have_tags.Select(t => t.id_r).ToList();
+            return await dbContext.Recipes.AsNoTracking().Where(r => list.Contains(r.id_r)).ToListAsync();
         }
 
-        public Task<IEnumerable<Recipe>> FindFavouritesAsync(User user)
+        public async Task<IEnumerable<Recipe>> FindFavouritesAsync(User user) //need to test
         {
-            throw new NotImplementedException();
+            var dbContext = new TasteItDbEntities();
+            User current = await dbContext.Users.FirstOrDefaultAsync(u => u.id_u == user.id_u);
+            var list = current.Have_favourites.Select(f => f.id_r).ToList();
+            return await dbContext.Recipes.AsNoTracking().Where(r => list.Contains(r.id_r)).ToListAsync();
+        }
+        public async Task<IEnumerable<Recipe>> FindByNameAsync(string name) //need to test
+        {
+           var dbContext = new TasteItDbEntities();
+           return await  dbContext.Recipes.Where(r => r.name.Contains(name)).ToListAsync();
         }
 
         public async Task<IEnumerable<Recipe>> GetRecipesAsync()
