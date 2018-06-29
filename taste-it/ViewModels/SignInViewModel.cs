@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Input;
 using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 using taste_it.Models;
+using taste_it.Additionals.Messages;
 
 namespace taste_it.ViewModels
 {
@@ -95,7 +97,16 @@ namespace taste_it.ViewModels
         public void SignIn()   // Method execute after button clicked
         {
 
-            if (CheckCredentials()) _navigationService.NavigateTo("NavigableContent");
+            if (CheckCredentials())
+            {
+                Messenger.Default.Send<CurrentUserMessage>(new CurrentUserMessage
+                {
+                    CurrentUser = this.CurrentUser
+
+                });
+                _navigationService.NavigateTo("NavigableContent");
+            }
+
             //if (CheckCredentials()) NavigateTo...(); // after logged in display anot her view
         }
 

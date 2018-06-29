@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using taste_it.Additionals.ContentNavigationService;
 using taste_it.DataService;
+using taste_it.Additionals.Messages;
+using taste_it.Models;
+using System.Diagnostics;
 
 namespace taste_it.ViewModels
 {
     public class NavigableContentViewModel : ViewModelBase
     {
-
         public ICommand ChangePageCommand { get; private set; }
 
         private IPageViewModel currentPageViewModel;
@@ -21,6 +24,7 @@ namespace taste_it.ViewModels
 
         public NavigableContentViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
         {
+          
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
             PageViewModels.Add(new TempVM());
 
@@ -30,7 +34,10 @@ namespace taste_it.ViewModels
                 (IPageViewModel)p) , 
                 (p) => p is IPageViewModel && CurrentPageViewModel.name != p.name );
 
+
         }
+
+       
         private void ChangeViewModel(IPageViewModel viewModel)
         {
             if (!PageViewModels.Contains(viewModel))
