@@ -143,7 +143,6 @@ namespace taste_it.ViewModels
             }
             else
             {
-                Debug.WriteLine("User does not exist!");
                 return false;
             }
         }
@@ -164,10 +163,8 @@ namespace taste_it.ViewModels
                 if (hashBytes[i + 16] != hash[i])
                 {
                     //throw new UnauthorizedAccessException();
-                    Debug.WriteLine("wrong password");
                     return false;
                 }
-            Debug.WriteLine("correct password, logged in");
             return true;
 
         }

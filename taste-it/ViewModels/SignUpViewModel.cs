@@ -162,8 +162,6 @@ namespace taste_it.ViewModels
             ErrorMessage = string.Empty;
             if ((string.IsNullOrWhiteSpace(name) || string.IsNullOrEmpty(name)))
             {
-                Debug.WriteLine("empty");
-                Debug.WriteLine(name);
                 ErrorMessage = "User name should not be empty";
                 return false;
 
