@@ -259,6 +259,9 @@ namespace taste_it.ViewModels
             var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = int.Parse(Duration) };
             await AddTagsToDatabase();
             var tagList = new List<Tag>(Tags);
+           Debug.WriteLine( newRecipe.description.Length);
+            Debug.WriteLine(newRecipe.ingredients.Length);
+
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
            /// await _recipeDataService.AddToFavourites(_currentUser, newRecipe); // have favourites=author?
             ResetRecipe();
@@ -415,12 +418,12 @@ namespace taste_it.ViewModels
         {
             message = string.Empty;
 
-            if (string.IsNullOrWhiteSpace(RecipeIngredients) || string.IsNullOrEmpty(RecipeIngredients))
+            if (string.IsNullOrWhiteSpace(Description) || string.IsNullOrEmpty(Description))
             {
                 message = "Field should not be empty";
                 return false;
             }
-            else if (RecipeIngredients.Length > 1000)
+            else if (Description.Length > 1000)
             {
                 message = "the maximum number of characters is 1000";
                 return false;
