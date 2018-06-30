@@ -33,20 +33,24 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height=".2*"/>
-                                    <RowDefinition Height=".05*"/>
+                                    <RowDefinition Height=".12*"/>
                                     <RowDefinition Height=".3*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                             x:Name="RecipeTitle" Text="{Binding name, Mode=OneWay}" 
                                             FontSize="16" Foreground="{StaticResource FilterMain}" Padding="15" FontWeight="Bold"/>
-                                <ItemsControl Name="ic_Category" Background="red"  Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding Have_category}">
-
+                                <ItemsControl Name="ic_Category" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Have_category}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <DockPanel Margin="15, 0, 0, 0"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock 
                                             x:Name="RecipeCategory" Text="{Binding Category.name, Mode=OneWay}" 
-                                            FontSize="14" Foreground="{StaticResource MainTextColor}" Padding="15" FontWeight="Bold"/>
+                                            FontSize="14" Foreground="{StaticResource MainTextColor}" FontWeight="Bold"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -66,21 +70,21 @@
                                         </LinearGradientBrush>
                                     </Grid.OpacityMask>
                                 </Grid>
-                                <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="15" Height="150" Background="Aqua">
+                                <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="15" Height="150" VerticalAlignment="Center" HorizontalAlignment="Left">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width=".4*"/>
                                         <ColumnDefinition Width=".4*"/>
                                         <ColumnDefinition Width=".4*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="25"/>
-                                        <RowDefinition Height="25"/>
-                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="0">Complexity:</TextBlock>
-                                    <TextBlock Grid.Row="1">Tags:</TextBlock>
-                                    <TextBlock Grid.Row="2">Preparation Time:</TextBlock>
+                                    <TextBlock Grid.Row="0" VerticalAlignment="Center">Complexity:</TextBlock>
+                                    <TextBlock Grid.Row="1" VerticalAlignment="Center">Tags:</TextBlock>
+                                    <TextBlock Grid.Row="2" VerticalAlignment="Center">Preparation Time:</TextBlock>
 
                                     <ProgressBar  Grid.Row="0" Grid.Column="1" Style="{StaticResource ProgressBarCustom}" Minimum="0" Value="{Binding complexity, Mode=OneWay}" Maximum="10"></ProgressBar>
                                     <ItemsControl Name="ic_Tags" Grid.Row="1" Grid.Column="1" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Have_tags}">
@@ -94,9 +98,9 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Style="{StaticResource TagPanel}">
-                                                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
-                                                        <TextBlock Style="{StaticResource TagTextBlock}" HorizontalAlignment="Center" FontSize="10" Text="{Binding Tag.name}">
+                                                <Border Style="{StaticResource TagPanel}" MaxWidth="100">
+                                                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left" >
+                                                        <TextBlock Style="{StaticResource TagTextBlock}" HorizontalAlignment="Left" FontSize="10" Text="{Binding Tag.name}">
 
                                                         </TextBlock>
                                                     </Grid>
@@ -104,6 +108,10 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding duration}" FontSize="16" Foreground="{StaticResource FilterMain}" Padding="10"/>
+                                    <Border Margin="15" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Background="#FFF5FFCA" CornerRadius="15" Padding="15">
+                                        <TextBlock Text="{Binding ingredients}" TextWrapping="Wrap"/>
+                                    </Border>
                                 </Grid>
                             </Grid>
                         </Border>
