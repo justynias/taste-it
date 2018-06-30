@@ -22,8 +22,8 @@
         <DataTemplate DataType="{x:Type viewmodels:AddRecipeViewModel}">
             <views:AddRecipeView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:TempVM}">
-            <local:TestV />
+        <DataTemplate DataType="{x:Type viewmodels:AllRecipesViewModel}">
+            <local:AllRecipesView />
         </DataTemplate>
     </Page.Resources>
 

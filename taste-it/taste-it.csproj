@@ -162,7 +162,6 @@
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignUpViewModel.cs" />
     <Compile Include="ViewModels\TasteItViewModel.cs" />
-    <Compile Include="ViewModels\TempVM.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\AddRecipeView.xaml.cs">
       <DependentUpon>AddRecipeView.xaml</DependentUpon>
@@ -185,8 +184,8 @@
     <Compile Include="Views\TasteItView.xaml.cs">
       <DependentUpon>TasteItView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TestV.xaml.cs">
-      <DependentUpon>TestV.xaml</DependentUpon>
+    <Compile Include="Views\AllRecipesView.xaml.cs">
+      <DependentUpon>AllRecipesView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -236,7 +235,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TestV.xaml">
+    <Page Include="Views\AllRecipesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

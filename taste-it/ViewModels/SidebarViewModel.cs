@@ -24,7 +24,9 @@ namespace taste_it.ViewModels
         {
             get
             {
-                return "Hello "+_currentUser.name;
+                if(_currentUser != null)
+                    return "Hello "+ _currentUser.name;
+                return "Hello null user";
             }
         }
 

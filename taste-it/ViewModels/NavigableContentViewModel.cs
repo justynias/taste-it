@@ -26,7 +26,7 @@ namespace taste_it.ViewModels
         {
           
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
-            PageViewModels.Add(new TempVM());
+            PageViewModels.Add(new AllRecipesViewModel(recipeData));
             PageViewModels.Add(new FavouriteRecipesViewModel(recipeData));
 
 
