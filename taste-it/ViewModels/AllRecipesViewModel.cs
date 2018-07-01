@@ -24,8 +24,7 @@ namespace taste_it.ViewModels
         private ObservableCollection<Recipe> recipesCollection;
         private User _currentUser;
         public ICommand AddRecipeToFavouritesCommand { get; private set; }
-        public ICommand RemoveRecipeToFavouritesCommand
-        { get; private set; }
+        public ICommand RemoveRecipeToFavouritesCommand { get; private set; }
         public string name
         {
             get
