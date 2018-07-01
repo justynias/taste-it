@@ -24,7 +24,8 @@ namespace taste_it.ViewModels
         private ObservableCollection<Recipe> recipesCollection;
         private User _currentUser;
         public ICommand AddRecipeToFavouritesCommand { get; private set; }
-
+        public ICommand RemoveRecipeToFavouritesCommand
+        { get; private set; }
         public string name
         {
             get
@@ -52,6 +53,8 @@ namespace taste_it.ViewModels
             RecipesCollection = new ObservableCollection<Recipe>();
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
             AddRecipeToFavouritesCommand = new RelayCommand<object>(AddRecipeToFavourites);
+            RemoveRecipeToFavouritesCommand = new RelayCommand<object>(RemoveRecipeToFavourites);
+
 
             //LoadRecipes();
         }
@@ -79,22 +82,21 @@ namespace taste_it.ViewModels
             LoadRecipes();
 
         }
+        private void RemoveRecipeToFavourites(object parameter)
+        {
+            int id = Convert.ToInt32(parameter);
+            var currentRecipe = RecipesCollection.First(r => r.id_r == id);
+            Debug.WriteLine("Usuwam " + currentRecipe.name);
+            // delete relationship (currentRecipe, currentUser)
+        }
 
         private void AddRecipeToFavourites(object parameter)
         {
             int id = Convert.ToInt32(parameter);
             var currentRecipe = RecipesCollection.First(r => r.id_r == id); 
-            //check if already exist 
-
             _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
 
         }
-        //private void RemoveTag(object parameter)
-        //{
-        //    string name = (string)parameter;
-        //    Tags.Remove(Tags.Where(i => i.name == name).Single());
-        //    RaisePropertyChanged(() => Tags);
-        ////}
-
+      
     }
 }
