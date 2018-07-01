@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding RecipesCollection}">
+            <ItemsControl ItemsSource="{Binding RecipesCollection}" Name="recipes">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"/>
@@ -58,8 +58,9 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
+
+                                <CheckBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource HeartCheckbox}" Command="{Binding DataContext.AddRecipeToFavouritesCommand, ElementName=recipes}" CommandParameter="{Binding id_r}"/>
                                 
-                                <CheckBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource HeartCheckbox}"/>
                                 <Button Style="{StaticResource EnterRecipeBtn}" Margin="0" Padding="10" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="50" FontSize="14">Show full recipe</Button>
                                 <Grid Grid.Row="2">
                                     <TextBlock  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"

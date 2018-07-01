@@ -6,10 +6,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using taste_it.Additionals.ContentNavigationService;
 using taste_it.Additionals.Messages;
 using taste_it.DataService;
 using taste_it.Models;
+using System.Globalization;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.CommandWpf;
+using System.Diagnostics;
 
 namespace taste_it.ViewModels
 {
@@ -17,6 +22,9 @@ namespace taste_it.ViewModels
     {
         private IRecipeDataService _recipeDataService;
         private ObservableCollection<Recipe> recipesCollection;
+        private User _currentUser;
+        public ICommand AddRecipeToFavouritesCommand { get; private set; }
+
         public string name
         {
             get
@@ -42,6 +50,9 @@ namespace taste_it.ViewModels
         {
             _recipeDataService = recipeData;
             RecipesCollection = new ObservableCollection<Recipe>();
+            Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
+            AddRecipeToFavouritesCommand = new RelayCommand<object>(AddRecipeToFavourites);
+
             LoadRecipes();
         }
 
@@ -57,6 +68,25 @@ namespace taste_it.ViewModels
             RaisePropertyChanged(() => RecipesCollection);
 
         }
+        private void HandleCurrentUserMessage(CurrentUserMessage message)
+        {
+            this._currentUser = message.CurrentUser;
+            LoadRecipes();
+
+        }
+
+        private void AddRecipeToFavourites(object parameter)
+        {
+            int id = Convert.ToInt32(parameter);
+            var currentRecipe = RecipesCollection.First(r => r.id_r == id);
+            _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
+        }
+        //private void RemoveTag(object parameter)
+        //{
+        //    string name = (string)parameter;
+        //    Tags.Remove(Tags.Where(i => i.name == name).Single());
+        //    RaisePropertyChanged(() => Tags);
+        ////}
 
     }
 }

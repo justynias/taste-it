@@ -148,6 +148,7 @@
                             </TextBox>
                             <ScrollViewer Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
                                 <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Tags, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+                                    
                                     <ItemsControl.ItemsPanel>
 
                                         <ItemsPanelTemplate>
