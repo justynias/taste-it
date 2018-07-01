@@ -53,7 +53,7 @@ namespace taste_it.ViewModels
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
             AddRecipeToFavouritesCommand = new RelayCommand<object>(AddRecipeToFavourites);
 
-            LoadRecipes();
+            //LoadRecipes();
         }
 
         private async void LoadRecipes() //when view is loading after getting message with current user
@@ -63,7 +63,12 @@ namespace taste_it.ViewModels
             RecipesCollection.Clear();
             foreach (var item in recipes)
             {
+                if(item.Have_favourites.Any(u => u.id_u==_currentUser.id_u))
+                {
+                    item.isFavourite = true;
+                }
                 RecipesCollection.Add(item);
+
             }
             RaisePropertyChanged(() => RecipesCollection);
 
@@ -78,8 +83,11 @@ namespace taste_it.ViewModels
         private void AddRecipeToFavourites(object parameter)
         {
             int id = Convert.ToInt32(parameter);
-            var currentRecipe = RecipesCollection.First(r => r.id_r == id);
+            var currentRecipe = RecipesCollection.First(r => r.id_r == id); 
+            //check if already exist 
+
             _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
+
         }
         //private void RemoveTag(object parameter)
         //{

@@ -28,7 +28,9 @@ namespace taste_it.Models
         public int complexity { get; set; }
         public string ingredients { get; set; }
         public string description { get; set; }
-    
+
+        public bool isFavourite { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Have_category> Have_category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
