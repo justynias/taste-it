@@ -3,10 +3,138 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:taste_it.Views"
+             
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:my="clr-namespace:taste_it.Additionals" 
+             xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow"
+             xmlns:ws="clr-namespace:taste_it.Additionals.WatermarkService"
+             xmlns:ps="clr-namespace:taste_it.Additionals.PasswordService"
+             xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
+             xmlns:views="clr-namespace:taste_it.Views" 
+             xmlns:models="clr-namespace:taste_it.Models"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+                         
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".1*"/>
+            <RowDefinition  Height=".2*"/>
+            <RowDefinition Height=".4*"/>
+        </Grid.RowDefinitions>
+
+
+        <DockPanel  Grid.Row="0">
+            <Border Background="{StaticResource FilterMain}" Padding="15">
+                <TextBox Style="{StaticResource SinglelineRoundedTextBox}" VerticalAlignment="Center">
+                    <ws:WatermarkService.Watermark>
+                        <fa:FontAwesome Icon="Search" HorizontalAlignment="Left" FontSize="18" VerticalAlignment="Stretch"/>
+                    </ws:WatermarkService.Watermark>
+                </TextBox>
+            </Border>
+        </DockPanel>
+        <DockPanel Grid.Row="1">
+            <Border Background="{StaticResource FilterAlt}" Padding="15">
+                <!--BINDING HERE-->
+                <ItemsControl Padding="10">
+                    <!--<ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" Rows="3">
+
+                            </UniformGrid>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel> 
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            --><!--BINDING HERE--><!--
+                            <CheckBox Style="{StaticResource CategoryCheckbox}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>-->
+                    
+                    <!-- TO DELETE -->
+                    <UniformGrid Columns="2" Rows="3">
+                        <CheckBox Style="{StaticResource CategoryCheckbox}">Breakfast</CheckBox>
+                        <CheckBox Style="{StaticResource CategoryCheckbox}">Lunch</CheckBox>
+                        <CheckBox Style="{StaticResource CategoryCheckbox}">Dinner</CheckBox>
+                        <CheckBox Style="{StaticResource CategoryCheckbox}">Tea</CheckBox>
+                        <CheckBox Style="{StaticResource CategoryCheckbox}">Snack</CheckBox>
+                        <CheckBox Style="{StaticResource CategoryCheckbox}">Supper</CheckBox>
+                    </UniformGrid>
+                </ItemsControl>
+            </Border>
+        </DockPanel>
+        <DockPanel Grid.Row="2">
+            <Border Background="{StaticResource FilterMain}" Padding="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".1*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Style="{StaticResource SinglelineRoundedTextBox}" Grid.Row="0" VerticalAlignment="Center">
+                        <ws:WatermarkService.Watermark>
+                            <fa:FontAwesome Icon="Tag" HorizontalAlignment="Left" FontSize="18" VerticalAlignment="Stretch"/>
+                        </ws:WatermarkService.Watermark>
+                    </TextBox>
+                    <ScrollViewer Grid.Row="1"  Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top">
+                        <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Tags, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+                            <!--<ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel VerticalAlignment="Center">
+
+                                    </WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource TagPanel}">
+                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            --><!--BINDING HERE--><!--
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}">
+
+                                            </TextBlock>
+                                            --><!--BINDING HERE--><!--
+                                            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>-->
+                            <Border Style="{StaticResource TagPanel}">
+                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!--BINDING HERE-->
+                                    
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}">
+
+                                            </TextBlock>
+                                            
+                                    <!--BINDING HERE-->
+                                    
+                                            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
+                                        </Grid>
+                                    </Border>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </DockPanel>
     </Grid>
 </UserControl>
