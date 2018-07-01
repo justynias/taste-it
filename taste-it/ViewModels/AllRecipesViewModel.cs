@@ -87,13 +87,15 @@ namespace taste_it.ViewModels
             int id = Convert.ToInt32(parameter);
             var currentRecipe = RecipesCollection.First(r => r.id_r == id);
             Debug.WriteLine("Usuwam " + currentRecipe.name);
+            _recipeDataService.RemoveFavouriteRecipe(currentRecipe, _currentUser);
             // delete relationship (currentRecipe, currentUser)
         }
 
         private void AddRecipeToFavourites(object parameter)
         {
             int id = Convert.ToInt32(parameter);
-            var currentRecipe = RecipesCollection.First(r => r.id_r == id); 
+            var currentRecipe = RecipesCollection.First(r => r.id_r == id);
+            Debug.WriteLine("Dodaje");
             _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
 
         }

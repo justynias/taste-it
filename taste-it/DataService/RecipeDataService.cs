@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,5 +102,19 @@ namespace taste_it.DataService
 
             return await dbContext.Recipes.AsNoTracking().ToListAsync();
         }
+
+        public async Task RemoveFavouriteRecipe(Recipe recipe, User user)
+        {
+
+            var dbContext = new TasteItDbEntities();
+            var current = await dbContext.Have_favourites.AsNoTracking().ToListAsync();
+
+            foreach (var fawRecipes in dbContext.Have_favourites.Where((f => f.id_r == recipe.id_r && f.id_u == user.id_u)).ToList())
+            {
+                dbContext.Have_favourites.Remove(fawRecipes);
+            }
+            await dbContext.SaveChangesAsync();
+        }
+
     }
 }
