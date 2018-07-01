@@ -29,7 +29,7 @@
 
         <DockPanel  Grid.Row="0">
             <Border Background="{StaticResource FilterMain}" Padding="15">
-                <TextBox Style="{StaticResource SinglelineRoundedTextBox}" VerticalAlignment="Center">
+                <TextBox Style="{StaticResource SinglelineRoundedTextBox}" VerticalAlignment="Center" Text="{Binding RecipeName}">
                     <ws:WatermarkService.Watermark>
                         <fa:FontAwesome Icon="Search" HorizontalAlignment="Left" FontSize="18" VerticalAlignment="Stretch"/>
                     </ws:WatermarkService.Watermark>
@@ -80,10 +80,21 @@
                         <ws:WatermarkService.Watermark>
                             <fa:FontAwesome Icon="Tag" HorizontalAlignment="Left" FontSize="18" VerticalAlignment="Stretch"/>
                         </ws:WatermarkService.Watermark>
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Return" Command="{Binding AddTagCommand, Mode=OneWay}"/>
+                        </TextBox.InputBindings>
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" Path="TagName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
                     </TextBox>
+                    
                     <ScrollViewer Grid.Row="1"  Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top">
                         <ItemsControl Name="ic_Tags" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Tags, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
-                            <!--<ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel VerticalAlignment="Center">
 
@@ -101,17 +112,17 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            --><!--BINDING HERE--><!--
+                                            <!--BINDING HERE-->
                                             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}">
 
                                             </TextBlock>
-                                            --><!--BINDING HERE--><!--
+                                            <!--BINDING HERE-->
                                             <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
-                            </ItemsControl.ItemTemplate>-->
-                            <Border Style="{StaticResource TagPanel}">
+                            </ItemsControl.ItemTemplate>
+                            <!--<Border Style="{StaticResource TagPanel}">
                                 <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -120,17 +131,17 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <!--BINDING HERE-->
+                                    --><!--BINDING HERE--><!--
                                     
-                                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}">
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding RecipeName}">
 
                                             </TextBlock>
                                             
-                                    <!--BINDING HERE-->
+                                    --><!--BINDING HERE--><!--
                                     
                                             <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
                                         </Grid>
-                                    </Border>
+                                    </Border>-->
                         </ItemsControl>
                     </ScrollViewer>
                 </Grid>
