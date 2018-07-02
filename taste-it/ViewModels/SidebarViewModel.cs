@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using taste_it.Additionals.ContentNavigationService;
 using taste_it.Additionals.Messages;
+using taste_it.DataService;
 using taste_it.Models;
 
 namespace taste_it.ViewModels
@@ -55,10 +56,10 @@ namespace taste_it.ViewModels
                 }
             }
         }
-
-        public SidebarViewModel() // Here we have to pass user probably from NavigableContentViewModel
+        //temporary data services
+        public SidebarViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData) // Here we have to pass user probably from NavigableContentViewModel
         {
-            PageViewModels.Add(new FilterViewModel());
+            PageViewModels.Add(new FilterViewModel(recipeData, tagData, categoryData));
             PageViewModels.Add(new TasteItViewModel()); 
 
             CurrentPageViewModel = PageViewModels[0];

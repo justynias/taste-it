@@ -53,10 +53,10 @@
                             <CheckBox Style="{StaticResource CategoryCheckbox}" Content="{Binding name}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
-                                        <i:InvokeCommandAction Command="{Binding DataContext.AddFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding name}"/> <!--temporary name-->
+                                        <i:InvokeCommandAction Command="{Binding DataContext.AddFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding id_c}"/> <!--temporary name-->
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="Unchecked">
-                                        <i:InvokeCommandAction Command="{Binding DataContext.RemoveFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding name}"/> <!--temporary name-->
+                                        <i:InvokeCommandAction Command="{Binding DataContext.RemoveFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding id_c}"/> <!--temporary name-->
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
