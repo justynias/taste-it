@@ -3,12 +3,14 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using taste_it.Additionals.ContentNavigationService;
+using taste_it.DataService;
 using taste_it.Models;
 
 namespace taste_it.ViewModels
@@ -24,7 +26,7 @@ namespace taste_it.ViewModels
         }
 
         private string recipeName;
-        private ObservableCollection<Category> categories;
+        private ObservableCollection<Category> categoriesCollection;
         private ObservableCollection<Tag> tags;
         private ObservableCollection<Category> filterCategories;
         private Tag currentTag;
@@ -60,17 +62,17 @@ namespace taste_it.ViewModels
 
             }
         }
-        public ObservableCollection<Category> Categories
+        public ObservableCollection<Category> CategoriesCollection
         {
             get
             {
-                return categories;
+                return categoriesCollection;
             }
 
             set
             {
 
-                Set(ref categories, value);
+                Set(ref categoriesCollection, value);
 
             }
         }
@@ -123,24 +125,53 @@ namespace taste_it.ViewModels
 
         public FilterViewModel()
         {
-
             // RecipesCollection = new ObservableCollection<Recipe>();
 
             Tags = new ObservableCollection<Tag>();
+            LoadCategories();
 
-            AddFilterCategoriesCommand= new RelayCommand<object>(AddFilterCategories);
+            //test
+            this.PropertyChanged += Filter_PropertyChanged;
+
+            AddFilterCategoriesCommand = new RelayCommand<object>(AddFilterCategories);
             RemoveFilterCategoriesCommand = new RelayCommand<object>(RemoveFilterCategories);
             AddTagCommand = new RelayCommand(AddTag);
             RemoveTagCommand = new RelayCommand<object>(RemoveTag);
 
         }
 
+        void Filter_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)   //here methods to filtering 
+            {
+                case "RecipeName":
+                    Debug.WriteLine(RecipeName); 
+                    break;
+                case "FilterCategories":
+                    Debug.WriteLine(FilterCategories?.Count());
+                    break;
+                case "Tags":
+                    Debug.WriteLine(Tags?.Count());
+                    break;
+
+            }
+        }
+
         private void AddFilterCategories(object parameter)
         {
 
+            //int id = Convert.ToInt32(parameter);
+            string name = (string)parameter;
+            var currentCategory = CategoriesCollection.First(c => c.name == name);
+            FilterCategories.Add(currentCategory);
+            RaisePropertyChanged(() => FilterCategories);
         }
         private void RemoveFilterCategories(object parameter)
         {
+            string name = (string)parameter;
+            var currentCategory = CategoriesCollection.First(c => c.name == name);
+            FilterCategories.Remove(currentCategory);
+            RaisePropertyChanged(() => FilterCategories);
 
         }
         private void RemoveTag(object parameter)
@@ -160,6 +191,26 @@ namespace taste_it.ViewModels
             //}
 
             TagName = string.Empty;
+        }
+
+        private void LoadCategories()  //temporary , no sense to load from db, messenger?
+        {
+            CategoriesCollection = new ObservableCollection<Category>();
+            FilterCategories = new ObservableCollection<Category>();
+
+            CategoriesCollection.Add(new Category() { name = "Breakfast" });
+            CategoriesCollection.Add(new Category() { name = "Snack" });
+            CategoriesCollection.Add(new Category() { name = "Lunch" });
+            CategoriesCollection.Add(new Category() { name = "Tea" });
+            CategoriesCollection.Add(new Category() { name = "Dinner" });
+            CategoriesCollection.Add(new Category() { name = "Supper" });
+
+            //var categoriesTemp = await _categoryDataService.GetCategoriesAsync();
+            //CategoriesCollection = new ObservableCollection<Category>();
+            //foreach (var c in categoriesTemp)
+            //{
+            //    CategoriesCollection.Add(c);
+            //}
         }
         //private bool IsTagsValid(ref string message)
         //{

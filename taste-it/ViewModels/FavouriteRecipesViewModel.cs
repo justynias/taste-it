@@ -15,7 +15,6 @@ namespace taste_it.ViewModels
 {
     class FavouriteRecipesViewModel : ViewModelBase, IPageViewModel
     {
-
         private User _currentUser;
         private IRecipeDataService _recipeDataService;
         private ObservableCollection<Recipe> recipesCollection;
@@ -65,5 +64,7 @@ namespace taste_it.ViewModels
             LoadRecipes();
 
         }
+
+       
     }
 }

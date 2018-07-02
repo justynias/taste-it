@@ -29,7 +29,7 @@
 
         <DockPanel  Grid.Row="0">
             <Border Background="{StaticResource FilterMain}" Padding="15">
-                <TextBox Style="{StaticResource SinglelineRoundedTextBox}" VerticalAlignment="Center" Text="{Binding RecipeName}">
+                <TextBox Style="{StaticResource SinglelineRoundedTextBox}" VerticalAlignment="Center" Text="{Binding RecipeName, UpdateSourceTrigger=PropertyChanged}">
                     <ws:WatermarkService.Watermark>
                         <fa:FontAwesome Icon="Search" HorizontalAlignment="Left" FontSize="18" VerticalAlignment="Stretch"/>
                     </ws:WatermarkService.Watermark>
@@ -39,8 +39,8 @@
         <DockPanel Grid.Row="1">
             <Border Background="{StaticResource FilterAlt}" Padding="15">
                 <!--BINDING HERE-->
-                <ItemsControl Padding="10">
-                    <!--<ItemsControl.ItemsPanel>
+                <ItemsControl Name="categories" Padding="10" ItemsSource="{Binding CategoriesCollection}" >
+                    <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="2" Rows="3">
 
@@ -49,20 +49,29 @@
                     </ItemsControl.ItemsPanel> 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            --><!--BINDING HERE--><!--
-                            <CheckBox Style="{StaticResource CategoryCheckbox}"/>
+                            <!--BINDING HERE-->
+                            <CheckBox Style="{StaticResource CategoryCheckbox}" Content="{Binding name}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Checked">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.AddFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding name}"/> <!--temporary name-->
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="Unchecked">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.RemoveFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding name}"/> <!--temporary name-->
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </CheckBox>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>-->
+                    </ItemsControl.ItemTemplate>
                     
                     <!-- TO DELETE -->
-                    <UniformGrid Columns="2" Rows="3">
+                    <!--<UniformGrid Columns="2" Rows="3">
                         <CheckBox Style="{StaticResource CategoryCheckbox}">Breakfast</CheckBox>
                         <CheckBox Style="{StaticResource CategoryCheckbox}">Lunch</CheckBox>
                         <CheckBox Style="{StaticResource CategoryCheckbox}">Dinner</CheckBox>
                         <CheckBox Style="{StaticResource CategoryCheckbox}">Tea</CheckBox>
                         <CheckBox Style="{StaticResource CategoryCheckbox}">Snack</CheckBox>
                         <CheckBox Style="{StaticResource CategoryCheckbox}">Supper</CheckBox>
-                    </UniformGrid>
+                    </UniformGrid>-->
                 </ItemsControl>
             </Border>
         </DockPanel>
