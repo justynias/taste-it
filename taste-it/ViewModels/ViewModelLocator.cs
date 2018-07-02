@@ -55,7 +55,6 @@ namespace taste_it.ViewModels
             //SimpleIoc.Default.Register<AddRecipeViewModel>(true);
             SimpleIoc.Default.Register<NavigableContentViewModel>(true);
             SimpleIoc.Default.Register<SidebarViewModel>(true);
-            SimpleIoc.Default.Register<CurrentRecipeViewModel>(true);
 
 
 

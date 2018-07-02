@@ -25,9 +25,11 @@ namespace taste_it.ViewModels
         public NavigableContentViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
         {
           
-            PageViewModels.Add(new AllRecipesViewModel(recipeData));
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
+            PageViewModels.Add(new AllRecipesViewModel(recipeData));
             PageViewModels.Add(new FavouriteRecipesViewModel(recipeData));
+
+            Messenger.Default.Register<NavigationWithCurrentRecipeMessage>(this, this.HandleNavigationMessage);
 
 
             CurrentPageViewModel = PageViewModels[0];
@@ -39,7 +41,11 @@ namespace taste_it.ViewModels
 
         }
 
-       
+        private void HandleNavigationMessage(NavigationWithCurrentRecipeMessage msg)
+        {
+            CurrentPageViewModel = new CurrentRecipeViewModel(msg.CurrentRecipe);
+        }
+
         private void ChangeViewModel(IPageViewModel viewModel)
         {
             if (!PageViewModels.Contains(viewModel))

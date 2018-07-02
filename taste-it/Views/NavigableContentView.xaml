@@ -28,6 +28,9 @@
         <DataTemplate DataType="{x:Type viewmodels:FavouriteRecipesViewModel}">
             <local:FavouriteRecipesView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:CurrentRecipeViewModel}">
+            <local:CurrentRecipeView />
+        </DataTemplate>
     </Page.Resources>
 
     <Grid Width="auto"> 
