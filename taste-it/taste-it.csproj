@@ -107,7 +107,7 @@
     </ApplicationDefinition>
     <Compile Include="Additionals\ContentNavigationService\IPageViewModel.cs" />
     <Compile Include="Additionals\Messages\CurrentUserMessage.cs" />
-    <Compile Include="Additionals\Messages\FilteredRecipesMessage.cs" />
+    <Compile Include="Additionals\Messages\FiltersMessage.cs" />
     <Compile Include="Additionals\NavigationService\FrameNavigationService.cs" />
     <Compile Include="Additionals\NavigationService\IFrameNavigationService.cs" />
     <Compile Include="Additionals\PasswordService\PasswordBoxAssistant.cs" />

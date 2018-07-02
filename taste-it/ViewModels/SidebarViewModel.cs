@@ -57,9 +57,9 @@ namespace taste_it.ViewModels
             }
         }
         //temporary data services
-        public SidebarViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData) // Here we have to pass user probably from NavigableContentViewModel
+        public SidebarViewModel(ICategoryDataService categoryData) // Here we have to pass user probably from NavigableContentViewModel
         {
-            PageViewModels.Add(new FilterViewModel(recipeData, tagData, categoryData));
+            PageViewModels.Add(new FilterViewModel( categoryData));
             PageViewModels.Add(new TasteItViewModel()); 
 
             CurrentPageViewModel = PageViewModels[0];

@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding RecipesCollection}" Name="recipes">
+            <ItemsControl ItemsSource="{Binding FilteredRecipesCollection}" Name="recipes">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"/>
