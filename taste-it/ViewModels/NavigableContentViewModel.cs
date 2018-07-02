@@ -32,7 +32,7 @@ namespace taste_it.ViewModels
             Messenger.Default.Register<NavigationWithCurrentRecipeMessage>(this, this.HandleNavigationMessage);
 
 
-            CurrentPageViewModel = PageViewModels[0];
+            CurrentPageViewModel = PageViewModels[1];
 
             ChangePageCommand = new RelayCommand<IPageViewModel>(p =>  ChangeViewModel(
                 (IPageViewModel)p) , 

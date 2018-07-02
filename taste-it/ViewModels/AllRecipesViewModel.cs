@@ -28,7 +28,6 @@ namespace taste_it.ViewModels
         public ICommand RemoveRecipeToFavouritesCommand
         { get; private set; }
         public ICommand NavigateToCurrentRecipeCommand { get; private set; }
-        public ICommand RemoveRecipeToFavouritesCommand { get; private set; }
 
         private string filterRecipeName = String.Empty;
         private ObservableCollection<Tag> filterTags;
@@ -67,7 +66,7 @@ namespace taste_it.ViewModels
 
             AddRecipeToFavouritesCommand = new RelayCommand<object>(AddRecipeToFavourites);
             RemoveRecipeToFavouritesCommand = new RelayCommand<object>(RemoveRecipeToFavourites);
-            
+            NavigateToCurrentRecipeCommand = new RelayCommand<object>(NavigateToCurrentRecipe);
 
             Messenger.Default.Register<FiltersMessage>(this, this.HandleFiltersMessage);
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
@@ -80,8 +79,6 @@ namespace taste_it.ViewModels
             this.filterTags = message.FilterTags ;
             this.filterRecipeName = message.FilterName ;
             Filter();
-            NavigateToCurrentRecipeCommand = new RelayCommand<object>(NavigateToCurrentRecipe);
-
 
         }
         private void HandleCurrentUserMessage(CurrentUserMessage message)
