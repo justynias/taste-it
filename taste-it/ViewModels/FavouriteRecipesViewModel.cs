@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,6 @@ namespace taste_it.ViewModels
 {
     class FavouriteRecipesViewModel : ViewModelBase, IPageViewModel
     {
-        private User _currentUser;
-        private IRecipeDataService _recipeDataService;
         private ObservableCollection<Recipe> recipesCollection;
         public string name
         {
@@ -39,30 +38,28 @@ namespace taste_it.ViewModels
             }
         }
 
-        public FavouriteRecipesViewModel(IRecipeDataService recipeData)
+        public FavouriteRecipesViewModel()
         {
-            _recipeDataService = recipeData;
-            Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
             RecipesCollection = new ObservableCollection<Recipe>();
+
+            Messenger.Default.Register<RecipesCollectionMessage>(this, this.HandleRecipesCollectionMessage);
         }
 
-      private async void LoadRecipes() //when view is loading after getting message with current user
+ 
+        private void HandleRecipesCollectionMessage(RecipesCollectionMessage message)
         {
-
-            var recipes = await _recipeDataService.FindFavouritesAsync(_currentUser);
             RecipesCollection.Clear();
+
+            var recipes = message.RecipesCollection;
             foreach (var item in recipes)
             {
-                RecipesCollection.Add(item);
+                if(item.isFavourite)
+                {
+                    RecipesCollection.Add(item);
+                    Debug.WriteLine(item.id_r);
+                }
             }
-            RaisePropertyChanged(() => RecipesCollection);
-
-        }
-        private void HandleCurrentUserMessage(CurrentUserMessage message)
-        {
-            this._currentUser = message.CurrentUser;
-            LoadRecipes();
-
+           
         }
 
        

@@ -153,7 +153,6 @@ namespace taste_it.ViewModels
 
         private void SendFilters()
         {
-            //Debug.WriteLine(FilterCategories.Count() + RecipeName +Tags.Count());
         
             Messenger.Default.Send<FiltersMessage>(new FiltersMessage
             {
@@ -174,7 +173,6 @@ namespace taste_it.ViewModels
         {
 
             int id = Convert.ToInt32(parameter);
-           // string name = (string)parameter;
             var currentCategory = CategoriesCollection.First(c => c.id_c == id);
             FilterCategories.Add(currentCategory);
             RaisePropertyChanged(() => FilterCategories);
@@ -182,7 +180,6 @@ namespace taste_it.ViewModels
         private void RemoveFilterCategories(object parameter)
         {
             int id = Convert.ToInt32(parameter);
-            //string name = (string)parameter;
             var currentCategory = CategoriesCollection.First(c => c.id_c == id);
             FilterCategories.Remove(currentCategory);
             RaisePropertyChanged(() => FilterCategories);
