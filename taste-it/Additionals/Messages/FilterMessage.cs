@@ -8,9 +8,13 @@ using taste_it.Models;
 
 namespace taste_it.Additionals.Messages
 {
-   public class FilteredRecipesMessage
+    public class FiltersMessage
     {
-        public ObservableCollection<Recipe> FilteredRecipes { get;  set; }
+        public ObservableCollection<Category> FilterCategories { get; set; }
+        public ObservableCollection<Tag> FilterTags { get; set; }
+        public string FilterName { get; set; }
+
+
     }
-   
+
 }
