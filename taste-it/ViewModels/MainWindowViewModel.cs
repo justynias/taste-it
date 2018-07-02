@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using taste_it.Additionals.Messages;
 using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 using taste_it.Models;
@@ -27,7 +28,12 @@ namespace taste_it.ViewModels
         {
             this.navigationService = navigationService;
             Messenger.Default.Register<GenericMessage<bool>>(this, SetLoading);
-           
+            Messenger.Default.Register<LogoutMessage>(this,this.HandleLogout);
+        }
+
+        private void HandleLogout(LogoutMessage obj)
+        {
+            Cleanup();
         }
 
 

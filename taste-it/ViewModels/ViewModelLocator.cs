@@ -115,7 +115,34 @@ namespace taste_it.ViewModels
 
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            SimpleIoc.Default.Unregister<FrameNavigationService>();
+            SimpleIoc.Default.Unregister<UserDataService>();
+            SimpleIoc.Default.Unregister<RecipeDataService>();
+            SimpleIoc.Default.Unregister<TagDataService>();
+            SimpleIoc.Default.Unregister<CategoryDataService>();
+            SimpleIoc.Default.Unregister<MainWindowViewModel>();
+            SimpleIoc.Default.Unregister<SignInViewModel>();
+            SimpleIoc.Default.Unregister<SignUpViewModel>();
+            //SimpleIoc.Default.Register<AddRecipeViewModel>(true);
+            SimpleIoc.Default.Unregister<NavigableContentViewModel>();
+            SimpleIoc.Default.Unregister<SidebarViewModel>();
+
+
+            var navigationService = new FrameNavigationService();
+
+            SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
+
+            SimpleIoc.Default.Register<IUserDataService, UserDataService>(true);
+            SimpleIoc.Default.Register<IRecipeDataService, RecipeDataService>(true);
+            SimpleIoc.Default.Register<ITagDataService, TagDataService>(true);
+            SimpleIoc.Default.Register<ICategoryDataService, CategoryDataService>(true);
+            SimpleIoc.Default.Register<MainWindowViewModel>(true);
+            SimpleIoc.Default.Register<SignInViewModel>(true);
+            SimpleIoc.Default.Register<SignUpViewModel>(true);
+            //SimpleIoc.Default.Register<AddRecipeViewModel>(true);
+            SimpleIoc.Default.Register<NavigableContentViewModel>(true);
+            SimpleIoc.Default.Register<SidebarViewModel>(true);
+
         }
     }
 }
