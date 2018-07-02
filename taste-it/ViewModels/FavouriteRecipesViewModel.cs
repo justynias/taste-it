@@ -1,12 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using taste_it.Additionals.ContentNavigationService;
 using taste_it.Additionals.Messages;
 using taste_it.DataService;
@@ -16,7 +17,13 @@ namespace taste_it.ViewModels
 {
     class FavouriteRecipesViewModel : ViewModelBase, IPageViewModel
     {
+
+        private User _currentUser;
+        private IRecipeDataService _recipeDataService;
         private ObservableCollection<Recipe> recipesCollection;
+        public ICommand AddRecipeToFavouritesCommand { get; private set; }
+        public ICommand RemoveRecipeToFavouritesCommand
+        { get; private set; }
         public string name
         {
             get
@@ -38,30 +45,52 @@ namespace taste_it.ViewModels
             }
         }
 
-        public FavouriteRecipesViewModel()
+        public FavouriteRecipesViewModel(IRecipeDataService recipeData)
         {
+            _recipeDataService = recipeData;
+            Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
             RecipesCollection = new ObservableCollection<Recipe>();
-
-            Messenger.Default.Register<RecipesCollectionMessage>(this, this.HandleRecipesCollectionMessage);
+            AddRecipeToFavouritesCommand = new RelayCommand<object>(AddRecipeToFavourites);
+            RemoveRecipeToFavouritesCommand = new RelayCommand<object>(RemoveRecipeToFavourites);
         }
 
- 
-        private void HandleRecipesCollectionMessage(RecipesCollectionMessage message)
+      private async void LoadRecipes() //when view is loading after getting message with current user
         {
-            RecipesCollection.Clear();
 
-            var recipes = message.RecipesCollection;
+            var recipes = await _recipeDataService.FindFavouritesAsync(_currentUser);
+
+            RecipesCollection.Clear();
             foreach (var item in recipes)
             {
-                if(item.isFavourite)
+                if (item.Have_favourites.Any(u => u.id_u == _currentUser.id_u))
                 {
-                    RecipesCollection.Add(item);
-                    Debug.WriteLine(item.id_r);
+                    item.isFavourite = true;
                 }
+                RecipesCollection.Add(item);
             }
-           
+            RaisePropertyChanged(() => RecipesCollection);
+
+        }
+        private void HandleCurrentUserMessage(CurrentUserMessage message)
+        {
+            this._currentUser = message.CurrentUser;
+            LoadRecipes();
+
+        }
+        private void RemoveRecipeToFavourites(object parameter)
+        {
+            int id = Convert.ToInt32(parameter);
+            var currentRecipe = RecipesCollection.First(r => r.id_r == id);
+            _recipeDataService.RemoveFavouriteRecipe(currentRecipe, _currentUser);
+            // delete relationship (currentRecipe, currentUser)
         }
 
-       
+        private void AddRecipeToFavourites(object parameter)
+        {
+            int id = Convert.ToInt32(parameter);
+            var currentRecipe = RecipesCollection.First(r => r.id_r == id);
+            _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
+
+        }
     }
 }
