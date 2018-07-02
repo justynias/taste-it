@@ -174,7 +174,7 @@ namespace taste_it.ViewModels
 
         private List<Recipe> FilterByName()
         {
-            var filteredRecipes = RecipesCollection.Where(r => r.name.StartsWith(filterRecipeName)).ToList(); 
+            var filteredRecipes = RecipesCollection.Where(r => r.name.ToLower().Contains(filterRecipeName.ToLower())).ToList(); 
             return filteredRecipes;
         }
 
@@ -185,7 +185,7 @@ namespace taste_it.ViewModels
             {
                 foreach (var r in RecipesCollection)
                 {
-                    if (r.Have_tags.Any(t=> t.Tag.name == tag.name))  
+                    if (r.Have_tags.Any(t=> t.Tag.name.ToLower() == tag.name.ToLower()))  
                     {
                         filteredRecipes.Add(r);
                     }
