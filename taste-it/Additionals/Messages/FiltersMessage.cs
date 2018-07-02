@@ -16,5 +16,4 @@ namespace taste_it.Additionals.Messages
 
 
     }
-
 }
