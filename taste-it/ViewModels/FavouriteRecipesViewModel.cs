@@ -202,7 +202,7 @@ namespace taste_it.ViewModels
 
         private async void LoadRecipes() //when view is loading after getting message with current user
         {
-
+            SetLoaderOn();
             var recipes = await _recipeDataService.FindFavouritesAsync(_currentUser);
 
             RecipesCollection.Clear();
@@ -217,7 +217,7 @@ namespace taste_it.ViewModels
             }
             RaisePropertyChanged(() => RecipesCollection);
             RaisePropertyChanged(() => FilteredRecipesCollection);
-
+            SetLoaderOff();
         }
         private void NavigateToCurrentRecipe(object parameter)
         {
@@ -248,6 +248,14 @@ namespace taste_it.ViewModels
             var currentRecipe = RecipesCollection.First(r => r.id_r == id);
             _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
 
+        }
+        private void SetLoaderOn()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(true));
+        }
+        private void SetLoaderOff()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
         }
     }
 }

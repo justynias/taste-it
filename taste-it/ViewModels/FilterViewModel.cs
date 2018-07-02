@@ -205,6 +205,7 @@ namespace taste_it.ViewModels
 
         private async void LoadCategories()  
         {
+            SetLoaderOn();
             CategoriesCollection = new ObservableCollection<Category>();
             FilterCategories = new ObservableCollection<Category>();
             var categoriesTemp = await _categoryDataService.GetCategoriesAsync();
@@ -213,8 +214,18 @@ namespace taste_it.ViewModels
             {
                 CategoriesCollection.Add(c);
             }
+            SetLoaderOff();
         }
-       
+
+        private void SetLoaderOn()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(true));
+        }
+        private void SetLoaderOff()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
+        }
+
 
     }
 }

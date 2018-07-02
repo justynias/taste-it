@@ -256,6 +256,7 @@ namespace taste_it.ViewModels
         //}
         private async void AddRecipe()
         {
+            SetLoaderOn();
             var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = int.Parse(Duration) };
             await AddTagsToDatabase();
             var tagList = new List<Tag>(Tags);
@@ -263,7 +264,8 @@ namespace taste_it.ViewModels
             Debug.WriteLine(newRecipe.ingredients.Length);
 
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
-           /// await _recipeDataService.AddToFavourites(_currentUser, newRecipe); // have favourites=author?
+            SetLoaderOff();
+            /// await _recipeDataService.AddToFavourites(_currentUser, newRecipe); // have favourites=author?
             ResetRecipe();
         }
         private void ResetRecipe()
@@ -279,6 +281,7 @@ namespace taste_it.ViewModels
         }
         private async Task AddTagsToDatabase()
         {
+            
             if (Tags != null)
             {
                 foreach (var t in Tags)
@@ -300,17 +303,20 @@ namespace taste_it.ViewModels
 
                 }
             }
+            
 
         }
 
         private async void LoadCategories()
         {
+            SetLoaderOn();
             var categoriesTemp = await _categoryDataService.GetCategoriesAsync();
             CategoriesCollection = new ObservableCollection<Category>();
             foreach (var c in categoriesTemp)
             {
                 CategoriesCollection.Add(c);
             }
+            SetLoaderOff();
         }
         private void LoadTags()
         {
@@ -333,6 +339,15 @@ namespace taste_it.ViewModels
             }
 
             TagName = string.Empty;
+        }
+
+        private void SetLoaderOn()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(true));
+        }
+        private void SetLoaderOff()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
         }
         #endregion
         #region validation

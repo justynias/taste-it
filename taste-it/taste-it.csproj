@@ -108,11 +108,13 @@
     <Compile Include="Additionals\ContentNavigationService\IPageViewModel.cs" />
     <Compile Include="Additionals\Messages\CurrentUserMessage.cs" />
     <Compile Include="Additionals\Messages\FiltersMessage.cs" />
+    <Compile Include="Additionals\Messages\LoadingMessage.cs" />
     <Compile Include="Additionals\Messages\NavigationWithCurrentRecipeMessage.cs" />
     <Compile Include="Additionals\Messages\RecipesCollectionMessage.cs" />
     <Compile Include="Additionals\NavigationService\FrameNavigationService.cs" />
     <Compile Include="Additionals\NavigationService\IFrameNavigationService.cs" />
     <Compile Include="Additionals\PasswordService\PasswordBoxAssistant.cs" />
+    <Compile Include="Additionals\StyleableWindow\LoadingAdorner.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkAdorner.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkService.cs" />
     <Compile Include="DataService\CategoryDataService.cs" />

@@ -198,7 +198,7 @@ namespace taste_it.ViewModels
         }
         private async void LoadRecipes() //recipes loading after getting message with current user to get his fav
         {
-
+            SetLoaderOn();
             var recipes = await _recipeDataService.GetRecipesAsync();
             RecipesCollection.Clear();
             foreach (var item in recipes)
@@ -214,7 +214,7 @@ namespace taste_it.ViewModels
             RaisePropertyChanged(() => RecipesCollection);
             RaisePropertyChanged(() => FilteredRecipesCollection);  //at the beginning collections are the same
 
-
+            SetLoaderOff();
 
             //message to fav recipes
             Messenger.Default.Send<RecipesCollectionMessage>(new RecipesCollectionMessage
@@ -251,6 +251,14 @@ namespace taste_it.ViewModels
             _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
 
         }
-      
+        private void SetLoaderOn()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(true));
+        }
+        private void SetLoaderOff()
+        {
+            Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
+        }
+
     }
 }
