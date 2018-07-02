@@ -73,7 +73,7 @@
 
 
 
-                                <Button Style="{StaticResource EnterRecipeBtn}" Margin="0" Padding="10" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="50" FontSize="14">Show full recipe</Button>
+                                <Button Style="{StaticResource EnterRecipeBtn}" Margin="0" Padding="10" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="50" FontSize="14" Command="{Binding DataContext.NavigateToCurrentRecipeCommand, ElementName=recipes}" CommandParameter="{Binding }">Show full recipe</Button>
                                 <Grid Grid.Row="2">
                                     <TextBlock  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                             x:Name="RecipeDescription" Text="{Binding description, Mode=OneWay}" 

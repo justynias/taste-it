@@ -29,6 +29,7 @@ namespace taste_it.ViewModels
         public ICommand AddRecipeToFavouritesCommand { get; private set; }
         public ICommand RemoveRecipeToFavouritesCommand
         { get; private set; }
+        public ICommand NavigateToCurrentRecipeCommand { get; private set; }
         public string name
         {
             get
@@ -74,6 +75,8 @@ namespace taste_it.ViewModels
 
             AddRecipeToFavouritesCommand = new RelayCommand<object>(AddRecipeToFavourites);
             RemoveRecipeToFavouritesCommand = new RelayCommand<object>(RemoveRecipeToFavourites);
+            NavigateToCurrentRecipeCommand = new RelayCommand<object>(NavigateToCurrentRecipe);
+
 
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
             Messenger.Default.Register<FiltersMessage>(this, this.HandleFiltersMessage);
@@ -215,6 +218,15 @@ namespace taste_it.ViewModels
             RaisePropertyChanged(() => RecipesCollection);
             RaisePropertyChanged(() => FilteredRecipesCollection);
 
+        }
+        private void NavigateToCurrentRecipe(object parameter)
+        {
+            var currentRecipe = (Recipe)parameter;
+            Messenger.Default.Send<NavigationWithCurrentRecipeMessage>(new NavigationWithCurrentRecipeMessage
+            {
+                CurrentRecipe = currentRecipe
+
+            });
         }
         private void HandleCurrentUserMessage(CurrentUserMessage message)
         {
