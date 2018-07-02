@@ -39,6 +39,7 @@ namespace taste_it.ViewModels
             navigationService.Configure("SignUp", new Uri("../Views/SignUpView.xaml", UriKind.Relative));
             //navigationService.Configure("AddRecipe", new Uri("../Views/AddRecipeView.xaml", UriKind.Relative));
             navigationService.Configure("NavigableContent", new Uri("../Views/NavigableContentView.xaml", UriKind.Relative));
+            navigationService.Configure("CurrentRecipe", new Uri("../Views/CurrentRecipeView.xaml", UriKind.Relative));
 
 
 
@@ -54,6 +55,7 @@ namespace taste_it.ViewModels
             //SimpleIoc.Default.Register<AddRecipeViewModel>(true);
             SimpleIoc.Default.Register<NavigableContentViewModel>(true);
             SimpleIoc.Default.Register<SidebarViewModel>(true);
+            SimpleIoc.Default.Register<CurrentRecipeViewModel>(true);
 
 
 
@@ -102,6 +104,13 @@ namespace taste_it.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<SidebarViewModel>();
+            }
+        }
+        public CurrentRecipeViewModel CurrentRecipe
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CurrentRecipeViewModel>();
             }
         }
 

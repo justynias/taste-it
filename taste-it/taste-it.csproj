@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="ViewModels\AddRecipeViewModel.cs" />
     <Compile Include="ViewModels\AllRecipesViewModel.cs" />
+    <Compile Include="ViewModels\CurrentRecipeViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigableContentViewModel.cs" />
@@ -171,6 +172,9 @@
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\AddRecipeView.xaml.cs">
       <DependentUpon>AddRecipeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CurrentRecipeView.xaml.cs">
+      <DependentUpon>CurrentRecipeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FavouriteRecipesView.xaml.cs">
       <DependentUpon>FavouriteRecipesView.xaml</DependentUpon>
@@ -217,6 +221,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddRecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CurrentRecipeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
