@@ -24,6 +24,7 @@
             <RowDefinition Height=".1*"/>
             <RowDefinition  Height=".2*"/>
             <RowDefinition Height=".4*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
 
@@ -38,7 +39,6 @@
         </DockPanel>
         <DockPanel Grid.Row="1">
             <Border Background="{StaticResource FilterAlt}" Padding="15">
-                <!--BINDING HERE-->
                 <ItemsControl Name="categories" Padding="10" ItemsSource="{Binding CategoriesCollection}" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -49,31 +49,20 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <!--BINDING HERE-->
                             <CheckBox Style="{StaticResource CategoryCheckbox}" Content="{Binding name}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding DataContext.AddFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding id_c}"/>
-                                        <!--temporary name-->
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="Unchecked">
                                         <i:InvokeCommandAction Command="{Binding DataContext.RemoveFilterCategoriesCommand, ElementName=categories}" CommandParameter="{Binding id_c}"/>
-                                        <!--temporary name-->
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
-                    <!-- TO DELETE -->
-                    <!--<UniformGrid Columns="2" Rows="3">
-                        <CheckBox Style="{StaticResource CategoryCheckbox}">Breakfast</CheckBox>
-                        <CheckBox Style="{StaticResource CategoryCheckbox}">Lunch</CheckBox>
-                        <CheckBox Style="{StaticResource CategoryCheckbox}">Dinner</CheckBox>
-                        <CheckBox Style="{StaticResource CategoryCheckbox}">Tea</CheckBox>
-                        <CheckBox Style="{StaticResource CategoryCheckbox}">Snack</CheckBox>
-                        <CheckBox Style="{StaticResource CategoryCheckbox}">Supper</CheckBox>
-                    </UniformGrid>-->
+                   
                 </ItemsControl>
             </Border>
         </DockPanel>
@@ -123,46 +112,23 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <!--BINDING HERE-->
                                             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding name}">
 
                                             </TextBlock>
-                                            <!--BINDING HERE-->
                                             <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                            <!--<Border Style="{StaticResource TagPanel}">
-                                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    -->
-                            <!--BINDING HERE-->
-                            <!--
-                                    
-                                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TagTextBlock}" Text="{Binding RecipeName}">
-
-                                            </TextBlock>
-                                            
-                                    -->
-                            <!--BINDING HERE-->
-                            <!--
-                                    
-                                            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TagButton}" Command="{Binding DataContext.RemoveTagCommand, ElementName=ic_Tags}" CommandParameter="{Binding name}">X</Button>
-                                        </Grid>
-                                    </Border>-->
+                           
                         </ItemsControl>
                     </ScrollViewer>
                 </Grid>
             </Border>
         </DockPanel>
-        <Button Content="Filter" Command="{Binding SendFiltersCommand}" Margin="65,133.2,83,10" Grid.Row="2"/>
+        <DockPanel Grid.Row="3">
+            <Button Content="Filter" Command="{Binding SendFiltersCommand}" Style="{StaticResource EnterRecipeBtn}" MaxWidth="200" MaxHeight="50" Margin="15"/>
+        </DockPanel> 
     </Grid>
 
 </UserControl>
