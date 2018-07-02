@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using taste_it.Additionals.ContentNavigationService;
+using taste_it.Additionals.Messages;
 //using taste_it.Additionals.Messages;
 using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
@@ -264,6 +265,7 @@ namespace taste_it.ViewModels
             Debug.WriteLine(newRecipe.ingredients.Length);
 
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
+            NotifyAboutRefresh();
             SetLoaderOff();
             /// await _recipeDataService.AddToFavourites(_currentUser, newRecipe); // have favourites=author?
             ResetRecipe();
@@ -340,7 +342,7 @@ namespace taste_it.ViewModels
 
             TagName = string.Empty;
         }
-
+       
         private void SetLoaderOn()
         {
             Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(true));
@@ -348,6 +350,10 @@ namespace taste_it.ViewModels
         private void SetLoaderOff()
         {
             Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
+        }
+        private void NotifyAboutRefresh()
+        {
+            Messenger.Default.Send<RefreshMessage>(new RefreshMessage());
         }
         #endregion
         #region validation

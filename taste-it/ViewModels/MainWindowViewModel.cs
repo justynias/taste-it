@@ -27,6 +27,7 @@ namespace taste_it.ViewModels
         {
             this.navigationService = navigationService;
             Messenger.Default.Register<GenericMessage<bool>>(this, SetLoading);
+           
         }
 
 

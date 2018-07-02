@@ -80,7 +80,10 @@ namespace taste_it.ViewModels
 
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
             Messenger.Default.Register<FiltersMessage>(this, this.HandleFiltersMessage);
+
         }
+
+
 
         private void HandleFiltersMessage(FiltersMessage message)
         {

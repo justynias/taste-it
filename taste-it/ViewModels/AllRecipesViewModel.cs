@@ -70,7 +70,13 @@ namespace taste_it.ViewModels
 
             Messenger.Default.Register<FiltersMessage>(this, this.HandleFiltersMessage);
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
+            Messenger.Default.Register<RefreshMessage>(this, this.HandleRefresh);
 
+        }
+
+        private void HandleRefresh(RefreshMessage obj)
+        {
+            LoadRecipes();
         }
 
         private void HandleFiltersMessage(FiltersMessage message)

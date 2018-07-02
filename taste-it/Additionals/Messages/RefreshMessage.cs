@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace taste_it.Additionals.Messages
 {
-    public class LoadingMessage
+    public class RefreshMessage
     {
-        
+       // public RecipesCollectionMessage RecipesMessage {get; set;}
     }
 }
