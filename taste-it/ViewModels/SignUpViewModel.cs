@@ -183,7 +183,6 @@ namespace taste_it.ViewModels
         {
             var input = password;
             ErrorMessage = string.Empty;
-            Console.WriteLine(UserPassword);
 
             if (string.IsNullOrWhiteSpace(input))
             {

@@ -78,7 +78,6 @@ namespace taste_it.ViewModels
 
         private void HandleSwitchSidebarMessage(SwitchSidebarMessage obj)
         {
-            Console.WriteLine(obj.PageName);
             if(obj.PageName == "Add Recipe" || obj.PageName == "Current Recipe")
             {
                 CurrentPageViewModel = PageViewModels[1];

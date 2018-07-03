@@ -24,7 +24,7 @@ namespace taste_it.ViewModels
 
         public NavigableContentViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
         {
-            Debug.WriteLine("tworze vm");
+
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
             PageViewModels.Add(new AllRecipesViewModel(recipeData));
             PageViewModels.Add(new FavouriteRecipesViewModel());
