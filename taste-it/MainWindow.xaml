@@ -8,6 +8,7 @@
         xmlns:my="clr-namespace:taste_it.Additionals" 
         xmlns:sw="clr-namespace:taste_it.Additionals.StyleableWindow"
         xmlns:ws="clr-namespace:taste_it.Additionals.WatermarkService"
+        xmlns:ls="clr-namespace:taste_it.Additionals.LoaderService"
         xmlns:viewmodels="clr-namespace:taste_it.ViewModels" 
         xmlns:views="clr-namespace:taste_it.Views" 
         xmlns:models="clr-namespace:taste_it.Models" 
@@ -23,7 +24,13 @@
         <Style TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="Roboto" />
         </Style>
-
+        <ls:WaitAdorner x:Key="Loader" IsAdornerVisible="{Binding IsBusy}">
+            <ls:WaitAdorner.AdornerContent>
+                <Grid>
+                    <ls:BusyView />
+                </Grid>
+            </ls:WaitAdorner.AdornerContent>
+        </ls:WaitAdorner>
     </Window.Resources>
     <Grid HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>

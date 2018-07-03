@@ -106,6 +106,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Additionals\ContentNavigationService\IPageViewModel.cs" />
+    <Compile Include="Additionals\LoaderService\AdornerPlacement.cs" />
+    <Compile Include="Additionals\LoaderService\FrameworkElementAdorner.cs" />
     <Compile Include="Additionals\Messages\AddRecipeToFavMessage.cs" />
     <Compile Include="Additionals\Messages\CurrentUserMessage.cs" />
     <Compile Include="Additionals\Messages\FiltersMessage.cs" />
@@ -117,7 +119,7 @@
     <Compile Include="Additionals\NavigationService\FrameNavigationService.cs" />
     <Compile Include="Additionals\NavigationService\IFrameNavigationService.cs" />
     <Compile Include="Additionals\PasswordService\PasswordBoxAssistant.cs" />
-    <Compile Include="Additionals\StyleableWindow\LoadingAdorner.cs" />
+    <Compile Include="Additionals\LoaderService\WaitAdorner.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkAdorner.cs" />
     <Compile Include="Additionals\WatermarkService\WatermarkService.cs" />
     <Compile Include="DataService\CategoryDataService.cs" />
@@ -179,6 +181,9 @@
     <Compile Include="Views\AddRecipeView.xaml.cs">
       <DependentUpon>AddRecipeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Additionals\LoaderService\BusyView.xaml.cs">
+      <DependentUpon>BusyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CurrentRecipeView.xaml.cs">
       <DependentUpon>CurrentRecipeView.xaml</DependentUpon>
     </Compile>
@@ -227,6 +232,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddRecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Additionals\LoaderService\BusyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
