@@ -4,6 +4,7 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using System;
+using System.Diagnostics;
 using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 
@@ -39,6 +40,7 @@ namespace taste_it.ViewModels
             navigationService.Configure("SignUp", new Uri("../Views/SignUpView.xaml", UriKind.Relative));
             //navigationService.Configure("AddRecipe", new Uri("../Views/AddRecipeView.xaml", UriKind.Relative));
             navigationService.Configure("NavigableContent", new Uri("../Views/NavigableContentView.xaml", UriKind.Relative));
+            navigationService.Configure("Sidebar", new Uri("../Views/SidebarView.xaml", UriKind.Relative));
             navigationService.Configure("CurrentRecipe", new Uri("../Views/CurrentRecipeView.xaml", UriKind.Relative));
 
 
@@ -112,9 +114,10 @@ namespace taste_it.ViewModels
                 return ServiceLocator.Current.GetInstance<CurrentRecipeViewModel>();
             }
         }
-
         public static void Cleanup()
         {
+            Debug.WriteLine("czyszcze");
+
             SimpleIoc.Default.Unregister<FrameNavigationService>();
             SimpleIoc.Default.Unregister<UserDataService>();
             SimpleIoc.Default.Unregister<RecipeDataService>();
@@ -128,9 +131,9 @@ namespace taste_it.ViewModels
             SimpleIoc.Default.Unregister<SidebarViewModel>();
 
 
-            var navigationService = new FrameNavigationService();
+            //var navigationService = new FrameNavigationService();
 
-            SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
+            //SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
 
             SimpleIoc.Default.Register<IUserDataService, UserDataService>(true);
             SimpleIoc.Default.Register<IRecipeDataService, RecipeDataService>(true);

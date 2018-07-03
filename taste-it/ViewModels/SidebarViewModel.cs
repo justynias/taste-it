@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using taste_it.Additionals.ContentNavigationService;
 using taste_it.Additionals.Messages;
+using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 using taste_it.Models;
 
@@ -19,7 +21,7 @@ namespace taste_it.ViewModels
         private IPageViewModel currentPageViewModel;
         private List<IPageViewModel> pageViewModels; // Switching between filterview and TASTE.IT view
         private User _currentUser;
-
+        private IFrameNavigationService _navigationService;
 
         public string Message
         {
@@ -56,15 +58,30 @@ namespace taste_it.ViewModels
                 }
             }
         }
+        public RelayCommand LogOutCommand { get; private set; }
+
+
         //temporary data services
-        public SidebarViewModel(ICategoryDataService categoryData) // Here we have to pass user probably from NavigableContentViewModel
+        public SidebarViewModel(ICategoryDataService categoryData, IFrameNavigationService navigationService) // Here we have to pass user probably from NavigableContentViewModel
         {
+            this._navigationService = navigationService;
             PageViewModels.Add(new FilterViewModel( categoryData));
             PageViewModels.Add(new TasteItViewModel()); 
 
             CurrentPageViewModel = PageViewModels[0];
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
+            LogOutCommand = new RelayCommand(LogOut);
 
+
+        }
+        private void LogOut()
+        {
+            ViewModelLocator.Cleanup();
+
+            _navigationService.NavigateTo("SignIn");
+
+
+            // Navigate
         }
 
         private void HandleCurrentUserMessage(CurrentUserMessage message)

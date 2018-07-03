@@ -106,6 +106,9 @@ namespace taste_it.ViewModels
                 });
                 _navigationService.NavigateTo("NavigableContent");
             }
+            UserName = string.Empty;
+            UserPassword = string.Empty;
+            HasErrors = false;
 
             //if (CheckCredentials()) NavigateTo...(); // after logged in display anot her view
         }
