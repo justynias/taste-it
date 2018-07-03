@@ -15,130 +15,158 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding FilteredRecipesCollection}" Name="recipes">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="{StaticResource BackgroundColor}" Width="550" Height="400" CornerRadius="25" Margin="20">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="25" Direction="270" Opacity="0.25"/>
-                            </Border.Effect>
+        <ItemsControl 
+            VirtualizingStackPanel.IsVirtualizing="True" 
+            ScrollViewer.CanContentScroll="True"
+            ItemsSource="{Binding FilteredRecipesCollection}" Name="recipes">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{StaticResource BackgroundColor}" Width="700" Height="350" CornerRadius="25" Margin="20">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="25" Direction="270" Opacity="0.25"/>
+                        </Border.Effect>
 
-                            <Grid Margin="30">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height=".2*"/>
-                                    <RowDefinition Height=".12*"/>
-                                    <RowDefinition Height=".3*"/>
-                                    <RowDefinition Height=".9*"/>
-                                    <RowDefinition Height=".5*"/>
-                                </Grid.RowDefinitions>
+                        <Grid Margin="30">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height=".2*"/>
+                                <RowDefinition Height=".12*"/>
+                                <RowDefinition Height=".3*"/>
+                                <RowDefinition Height=".9*"/>
+                                <RowDefinition Height=".5*"/>
+                            </Grid.RowDefinitions>
 
-                                <TextBlock  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                            <TextBlock  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                             x:Name="RecipeTitle" Text="{Binding name, Mode=OneWay}" 
                                             FontSize="16" Foreground="{StaticResource FilterMain}" FontWeight="Bold"/>
-                                <ItemsControl Name="ic_Category" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Have_category}">
+                            <ItemsControl 
+                                Name="ic_Category" 
+                                Grid.ColumnSpan="2" 
+                                Grid.Row="1" Grid.Column="0" 
+                                VirtualizingStackPanel.IsVirtualizing="True" 
+                                ItemsSource="{Binding Have_category}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock 
+                                            x:Name="RecipeCategory" Text="{Binding Category.name, Mode=OneWay}" 
+                                            FontSize="14" Foreground="{StaticResource MainTextColor}" FontWeight="Bold"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.Template>
+                                    <ControlTemplate>
+                                        <ItemsPresenter/>
+                                    </ControlTemplate>
+                                </ItemsControl.Template>
+
+                            </ItemsControl>
+
+                            <CheckBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource HeartCheckbox}" IsChecked="{Binding isFavourite}" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Checked">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.AddRecipeToFavouritesCommand, ElementName=recipes}" CommandParameter="{Binding id_r}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="Unchecked">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.RemoveRecipeToFavouritesCommand, ElementName=recipes}" CommandParameter="{Binding id_r}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </CheckBox>
+
+
+
+                            <Button Style="{StaticResource EnterRecipeBtn}" Margin="0" Padding="10" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="50" FontSize="14" Command="{Binding DataContext.NavigateToCurrentRecipeCommand, ElementName=recipes}" CommandParameter="{Binding }">Show full recipe</Button>
+                            <Grid Grid.Row="2">
+                                <TextBlock  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                            x:Name="RecipeDescription" Text="{Binding description, Mode=OneWay}" 
+                                            FontSize="12" Foreground="{StaticResource FilterAlt}"  TextWrapping="Wrap">
+                                </TextBlock>
+                                <Grid.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="Black"/>
+                                            <GradientStop Offset="0.75" Color="Black"/>
+                                            <GradientStop Offset="1" Color="Transparent"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Grid.OpacityMask>
+                            </Grid>
+                            <Grid Grid.Row="3"  Grid.ColumnSpan="2" Height="150" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".4*"/>
+                                    <ColumnDefinition Width=".4*"/>
+                                    <ColumnDefinition Width=".4*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" VerticalAlignment="Center">Complexity:</TextBlock>
+                                <TextBlock Grid.Row="1" VerticalAlignment="Center">Tags:</TextBlock>
+                                <TextBlock Grid.Row="2" VerticalAlignment="Center">Preparation Time:</TextBlock>
+
+                                <ProgressBar  Grid.Row="0" Grid.Column="1" Style="{StaticResource ProgressBarCustom}" Minimum="0" Value="{Binding complexity, Mode=OneWay}" Maximum="10"></ProgressBar>
+                                <ItemsControl Name="ic_Tags" Grid.Row="1" Grid.Column="1"
+                                              ScrollViewer.CanContentScroll="True"             
+                                              VirtualizingStackPanel.IsVirtualizing="True" 
+                                              ItemsSource="{Binding Have_tags}" >
                                     <ItemsControl.ItemsPanel>
+
                                         <ItemsPanelTemplate>
-                                            <DockPanel />
+                                            <VirtualizingStackPanel Orientation="Horizontal"/>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock 
-                                            x:Name="RecipeCategory" Text="{Binding Category.name, Mode=OneWay}" 
-                                            FontSize="14" Foreground="{StaticResource MainTextColor}" FontWeight="Bold"/>
+                                            <Border Style="{StaticResource TagPanel}" MaxWidth="100">
+                                                <Grid VerticalAlignment="Center" HorizontalAlignment="Left" >
+                                                    <TextBlock Style="{StaticResource TagTextBlock}" HorizontalAlignment="Left" FontSize="10" Text="{Binding Tag.name}">
+
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
+                                    <ItemsControl.Template>
+                                        <ControlTemplate>
+                                            <ScrollViewer>
+                                                <ItemsPresenter/>
+                                            </ScrollViewer>
+                                        </ControlTemplate>
+                                    </ItemsControl.Template>
                                 </ItemsControl>
-
-                                <CheckBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource HeartCheckbox}" IsChecked="{Binding isFavourite}" >
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Checked">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.AddRecipeToFavouritesCommand, ElementName=recipes}" CommandParameter="{Binding id_r}"/>
-                                        </i:EventTrigger>
-                                        <i:EventTrigger EventName="Unchecked">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.RemoveRecipeToFavouritesCommand, ElementName=recipes}" CommandParameter="{Binding id_r}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </CheckBox>
-
-
-
-                                <Button Style="{StaticResource EnterRecipeBtn}" Margin="0" Padding="10" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="50" FontSize="14" Command="{Binding DataContext.NavigateToCurrentRecipeCommand, ElementName=recipes}" CommandParameter="{Binding }">Show full recipe</Button>
-                                <Grid Grid.Row="2">
-                                    <TextBlock  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                            x:Name="RecipeDescription" Text="{Binding description, Mode=OneWay}" 
-                                            FontSize="12" Foreground="{StaticResource FilterAlt}"  TextWrapping="Wrap">
-                                    </TextBlock>
-                                    <Grid.OpacityMask>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStop Offset="0" Color="Black"/>
-                                                <GradientStop Offset="0.75" Color="Black"/>
-                                                <GradientStop Offset="1" Color="Transparent"/>
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Grid.OpacityMask>
-                                </Grid>
-                                <Grid Grid.Row="3"  Grid.ColumnSpan="2" Height="150" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width=".4*"/>
-                                        <ColumnDefinition Width=".4*"/>
-                                        <ColumnDefinition Width=".4*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock Grid.Row="0" VerticalAlignment="Center">Complexity:</TextBlock>
-                                    <TextBlock Grid.Row="1" VerticalAlignment="Center">Tags:</TextBlock>
-                                    <TextBlock Grid.Row="2" VerticalAlignment="Center">Preparation Time:</TextBlock>
-
-                                    <ProgressBar  Grid.Row="0" Grid.Column="1" Style="{StaticResource ProgressBarCustom}" Minimum="0" Value="{Binding complexity, Mode=OneWay}" Maximum="10"></ProgressBar>
-                                    <ItemsControl Name="ic_Tags" Grid.Row="1" Grid.Column="1" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Have_tags}">
-                                        <ItemsControl.ItemsPanel>
-
-                                            <ItemsPanelTemplate>
-                                                <DockPanel VerticalAlignment="Center">
-
-                                                </DockPanel>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border Style="{StaticResource TagPanel}" MaxWidth="100">
-                                                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left" >
-                                                        <TextBlock Style="{StaticResource TagTextBlock}" HorizontalAlignment="Left" FontSize="10" Text="{Binding Tag.name}">
-
-                                                        </TextBlock>
-                                                    </Grid>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding duration}" FontSize="16" Foreground="{StaticResource FilterMain}" Padding="10"/>
-                                    <Border Margin="15, 0, 0, 0" Grid.Column="2" Grid.Row="0"  MinHeight="200"  Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FFF5FFCA" CornerRadius="5" Padding="5">
-                                        <TextBlock Text="{Binding ingredients}" FontSize="14" TextWrapping="Wrap"/>
-                                    </Border>
-                                </Grid>
-
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding duration}" FontSize="16" Foreground="{StaticResource FilterMain}" Padding="10"/>
+                                <Border Margin="15, 0, 0, 0" Grid.Column="2" Grid.Row="0"  MinHeight="200"  Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FFF5FFCA" CornerRadius="5" Padding="5">
+                                    <TextBlock Text="{Binding ingredients}" FontSize="14" TextWrapping="Wrap"/>
+                                </Border>
                             </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
 
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer
+                               >
+                        <ItemsPresenter
+                         />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
     </Grid>
 </UserControl>
