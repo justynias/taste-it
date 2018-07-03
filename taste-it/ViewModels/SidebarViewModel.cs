@@ -79,15 +79,11 @@ namespace taste_it.ViewModels
             ViewModelLocator.Cleanup();
 
             _navigationService.NavigateTo("SignIn");
-
-
-            // Navigate
         }
 
         private void HandleCurrentUserMessage(CurrentUserMessage message)
         {
             this._currentUser = message.CurrentUser;
-            Debug.WriteLine(_currentUser.name);
 
         }
     }

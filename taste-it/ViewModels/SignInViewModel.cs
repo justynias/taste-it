@@ -73,7 +73,6 @@ namespace taste_it.ViewModels
             _navigationService = navigationService;
             _userDataService = userData;
             UserCollection = new ObservableCollection<User>();
-           // LoadUsers();  //should load users after every change of view!
 
             SignInCommand = new RelayCommand(SignIn);
             NavigateToSignUpCommand = new RelayCommand(NavigateToSignUp);
@@ -109,13 +108,10 @@ namespace taste_it.ViewModels
             UserName = string.Empty;
             UserPassword = string.Empty;
             HasErrors = false;
-
-            //if (CheckCredentials()) NavigateTo...(); // after logged in display anot her view
         }
 
         public void NavigateToSignUp()
         {
-            //Messenger with collection of users?
             UserName = string.Empty;
             UserPassword = string.Empty;
             HasErrors = false;
@@ -165,7 +161,6 @@ namespace taste_it.ViewModels
             for (int i = 0; i < 20; i++)
                 if (hashBytes[i + 16] != hash[i])
                 {
-                    //throw new UnauthorizedAccessException();
                     return false;
                 }
             return true;

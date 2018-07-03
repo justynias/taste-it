@@ -248,17 +248,11 @@ namespace taste_it.ViewModels
         #region methods
         private async void AddRecipe()
         {
-            SetLoaderOn();
             var newRecipe = new Recipe() { name = RecipeName, ingredients = RecipeIngredients, description = Description, complexity = Complexity, duration = int.Parse(Duration) };
             await AddTagsToDatabase();
             var tagList = new List<Tag>(Tags);
-           Debug.WriteLine( newRecipe.description.Length);
-            Debug.WriteLine(newRecipe.ingredients.Length);
-
             await _recipeDataService.AddRecipeAsync(newRecipe, CurrentCategory, tagList);
             NotifyAboutRefresh();
-            SetLoaderOff();
-            /// await _recipeDataService.AddToFavourites(_currentUser, newRecipe); // have favourites=author?
             ResetRecipe();
         }
         private void ResetRecipe()
@@ -302,14 +296,12 @@ namespace taste_it.ViewModels
 
         private async void LoadCategories()
         {
-            SetLoaderOn();
             var categoriesTemp = await _categoryDataService.GetCategoriesAsync();
             CategoriesCollection = new ObservableCollection<Category>();
             foreach (var c in categoriesTemp)
             {
                 CategoriesCollection.Add(c);
             }
-            SetLoaderOff();
         }
         private void LoadTags()
         {

@@ -66,7 +66,6 @@ namespace taste_it.ViewModels
                 if (item.isFavourite)
                 {
                     FilteredRecipesCollection.Add(item);
-                    Debug.WriteLine(item.id_r);
                 }
             }
             RaisePropertyChanged(() => FilteredRecipesCollection);

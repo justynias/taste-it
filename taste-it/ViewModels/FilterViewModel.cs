@@ -205,7 +205,6 @@ namespace taste_it.ViewModels
 
         private async void LoadCategories()  
         {
-            SetLoaderOn();
             CategoriesCollection = new ObservableCollection<Category>();
             FilterCategories = new ObservableCollection<Category>();
             var categoriesTemp = await _categoryDataService.GetCategoriesAsync();
@@ -214,7 +213,6 @@ namespace taste_it.ViewModels
             {
                 CategoriesCollection.Add(c);
             }
-            SetLoaderOff();
         }
 
         private void SetLoaderOn()

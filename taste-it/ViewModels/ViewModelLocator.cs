@@ -116,7 +116,6 @@ namespace taste_it.ViewModels
         }
         public static void Cleanup()
         {
-            Debug.WriteLine("czyszcze");
 
             SimpleIoc.Default.Unregister<FrameNavigationService>();
             SimpleIoc.Default.Unregister<UserDataService>();

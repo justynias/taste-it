@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,6 @@ namespace taste_it.ViewModels
         private void SetLoading(GenericMessage<bool> message)
         {
             IsBusy = message.Content;
-            Console.WriteLine(message.Content.ToString());
         }
         #endregion
 
