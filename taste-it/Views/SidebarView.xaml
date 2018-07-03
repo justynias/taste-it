@@ -39,11 +39,11 @@
 
 
         <DockPanel Grid.Row="0" Background="{StaticResource FilterAlt}">
-            <UniformGrid Margin="15" Rows="2">
+            <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="T A S T E . I T" Foreground="{StaticResource MainTextColor}" FontSize="24px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Bold" />
                 <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Foreground="{StaticResource BackgroundColor}" FontSize="12px" TextAlignment="Center" FontStretch="UltraExpanded" FontWeight="Light" />
-            </UniformGrid>
-            <Button Content="Log out" Command="{Binding LogOutCommand}"/>
+                <Button  Command="{Binding LogOutCommand}" Style="{StaticResource EnterRecipeBtn}" Width="200" Height="50">Logout</Button>
+            </StackPanel>
         </DockPanel>
 
         <DockPanel Grid.Row="1" Background="{StaticResource FilterMain}">
