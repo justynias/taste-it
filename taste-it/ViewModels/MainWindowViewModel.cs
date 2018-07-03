@@ -39,7 +39,7 @@ namespace taste_it.ViewModels
 
         #endregion
         #region Properties
-        public bool IsBusy { get => isBusy; set => Set(ref isBusy, value); }
+        public bool IsBusy { get { return isBusy; } set { Set(ref isBusy, value); } }
         #endregion
         #region Private Methods
         private void SetLoading(GenericMessage<bool> message)
