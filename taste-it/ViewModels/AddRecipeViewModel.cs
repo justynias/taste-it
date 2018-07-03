@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using taste_it.Additionals.ContentNavigationService;
 using taste_it.Additionals.Messages;
-//using taste_it.Additionals.Messages;
 using taste_it.Additionals.NavigationService;
 using taste_it.DataService;
 using taste_it.Models;
@@ -26,7 +25,6 @@ namespace taste_it.ViewModels
     public class AddRecipeViewModel : ViewModelBase, IDataErrorInfo, IPageViewModel
     {
         #region private fields
-        private IFrameNavigationService _navigationService;
         private readonly IRecipeDataService _recipeDataService;
         private readonly ICategoryDataService _categoryDataService;
         private readonly ITagDataService _tagDataService;

@@ -20,19 +20,24 @@ namespace taste_it.ViewModels
 {
     public class AllRecipesViewModel : ViewModelBase, IPageViewModel
     {
+        #region fields 
         private readonly IRecipeDataService _recipeDataService;
         private ObservableCollection<Recipe> filteredRecipesCollection;
-
         private User _currentUser;
+        private string filterRecipeName = String.Empty;
+        private ObservableCollection<Tag> filterTags;
+        private ObservableCollection<Category> filterCategories;
+        #endregion
+
+        #region properties
+
+
         public ICommand AddRecipeToFavouritesCommand { get; private set; }
         public ICommand RemoveRecipeToFavouritesCommand
         { get; private set; }
         public ICommand NavigateToCurrentRecipeCommand { get; private set; }
 
-        private string filterRecipeName = String.Empty;
-        private ObservableCollection<Tag> filterTags;
-        private ObservableCollection<Category> filterCategories;
-
+       
         public string name
         {
             get
@@ -55,6 +60,8 @@ namespace taste_it.ViewModels
                 Set(ref filteredRecipesCollection, value);
             }
         }
+        #endregion
+        //ctor
         public AllRecipesViewModel(IRecipeDataService recipeData)
         {
             _recipeDataService = recipeData;
@@ -76,7 +83,7 @@ namespace taste_it.ViewModels
 
 
         }
-
+        #region handle message methods
         private void HandleRemoveRecipeToFavMessage(RemoveRecipeToFavMessage message)
         {
             RemoveRecipeToFavourites(message.RecipeIndex);
@@ -106,6 +113,9 @@ namespace taste_it.ViewModels
             LoadRecipes();
 
         }
+        #endregion
+
+        #region methods
         private void Filter() 
         {
 
@@ -294,6 +304,7 @@ namespace taste_it.ViewModels
         {
             Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
         }
-      
+        #endregion
+
     }
 }

@@ -9,7 +9,6 @@ namespace taste_it.DataService
 {
     public interface ITagDataService
     {
-        Task<IEnumerable<Tag>> GetTagsAsync();
         Task AddTagAsync(Tag tag);
         Task<Tag> FindTag(Tag tag);
     }

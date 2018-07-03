@@ -8,6 +8,5 @@ namespace taste_it.Additionals.Messages
 {
     public class RefreshMessage
     {
-       // public RecipesCollectionMessage RecipesMessage {get; set;}
     }
 }

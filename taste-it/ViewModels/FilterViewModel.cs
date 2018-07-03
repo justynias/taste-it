@@ -19,6 +19,19 @@ namespace taste_it.ViewModels
 {
     public class FilterViewModel : ViewModelBase, IPageViewModel
     {
+        #region fields
+
+        private string recipeName = string.Empty;
+        private ObservableCollection<Category> categoriesCollection;
+        private ObservableCollection<Tag> tags;
+        private ObservableCollection<Category> filterCategories;
+        private Tag currentTag;
+        private string tagName;
+        private readonly ICategoryDataService _categoryDataService;
+
+        #endregion
+
+        #region properties 
         public string name
         {
             get
@@ -27,20 +40,6 @@ namespace taste_it.ViewModels
             }
         }
 
-        private string recipeName=string.Empty;
-        private ObservableCollection<Category> categoriesCollection;
-        private ObservableCollection<Tag> tags;
-        private ObservableCollection<Category> filterCategories;
-     
-
-        private Tag currentTag;
-        private string tagName;
-        private string tagError;
-        //temporary
-        private readonly ICategoryDataService _categoryDataService;
-       
-
-        //
         public string RecipeName
         {
             get
@@ -130,15 +129,14 @@ namespace taste_it.ViewModels
         public ICommand AddTagCommand { get; private set; }
         public ICommand RemoveTagCommand { get; private set; }
         public ICommand SendFiltersCommand { get; private set; }
-       
 
+        #endregion
+
+        //ctor
         public FilterViewModel(ICategoryDataService categoryData)
         {
-            
             _categoryDataService = categoryData;
         
-
-            
             LoadCategories();
             LoadTags();
 
@@ -148,9 +146,9 @@ namespace taste_it.ViewModels
             RemoveTagCommand = new RelayCommand<object>(RemoveTag);
             SendFiltersCommand = new RelayCommand(SendFilters);
 
-
         }
 
+        #region methods
         private void SendFilters()
         {
         
@@ -223,7 +221,7 @@ namespace taste_it.ViewModels
         {
             Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
         }
-
+        #endregion
 
     }
 }
