@@ -26,7 +26,6 @@ namespace taste_it.ViewModels
     public class AddRecipeViewModel : ViewModelBase, IDataErrorInfo, IPageViewModel
     {
         #region private fields
-        private User _currentUser; // to merged author with the recipe // MVVM message?
         private IFrameNavigationService _navigationService;
         private readonly IRecipeDataService _recipeDataService;
         private readonly ICategoryDataService _categoryDataService;
@@ -244,17 +243,9 @@ namespace taste_it.ViewModels
             RemoveTagCommand = new RelayCommand<object>(RemoveTag);
 
 
-           // Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
-
-
         }
 
         #region methods
-        //private void HandleCurrentUserMessage(CurrentUserMessage message)
-        //{
-        //    this._currentUser = message.CurrentUser;
-
-        //}
         private async void AddRecipe()
         {
             SetLoaderOn();
@@ -277,7 +268,7 @@ namespace taste_it.ViewModels
             Description = string.Empty;
             Tags.Clear();
             CurrentCategory = null;
-            Complexity = 0;
+            Complexity = 1;
             Duration = "0";
 
         }
@@ -305,7 +296,7 @@ namespace taste_it.ViewModels
 
                 }
             }
-            
+
 
         }
 
