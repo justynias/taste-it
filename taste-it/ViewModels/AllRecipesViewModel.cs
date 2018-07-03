@@ -37,7 +37,7 @@ namespace taste_it.ViewModels
         {
             get
             {
-                return "Recipes";
+                return "All Recipes";
             }
         }
 

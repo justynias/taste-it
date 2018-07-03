@@ -70,10 +70,25 @@ namespace taste_it.ViewModels
 
             CurrentPageViewModel = PageViewModels[0];
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
+            Messenger.Default.Register<SwitchSidebarMessage>(this, this.HandleSwitchSidebarMessage);
             LogOutCommand = new RelayCommand(LogOut);
 
 
         }
+
+        private void HandleSwitchSidebarMessage(SwitchSidebarMessage obj)
+        {
+            Console.WriteLine(obj.PageName);
+            if(obj.PageName == "Add Recipe" || obj.PageName == "Current Recipe")
+            {
+                CurrentPageViewModel = PageViewModels[1];
+            }
+            else if(obj.PageName == "All Recipes" || obj.PageName == "Favourite Recipes")
+            {
+                CurrentPageViewModel = PageViewModels[0];
+            }
+        }
+
         private void LogOut()
         {
             ViewModelLocator.Cleanup();

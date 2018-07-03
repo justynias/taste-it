@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace taste_it.Additionals.Messages
+{
+    public class SwitchSidebarMessage
+    {
+        public string PageName { get; set;}
+    }
+}
