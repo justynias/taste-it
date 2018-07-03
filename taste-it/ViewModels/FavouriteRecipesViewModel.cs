@@ -53,6 +53,7 @@ namespace taste_it.ViewModels
 
             AddRecipeToFavouritesCommand = new RelayCommand<object>(AddRecipeToFavourites);
             RemoveRecipeToFavouritesCommand = new RelayCommand<object>(RemoveRecipeToFavourites);
+            NavigateToCurrentRecipeCommand = new RelayCommand<object>(NavigateToCurrentRecipe);
 
             Messenger.Default.Register<RecipesCollectionMessage>(this, this.HandleRecipesCollectionMessage);
 
