@@ -24,6 +24,7 @@ namespace taste_it.ViewModels
 
         public NavigableContentViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
         {
+            Debug.WriteLine("tworze vm");
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
             PageViewModels.Add(new AllRecipesViewModel(recipeData));
             PageViewModels.Add(new FavouriteRecipesViewModel());
@@ -33,9 +34,9 @@ namespace taste_it.ViewModels
 
             CurrentPageViewModel = PageViewModels[1];
 
-            ChangePageCommand = new RelayCommand<IPageViewModel>(p =>  ChangeViewModel(
-                (IPageViewModel)p) , 
-                (p) => p is IPageViewModel && CurrentPageViewModel.name != p.name );
+            ChangePageCommand = new RelayCommand<IPageViewModel>(p => ChangeViewModel(
+                (IPageViewModel)p),
+                (p) => p is IPageViewModel && CurrentPageViewModel.name != p.name);
 
 
         }
@@ -43,6 +44,7 @@ namespace taste_it.ViewModels
         private void HandleNavigationMessage(NavigationWithCurrentRecipeMessage msg)
         {
             CurrentPageViewModel = new CurrentRecipeViewModel(msg.CurrentRecipe);
+            Messenger.Default.Send<SwitchSidebarMessage>(new SwitchSidebarMessage { PageName = CurrentPageViewModel.name });
         }
 
         private void ChangeViewModel(IPageViewModel viewModel)
@@ -52,9 +54,11 @@ namespace taste_it.ViewModels
 
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
+
+            Messenger.Default.Send<SwitchSidebarMessage>(new SwitchSidebarMessage { PageName = viewModel.name });
         }
 
-      
+
 
         public List<IPageViewModel> PageViewModels
         {
@@ -82,6 +86,6 @@ namespace taste_it.ViewModels
             }
         }
 
-      
+
     }
 }
