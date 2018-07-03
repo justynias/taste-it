@@ -70,7 +70,20 @@ namespace taste_it.ViewModels
 
             Messenger.Default.Register<FiltersMessage>(this, this.HandleFiltersMessage);
             Messenger.Default.Register<CurrentUserMessage>(this, this.HandleCurrentUserMessage);
+            Messenger.Default.Register<RemoveRecipeToFavMessage>(this, this.HandleRemoveRecipeToFavMessage);
+            Messenger.Default.Register<AddRecipeToFavMessage>(this, this.HandleAddRecipeToFavMessage);
             Messenger.Default.Register<RefreshMessage>(this, this.HandleRefresh);
+
+
+        }
+
+        private void HandleRemoveRecipeToFavMessage(RemoveRecipeToFavMessage message)
+        {
+            RemoveRecipeToFavourites(message.RecipeIndex);
+        }
+        private void HandleAddRecipeToFavMessage(AddRecipeToFavMessage message)
+        {
+            AddRecipeToFavourites(message.RecipeIndex);
 
         }
 
@@ -95,6 +108,7 @@ namespace taste_it.ViewModels
         }
         private void Filter() 
         {
+
             List<Recipe> filteredRecipes = new List<Recipe>();
 
             if (filterRecipeName != string.Empty)
@@ -159,7 +173,11 @@ namespace taste_it.ViewModels
                 FilteredRecipesCollection.Add(item);
             }
             RaisePropertyChanged(() => FilteredRecipesCollection);
+            Messenger.Default.Send<RecipesCollectionMessage>(new RecipesCollectionMessage
+            {
+                RecipesCollection = this.FilteredRecipesCollection
 
+            });
 
         }
 
@@ -225,7 +243,7 @@ namespace taste_it.ViewModels
             //message to fav recipes
             Messenger.Default.Send<RecipesCollectionMessage>(new RecipesCollectionMessage
             {
-                RecipesCollection = this.RecipesCollection
+                RecipesCollection = this.FilteredRecipesCollection
 
             });
 
@@ -248,6 +266,12 @@ namespace taste_it.ViewModels
             int id = Convert.ToInt32(parameter);
             var currentRecipe = RecipesCollection.First(r => r.id_r == id);
             _recipeDataService.RemoveFavouriteRecipe(currentRecipe, _currentUser);
+            Messenger.Default.Send<RecipesCollectionMessage>(new RecipesCollectionMessage
+            {
+                RecipesCollection = this.FilteredRecipesCollection
+
+            });
+
         }
 
         private void AddRecipeToFavourites(object parameter)
@@ -255,6 +279,11 @@ namespace taste_it.ViewModels
             int id = Convert.ToInt32(parameter);
             var currentRecipe = RecipesCollection.First(r => r.id_r == id);
             _recipeDataService.AddToFavourites(_currentUser, currentRecipe);
+            Messenger.Default.Send<RecipesCollectionMessage>(new RecipesCollectionMessage
+            {
+                RecipesCollection = this.FilteredRecipesCollection
+
+            });
 
         }
         private void SetLoaderOn()
@@ -265,6 +294,6 @@ namespace taste_it.ViewModels
         {
             Messenger.Default.Send<GenericMessage<bool>>(new GenericMessage<bool>(false));
         }
-
+      
     }
 }

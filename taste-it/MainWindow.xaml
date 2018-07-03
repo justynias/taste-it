@@ -32,7 +32,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
         <Frame Source="./Views/SignInView.xaml" x:Name="MainFrame" 
                     NavigationUIVisibility="Hidden"
                

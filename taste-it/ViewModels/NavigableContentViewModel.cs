@@ -27,7 +27,7 @@ namespace taste_it.ViewModels
           
             PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
             PageViewModels.Add(new AllRecipesViewModel(recipeData));
-            PageViewModels.Add(new FavouriteRecipesViewModel(recipeData));
+            PageViewModels.Add(new FavouriteRecipesViewModel());
 
             Messenger.Default.Register<NavigationWithCurrentRecipeMessage>(this, this.HandleNavigationMessage);
 
