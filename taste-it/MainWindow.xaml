@@ -24,14 +24,15 @@
         <Style TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="Roboto" />
         </Style>
-        <ls:WaitAdorner x:Key="Loader" IsAdornerVisible="{Binding IsBusy}">
-            <ls:WaitAdorner.AdornerContent>
-                <Grid>
-                    <ls:BusyView />
-                </Grid>
-            </ls:WaitAdorner.AdornerContent>
-        </ls:WaitAdorner>
+       
     </Window.Resources>
+    <ls:WaitAdorner IsAdornerVisible="{Binding IsBusy,UpdateSourceTrigger=PropertyChanged}" >
+        <ls:WaitAdorner.AdornerContent>
+            <Grid>
+                <ls:BusyView />
+            </Grid>
+        </ls:WaitAdorner.AdornerContent>
+  
     <Grid HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -50,5 +51,5 @@
                     MinHeight="800" MinWidth="400"
                />
     </Grid>
-
+    </ls:WaitAdorner>
 </Window>
