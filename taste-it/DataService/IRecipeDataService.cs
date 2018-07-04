@@ -13,9 +13,6 @@ namespace taste_it.DataService
         Task AddRecipeAsync(Recipe recipe,Category category, Tag tag);
         Task AddRecipeAsync(Recipe recipe, Category category, List<Tag> tags);
         Task AddToFavourites(User user, Recipe recipe);
-        Task<IEnumerable<Recipe>> FindFavouritesAsync(User user);
-        Task<IEnumerable<Recipe>> FindByTagAsync(Tag tag);
-        Task<IEnumerable<Recipe>> FindByCategory(Category category);
         Task RemoveFavouriteRecipe(Recipe recipe, User user);
     }
 }

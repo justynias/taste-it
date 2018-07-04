@@ -13,7 +13,11 @@ namespace taste_it.ViewModels
 {
     public class CurrentRecipeViewModel : ViewModelBase, IPageViewModel
     {
+        #region fields
         private Recipe currentRecipe;
+        #endregion
+
+        #region properties
 
         public Recipe CurrentRecipe
         {
@@ -35,7 +39,9 @@ namespace taste_it.ViewModels
                 return "Current Recipe";
             }
         }
+        #endregion
 
+        //ctor
         public CurrentRecipeViewModel(Recipe CurrentRecipe)
         {
             this.CurrentRecipe = CurrentRecipe;

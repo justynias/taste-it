@@ -41,10 +41,6 @@ namespace taste_it.DataService
 
             if (currentRecipe != null)
             {
-                //foreach (var category in categories)
-                //{
-                //    dbContext.Have_category.Add(new Have_category { id_c = category.id_c, id_r = currentRecipe.id_r });
-                //}
                 dbContext.Have_category.Add(new Have_category { id_c = category.id_c, id_r = currentRecipe.id_r });
 
                 foreach (var tag in tags)
@@ -67,30 +63,7 @@ namespace taste_it.DataService
 
         }
 
-        public async Task<IEnumerable<Recipe>> FindByCategory(Category category)  //one cateogory?
-        {
-            var dbContext = new TasteItDbEntities();
-            Category current = await dbContext.Categories.FirstOrDefaultAsync(c => c.name == category.name);
-            var list = current.Have_category.Select(f => f.id_r).ToList();
-            return await dbContext.Recipes.AsNoTracking().Where(r => list.Contains(r.id_r)).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Recipe>> FindByTagAsync(Tag tag)
-        {
-            var dbContext = new TasteItDbEntities();
-            Tag current = await dbContext.Tags.FirstOrDefaultAsync(t => t.name == tag.name);
-            var list = current.Have_tags.Select(t => t.id_r).ToList();
-            return await dbContext.Recipes.AsNoTracking().Where(r => list.Contains(r.id_r)).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Recipe>> FindFavouritesAsync(User user) //need to test
-        {
-            var dbContext = new TasteItDbEntities();
-            User current = await dbContext.Users.FirstOrDefaultAsync(u => u.id_u == user.id_u);
-            var list = current.Have_favourites.Select(f => f.id_r).ToList();
-            return await dbContext.Recipes.AsNoTracking().Where(r => list.Contains(r.id_r)).ToListAsync();
-        }
-        public async Task<IEnumerable<Recipe>> FindByNameAsync(string name) //need to test
+        public async Task<IEnumerable<Recipe>> FindByNameAsync(string name) 
         {
            var dbContext = new TasteItDbEntities();
            return await  dbContext.Recipes.Where(r => r.name.Contains(name)).ToListAsync();

@@ -29,13 +29,13 @@ namespace taste_it.ViewModels
         {
             this.navigationService = navigationService;
             Messenger.Default.Register<GenericMessage<bool>>(this, SetLoading);
-            Messenger.Default.Register<LogoutMessage>(this,this.HandleLogout);
+            //Messenger.Default.Register<LogoutMessage>(this,this.HandleLogout);
         }
 
-        private void HandleLogout(LogoutMessage obj)
-        {
-            Cleanup();
-        }
+        //private void HandleLogout(LogoutMessage obj)
+        //{
+        //    Cleanup();
+        //}
 
 
         #endregion

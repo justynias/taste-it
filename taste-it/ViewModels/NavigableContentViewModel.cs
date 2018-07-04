@@ -17,49 +17,14 @@ namespace taste_it.ViewModels
 {
     public class NavigableContentViewModel : ViewModelBase
     {
-        public ICommand ChangePageCommand { get; private set; }
+        #region fields
 
         private IPageViewModel currentPageViewModel;
         private List<IPageViewModel> pageViewModels;
 
-        public NavigableContentViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
-        {
+        #endregion
 
-            PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
-            PageViewModels.Add(new AllRecipesViewModel(recipeData));
-            PageViewModels.Add(new FavouriteRecipesViewModel());
-
-            Messenger.Default.Register<NavigationWithCurrentRecipeMessage>(this, this.HandleNavigationMessage);
-
-
-            CurrentPageViewModel = PageViewModels[1];
-
-            ChangePageCommand = new RelayCommand<IPageViewModel>(p => ChangeViewModel(
-                (IPageViewModel)p),
-                (p) => p is IPageViewModel && CurrentPageViewModel.name != p.name);
-
-
-        }
-
-        private void HandleNavigationMessage(NavigationWithCurrentRecipeMessage msg)
-        {
-            CurrentPageViewModel = new CurrentRecipeViewModel(msg.CurrentRecipe);
-            Messenger.Default.Send<SwitchSidebarMessage>(new SwitchSidebarMessage { PageName = CurrentPageViewModel.name });
-        }
-
-        private void ChangeViewModel(IPageViewModel viewModel)
-        {
-            if (!PageViewModels.Contains(viewModel))
-                PageViewModels.Add(viewModel);
-
-            CurrentPageViewModel = PageViewModels
-                .FirstOrDefault(vm => vm == viewModel);
-
-            Messenger.Default.Send<SwitchSidebarMessage>(new SwitchSidebarMessage { PageName = viewModel.name });
-        }
-
-
-
+        #region properties
         public List<IPageViewModel> PageViewModels
         {
             get
@@ -85,7 +50,48 @@ namespace taste_it.ViewModels
                 }
             }
         }
+        public ICommand ChangePageCommand { get; private set; }
 
+        #endregion
+
+        //ctor
+        public NavigableContentViewModel(IRecipeDataService recipeData, ITagDataService tagData, ICategoryDataService categoryData)
+        {
+            PageViewModels.Add(new AddRecipeViewModel(recipeData, tagData, categoryData));
+            PageViewModels.Add(new AllRecipesViewModel(recipeData));
+            PageViewModels.Add(new FavouriteRecipesViewModel());
+
+            Messenger.Default.Register<NavigationWithCurrentRecipeMessage>(this, this.HandleNavigationMessage);
+
+
+            CurrentPageViewModel = PageViewModels[1];
+
+            ChangePageCommand = new RelayCommand<IPageViewModel>(p => ChangeViewModel(
+                (IPageViewModel)p),
+                (p) => p is IPageViewModel && CurrentPageViewModel.name != p.name);
+
+
+        }
+
+        #region methods
+        private void HandleNavigationMessage(NavigationWithCurrentRecipeMessage msg)
+        {
+            CurrentPageViewModel = new CurrentRecipeViewModel(msg.CurrentRecipe);
+            Messenger.Default.Send<SwitchSidebarMessage>(new SwitchSidebarMessage { PageName = CurrentPageViewModel.name });
+        }
+
+        private void ChangeViewModel(IPageViewModel viewModel)
+        {
+            if (!PageViewModels.Contains(viewModel))
+                PageViewModels.Add(viewModel);
+
+            CurrentPageViewModel = PageViewModels
+                .FirstOrDefault(vm => vm == viewModel);
+
+            Messenger.Default.Send<SwitchSidebarMessage>(new SwitchSidebarMessage { PageName = viewModel.name });
+        }
+
+        #endregion
 
     }
 }

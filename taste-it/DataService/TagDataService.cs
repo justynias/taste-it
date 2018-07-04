@@ -17,11 +17,6 @@ namespace taste_it.DataService
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Tag>> GetTagsAsync()
-        {
-            var dbContext = new TasteItDbEntities();
-            return await dbContext.Tags.AsNoTracking().ToListAsync();
-        }
         public async Task<Tag> FindTag(Tag tag)
         {
             var dbContext = new TasteItDbEntities();

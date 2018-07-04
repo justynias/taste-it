@@ -17,12 +17,15 @@ namespace taste_it.ViewModels
 {
     public class SidebarViewModel : ViewModelBase
     {
-        private string message; // Message shown to user with his/her name e.g Hello root
+
+        #region fields
         private IPageViewModel currentPageViewModel;
         private List<IPageViewModel> pageViewModels; // Switching between filterview and TASTE.IT view
         private User _currentUser;
         private IFrameNavigationService _navigationService;
+        #endregion
 
+        #region properties
         public string Message
         {
             get
@@ -60,9 +63,8 @@ namespace taste_it.ViewModels
         }
         public RelayCommand LogOutCommand { get; private set; }
 
-
-        //temporary data services
-        public SidebarViewModel(ICategoryDataService categoryData, IFrameNavigationService navigationService) // Here we have to pass user probably from NavigableContentViewModel
+        #endregion
+        public SidebarViewModel(ICategoryDataService categoryData, IFrameNavigationService navigationService) 
         {
             this._navigationService = navigationService;
             PageViewModels.Add(new FilterViewModel( categoryData));
@@ -75,7 +77,7 @@ namespace taste_it.ViewModels
 
 
         }
-
+        #region methods
         private void HandleSwitchSidebarMessage(SwitchSidebarMessage obj)
         {
             if(obj.PageName == "Add Recipe" || obj.PageName == "Current Recipe")
@@ -100,5 +102,6 @@ namespace taste_it.ViewModels
             this._currentUser = message.CurrentUser;
 
         }
+        #endregion
     }
 }
